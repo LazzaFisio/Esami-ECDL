@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace Programma
 {
@@ -15,6 +16,19 @@ namespace Programma
         public Login()
         {
             InitializeComponent();
+        }
+
+        private void connetti_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Program.connection = new MySqlConnection("Server=" + server.Text + ";Database=" + database.Text + ";Uid=" + user.Text + ";Psw=" + password.Text + ";");
+                Program.connection.Open();
+                Hide();
+                new Principale().ShowDialog();
+                Close();
+            }
+            catch { MessageBox.Show("Errore nel tentativo di creazione di una connessione", "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
         }
     }
 }

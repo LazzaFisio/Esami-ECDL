@@ -15,7 +15,7 @@ namespace Programma
         //SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'esami ecdl'
         //Query per prendere il nome delle tabelle di un database
 
-        //SELECT DISTINCT TABLE_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'esami ecdl'
+        //SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'esami ecdl'
         //Query per ottenere il nome delle colonne di un database
 
         public Principale()

@@ -20,9 +20,16 @@ namespace Programma
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            try { connection = new MySqlConnection("Server=127.0.0.1;Database=esami ecdl;Uid=root;Psw=;"); }
-            catch { Application.Run(new Login()); }
-            Application.Run(new Principale());
+            try
+            {
+                connection = new MySqlConnection("Server=127.0.0.1;Database= ecdl;Uid=root;Psw=;");
+                connection.Open();
+                Application.Run(new Principale());
+            }
+            catch
+            {
+                Application.Run(new Login());
+            }
         }
     }
 }
