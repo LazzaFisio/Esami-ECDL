@@ -14,6 +14,7 @@ namespace Programma
         /// <summary>
         /// Punto di ingresso principale dell'applicazione.
         /// </summary>
+        /// 
         [STAThread]
         static void Main()
         {
