@@ -8,6 +8,7 @@ namespace Programma
 {
     static class Program
     {
+
         /// <summary>
         /// Punto di ingresso principale dell'applicazione.
         /// </summary>
@@ -16,7 +17,7 @@ namespace Programma
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new Login());
         }
     }
 }

@@ -1,0 +1,11 @@
+F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\bin\Debug\Programma.exe.config
+F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\bin\Debug\Programma.exe
+F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\bin\Debug\Programma.pdb
+F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.csprojAssemblyReference.cache
+F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Login.resources
+F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Principale.resources
+F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Properties.Resources.resources
+F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.csproj.GenerateResource.cache
+F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.csproj.CoreCompileInputs.cache
+F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.exe
+F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.pdb
