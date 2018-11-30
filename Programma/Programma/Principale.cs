@@ -18,9 +18,31 @@ namespace Programma
         //SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'esami ecdl'
         //Query per ottenere il nome delle colonne di un database
 
+
         public Principale()
         {
             InitializeComponent();
+        }
+
+        private void leggi_Click(object sender, EventArgs e)
+        {
+            leggi.BackColor = Color.Lime;
+            scrivi.BackColor = Color.Honeydew;
+            panelLeggi.Visible = true;
+            panelScrivi.Visible = false;
+        }
+
+        private void scrivi_Click(object sender, EventArgs e)
+        {
+            scrivi.BackColor = Color.Lime;
+            leggi.BackColor = Color.Honeydew;
+            panelScrivi.Visible = true;
+            panelLeggi.Visible = false;
+        }
+
+        private void azioneComboBox(object sender, EventArgs e)
+        {
+
         }
     }
 }

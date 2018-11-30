@@ -22,7 +22,7 @@ namespace Programma
             Application.SetCompatibleTextRenderingDefault(false);
             try
             {
-                connection = new MySqlConnection("Server=127.0.0.1;Database= ecdl;Uid=root;Psw=;");
+                connection = new MySqlConnection("Server=127.0.0.1;Database=esami ecdl;Uid=root;Psw=;");
                 connection.Open();
                 Application.Run(new Principale());
             }
