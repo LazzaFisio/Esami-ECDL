@@ -10,6 +10,7 @@ namespace Programma
     static class Program
     {
         public static MySqlConnection connection;
+        public static string database;
 
         /// <summary>
         /// Punto di ingresso principale dell'applicazione.
@@ -24,6 +25,7 @@ namespace Programma
             {
                 connection = new MySqlConnection("Server=127.0.0.1;Database=esami ecdl;Uid=root;Psw=;");
                 connection.Open();
+                database = "esami ecdl";
                 Application.Run(new Principale());
             }
             catch

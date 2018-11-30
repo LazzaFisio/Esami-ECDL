@@ -22,7 +22,8 @@ namespace Programma
         {
             try
             {
-                Program.connection = new MySqlConnection("Server=" + server.Text + ";Database=" + database.Text + ";Uid=" + user.Text + ";Psw=" + password.Text + ";");
+                Program.database = "Server=" + server.Text + ";Database=" + database.Text + ";Uid=" + user.Text + ";Psw=" + password.Text + ";";
+                Program.connection = new MySqlConnection(Program.database);
                 Program.connection.Open();
                 Hide();
                 new Principale().ShowDialog();

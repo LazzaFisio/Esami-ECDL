@@ -32,13 +32,12 @@
             this.leggi = new System.Windows.Forms.Button();
             this.scrivi = new System.Windows.Forms.Button();
             this.panelLeggi = new System.Windows.Forms.Panel();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.panelScrivi = new System.Windows.Forms.Panel();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.comboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panelLeggi.SuspendLayout();
-            this.panelScrivi.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -77,55 +76,45 @@
             // 
             // panelLeggi
             // 
-            this.panelLeggi.Controls.Add(this.comboBox1);
-            this.panelLeggi.Controls.Add(this.label2);
-            this.panelLeggi.Location = new System.Drawing.Point(0, 120);
+            this.panelLeggi.Controls.Add(this.dataGridView1);
+            this.panelLeggi.Location = new System.Drawing.Point(0, 159);
             this.panelLeggi.Name = "panelLeggi";
-            this.panelLeggi.Size = new System.Drawing.Size(639, 332);
+            this.panelLeggi.Size = new System.Drawing.Size(639, 293);
             this.panelLeggi.TabIndex = 3;
             // 
-            // comboBox1
+            // dataGridView1
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(315, 12);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(141, 21);
-            this.comboBox1.TabIndex = 1;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(179, 15);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(117, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "SELEZIONA TABELLA";
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(12, 16);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(614, 263);
+            this.dataGridView1.TabIndex = 2;
             // 
             // panelScrivi
             // 
-            this.panelScrivi.Controls.Add(this.comboBox2);
-            this.panelScrivi.Controls.Add(this.label3);
-            this.panelScrivi.Location = new System.Drawing.Point(0, 104);
+            this.panelScrivi.Location = new System.Drawing.Point(0, 143);
             this.panelScrivi.Name = "panelScrivi";
-            this.panelScrivi.Size = new System.Drawing.Size(642, 348);
+            this.panelScrivi.Size = new System.Drawing.Size(642, 309);
             this.panelScrivi.TabIndex = 4;
             this.panelScrivi.Visible = false;
             // 
-            // comboBox2
+            // comboBox
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(315, 28);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(141, 21);
-            this.comboBox2.TabIndex = 1;
+            this.comboBox.FormattingEnabled = true;
+            this.comboBox.Location = new System.Drawing.Point(324, 114);
+            this.comboBox.Name = "comboBox";
+            this.comboBox.Size = new System.Drawing.Size(141, 21);
+            this.comboBox.TabIndex = 6;
+            this.comboBox.SelectedIndexChanged += new System.EventHandler(this.azioneComboBox);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(179, 31);
+            this.label3.Location = new System.Drawing.Point(188, 117);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(117, 13);
-            this.label3.TabIndex = 0;
+            this.label3.TabIndex = 5;
             this.label3.Text = "SELEZIONA TABELLA";
             // 
             // Principale
@@ -133,6 +122,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(638, 450);
+            this.Controls.Add(this.comboBox);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.panelLeggi);
             this.Controls.Add(this.scrivi);
             this.Controls.Add(this.leggi);
@@ -142,9 +133,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.panelLeggi.ResumeLayout(false);
-            this.panelLeggi.PerformLayout();
-            this.panelScrivi.ResumeLayout(false);
-            this.panelScrivi.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -156,10 +145,9 @@
         private System.Windows.Forms.Button leggi;
         private System.Windows.Forms.Button scrivi;
         private System.Windows.Forms.Panel panelLeggi;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panelScrivi;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.ComboBox comboBox;
         private System.Windows.Forms.Label label3;
     }
 }

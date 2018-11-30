@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace Programma
 {
@@ -18,10 +19,18 @@ namespace Programma
         //SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'esami ecdl'
         //Query per ottenere il nome delle colonne di un database
 
+        List<string[]> dati;
 
         public Principale()
         {
             InitializeComponent();
+            dati = new List<string[]>();
+            query(new MySqlCommand("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '" + Program.database + "'",
+                               Program.connection).ExecuteReader());
+            foreach (string[] item in dati)
+                comboBox.Items.Add(item[0]);
+            comboBox.Text = comboBox.Items[0].ToString();
+            azioneComboBox(null, null);
         }
 
         private void leggi_Click(object sender, EventArgs e)
@@ -42,7 +51,34 @@ namespace Programma
 
         private void azioneComboBox(object sender, EventArgs e)
         {
+            if (leggi.BackColor == Color.Lime)
+                leggiDatabase();
+        }
 
+        void query(MySqlDataReader reader)
+        {
+            this.dati.Clear();
+            while (reader.Read())
+            {
+                string[] dati = new string[reader.FieldCount];
+                for (int i = 0; i < dati.Length; i++)
+                    dati[i] = reader.GetValue(i).ToString();
+                this.dati.Add(dati);
+            }
+            reader.Close();
+        }
+
+        void leggiDatabase()
+        {
+            dataGridView1.Columns.Clear();
+            dataGridView1.Rows.Clear();
+            query(new MySqlCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '" + Program.database + "' AND TABLE_NAME = '" + comboBox.Text + "'",
+                                   Program.connection).ExecuteReader());
+            foreach (string[] item in dati)
+            {
+                dataGridView1.Columns.Add(item[0], item[0]);
+                dataGridView1.Columns[dataGridView1.Columns.Count - 1].ReadOnly = true;
+            }
         }
     }
 }
