@@ -9,3 +9,8 @@ F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.cspro
 F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.csproj.CoreCompileInputs.cache
 F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.exe
 F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.pdb
+F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\bin\Debug\Google.Protobuf.dll
+F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\bin\Debug\MySql.Data.dll
+F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\bin\Debug\Google.Protobuf.xml
+F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\bin\Debug\MySql.Data.xml
+F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.csproj.CopyComplete
