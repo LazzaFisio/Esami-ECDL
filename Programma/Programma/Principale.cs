@@ -79,6 +79,13 @@ namespace Programma
                 dataGridView1.Columns.Add(item[0], item[0]);
                 dataGridView1.Columns[dataGridView1.Columns.Count - 1].ReadOnly = true;
             }
+            query(new MySqlCommand("SELECT * FROM " + comboBox.Text, Program.connection).ExecuteReader());
+            foreach(string[] item in dati)
+            {
+                dataGridView1.Rows.Add(item[0]);
+                for (int i = 1; i < item.Length; i++)
+                    dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[i].Value = item[i];
+            }
         }
     }
 }
