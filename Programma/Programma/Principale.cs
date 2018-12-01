@@ -58,6 +58,16 @@ namespace Programma
                 leggiDatabase();
         }
 
+        private void elimina(object sender, DataGridViewCellEventArgs e)
+        {
+            MessageBox.Show("Desideri elimare questo campo");
+        }
+
+        private void scelta(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
         void query(MySqlDataReader reader)
         {
             this.dati.Clear();
@@ -89,11 +99,6 @@ namespace Programma
                 for (int i = 1; i < item.Length; i++)
                     grigliaLeggi.Rows[grigliaLeggi.Rows.Count - 1].Cells[i].Value = item[i];
             }
-        }
-
-        private void elimina(object sender, DataGridViewCellEventArgs e)
-        {
-            MessageBox.Show("Desideri elimare questo campo");
         }
     }
 }
