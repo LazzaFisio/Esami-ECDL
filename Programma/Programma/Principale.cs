@@ -73,22 +73,27 @@ namespace Programma
 
         void leggiDatabase()
         {
-            dataGridView1.Columns.Clear();
-            dataGridView1.Rows.Clear();
+            grigliaLeggi.Columns.Clear();
+            grigliaLeggi.Rows.Clear();
             query(new MySqlCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '" + Program.database + "' AND TABLE_NAME = '" + comboBox.Text + "'",
                                    Program.connection).ExecuteReader());
             foreach (string[] item in dati)
             {
-                dataGridView1.Columns.Add(item[0], item[0]);
-                dataGridView1.Columns[dataGridView1.Columns.Count - 1].ReadOnly = true;
+                grigliaLeggi.Columns.Add(item[0], item[0]);
+                grigliaLeggi.Columns[grigliaLeggi.Columns.Count - 1].ReadOnly = true;
             }
             query(new MySqlCommand("SELECT * FROM " + comboBox.Text, Program.connection).ExecuteReader());
             foreach(string[] item in dati)
             {
-                dataGridView1.Rows.Add(item[0]);
+                grigliaLeggi.Rows.Add(item[0]);
                 for (int i = 1; i < item.Length; i++)
-                    dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[i].Value = item[i];
+                    grigliaLeggi.Rows[grigliaLeggi.Rows.Count - 1].Cells[i].Value = item[i];
             }
+        }
+
+        private void elimina(object sender, DataGridViewCellEventArgs e)
+        {
+            MessageBox.Show("Desideri elimare questo campo");
         }
     }
 }
