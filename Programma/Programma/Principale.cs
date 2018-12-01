@@ -13,10 +13,10 @@ namespace Programma
 {
     public partial class Principale : Form
     {
-        //SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'esami ecdl'
+        //SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'nome del database'
         //Query per prendere il nome delle tabelle di un database
 
-        //SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'esami ecdl'
+        //SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'nome del database'
         //Query per ottenere il nome delle colonne di un database
 
         List<string[]> dati;
@@ -29,8 +29,11 @@ namespace Programma
                                Program.connection).ExecuteReader());
             foreach (string[] item in dati)
                 comboBox.Items.Add(item[0]);
-            comboBox.Text = comboBox.Items[0].ToString();
-            azioneComboBox(null, null);
+            if(dati.Count > 0)
+            {
+                comboBox.Text = comboBox.Items[0].ToString();
+                azioneComboBox(null, null);
+            }
         }
 
         private void leggi_Click(object sender, EventArgs e)

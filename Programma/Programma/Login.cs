@@ -25,9 +25,10 @@ namespace Programma
                 Program.database = "Server=" + server.Text + ";Database=" + database.Text + ";Uid=" + user.Text + ";Psw=" + password.Text + ";";
                 Program.connection = new MySqlConnection(Program.database);
                 Program.connection.Open();
+                Program.database = database.Text;
                 Hide();
                 new Principale().ShowDialog();
-                Close();
+                Show();
             }
             catch { MessageBox.Show("Errore nel tentativo di creazione di una connessione", "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
         }

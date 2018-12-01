@@ -124,11 +124,11 @@
             this.ClientSize = new System.Drawing.Size(638, 450);
             this.Controls.Add(this.comboBox);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.panelLeggi);
             this.Controls.Add(this.scrivi);
             this.Controls.Add(this.leggi);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panelScrivi);
+            this.Controls.Add(this.panelLeggi);
             this.Name = "Principale";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";

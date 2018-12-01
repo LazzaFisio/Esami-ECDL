@@ -115,6 +115,7 @@
             this.database.Name = "database";
             this.database.Size = new System.Drawing.Size(184, 20);
             this.database.TabIndex = 8;
+            this.database.Text = "esami ecdl";
             // 
             // user
             // 
