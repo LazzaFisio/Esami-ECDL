@@ -34,6 +34,7 @@
             this.panelLeggi = new System.Windows.Forms.Panel();
             this.grigliaLeggi = new System.Windows.Forms.DataGridView();
             this.panelScrivi = new System.Windows.Forms.Panel();
+            this.nome = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.grigliaScrivi = new System.Windows.Forms.DataGridView();
             this.nomeCampo = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -41,7 +42,8 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.comboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.nome = new System.Windows.Forms.Label();
+            this.materialFlatButton1 = new MaterialSkin.Controls.MaterialFlatButton();
+            this.materialFlatButton2 = new MaterialSkin.Controls.MaterialFlatButton();
             this.panelLeggi.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grigliaLeggi)).BeginInit();
             this.panelScrivi.SuspendLayout();
@@ -62,7 +64,7 @@
             // 
             this.leggi.BackColor = System.Drawing.Color.Lime;
             this.leggi.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.leggi.Location = new System.Drawing.Point(191, 69);
+            this.leggi.Location = new System.Drawing.Point(191, 73);
             this.leggi.Name = "leggi";
             this.leggi.Size = new System.Drawing.Size(83, 29);
             this.leggi.TabIndex = 1;
@@ -74,7 +76,7 @@
             // 
             this.scrivi.BackColor = System.Drawing.Color.Honeydew;
             this.scrivi.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.scrivi.Location = new System.Drawing.Point(382, 69);
+            this.scrivi.Location = new System.Drawing.Point(421, 73);
             this.scrivi.Name = "scrivi";
             this.scrivi.Size = new System.Drawing.Size(83, 29);
             this.scrivi.TabIndex = 2;
@@ -111,6 +113,15 @@
             this.panelScrivi.Size = new System.Drawing.Size(642, 309);
             this.panelScrivi.TabIndex = 4;
             this.panelScrivi.Visible = false;
+            // 
+            // nome
+            // 
+            this.nome.AutoSize = true;
+            this.nome.Location = new System.Drawing.Point(188, 36);
+            this.nome.Name = "nome";
+            this.nome.Size = new System.Drawing.Size(117, 13);
+            this.nome.TabIndex = 12;
+            this.nome.Text = "SELEZIONA TABELLA";
             // 
             // button1
             // 
@@ -172,20 +183,48 @@
             this.label3.TabIndex = 5;
             this.label3.Text = "SELEZIONA TABELLA";
             // 
-            // nome
+            // materialFlatButton1
             // 
-            this.nome.AutoSize = true;
-            this.nome.Location = new System.Drawing.Point(188, 36);
-            this.nome.Name = "nome";
-            this.nome.Size = new System.Drawing.Size(117, 13);
-            this.nome.TabIndex = 12;
-            this.nome.Text = "SELEZIONA TABELLA";
+            this.materialFlatButton1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialFlatButton1.Depth = 0;
+            this.materialFlatButton1.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.materialFlatButton1.FlatAppearance.BorderSize = 2;
+            this.materialFlatButton1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.materialFlatButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.materialFlatButton1.Location = new System.Drawing.Point(0, 64);
+            this.materialFlatButton1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialFlatButton1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialFlatButton1.Name = "materialFlatButton1";
+            this.materialFlatButton1.Primary = false;
+            this.materialFlatButton1.Size = new System.Drawing.Size(80, 25);
+            this.materialFlatButton1.TabIndex = 7;
+            this.materialFlatButton1.Text = "Leggi";
+            this.materialFlatButton1.UseVisualStyleBackColor = true;
+            this.materialFlatButton1.Click += new System.EventHandler(this.leggi_Click);
+            // 
+            // materialFlatButton2
+            // 
+            this.materialFlatButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialFlatButton2.Depth = 0;
+            this.materialFlatButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.materialFlatButton2.Location = new System.Drawing.Point(82, 64);
+            this.materialFlatButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialFlatButton2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialFlatButton2.Name = "materialFlatButton2";
+            this.materialFlatButton2.Primary = false;
+            this.materialFlatButton2.Size = new System.Drawing.Size(80, 25);
+            this.materialFlatButton2.TabIndex = 8;
+            this.materialFlatButton2.Text = "Scrivi";
+            this.materialFlatButton2.UseVisualStyleBackColor = true;
+            this.materialFlatButton2.Click += new System.EventHandler(this.scrivi_Click);
             // 
             // Principale
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(638, 450);
+            this.Controls.Add(this.materialFlatButton2);
+            this.Controls.Add(this.materialFlatButton1);
             this.Controls.Add(this.panelScrivi);
             this.Controls.Add(this.comboBox);
             this.Controls.Add(this.label3);
@@ -195,7 +234,7 @@
             this.Controls.Add(this.panelLeggi);
             this.Name = "Principale";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Gestionale";
             this.panelLeggi.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grigliaLeggi)).EndInit();
             this.panelScrivi.ResumeLayout(false);
@@ -222,6 +261,8 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label nome;
+        private MaterialSkin.Controls.MaterialFlatButton materialFlatButton1;
+        private MaterialSkin.Controls.MaterialFlatButton materialFlatButton2;
     }
 }
 
