@@ -28,72 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.connetti = new System.Windows.Forms.Button();
-            this.server = new System.Windows.Forms.TextBox();
-            this.database = new System.Windows.Forms.TextBox();
-            this.user = new System.Windows.Forms.TextBox();
-            this.password = new System.Windows.Forms.TextBox();
+            this.server = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.database = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.user = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.password = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(127, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(279, 24);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "CONNETTITI AL DATABASE";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(102, 63);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(80, 18);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "SERVER:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(84, 104);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(98, 18);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "DATABASE:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(71, 145);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(111, 18);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "USER NAME:";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(73, 182);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(109, 18);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "PASSWORD:";
             // 
             // connetti
             // 
             this.connetti.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.connetti.Location = new System.Drawing.Point(188, 227);
+            this.connetti.Location = new System.Drawing.Point(179, 252);
             this.connetti.Name = "connetti";
             this.connetti.Size = new System.Drawing.Size(105, 32);
             this.connetti.TabIndex = 6;
@@ -103,50 +52,134 @@
             // 
             // server
             // 
-            this.server.Location = new System.Drawing.Point(222, 60);
+            this.server.Depth = 0;
+            this.server.Hint = "";
+            this.server.Location = new System.Drawing.Point(200, 83);
+            this.server.MouseState = MaterialSkin.MouseState.HOVER;
             this.server.Name = "server";
-            this.server.Size = new System.Drawing.Size(184, 20);
+            this.server.PasswordChar = '\0';
+            this.server.SelectedText = "";
+            this.server.SelectionLength = 0;
+            this.server.SelectionStart = 0;
+            this.server.Size = new System.Drawing.Size(201, 23);
             this.server.TabIndex = 7;
             this.server.Text = "127.0.0.1";
+            this.server.UseSystemPasswordChar = false;
             // 
             // database
             // 
-            this.database.Location = new System.Drawing.Point(222, 102);
+            this.database.Depth = 0;
+            this.database.Hint = "";
+            this.database.Location = new System.Drawing.Point(200, 124);
+            this.database.MouseState = MaterialSkin.MouseState.HOVER;
             this.database.Name = "database";
-            this.database.Size = new System.Drawing.Size(184, 20);
+            this.database.PasswordChar = '\0';
+            this.database.SelectedText = "";
+            this.database.SelectionLength = 0;
+            this.database.SelectionStart = 0;
+            this.database.Size = new System.Drawing.Size(201, 23);
             this.database.TabIndex = 8;
             this.database.Text = "esami ecdl";
+            this.database.UseSystemPasswordChar = false;
             // 
             // user
             // 
-            this.user.Location = new System.Drawing.Point(222, 143);
+            this.user.Depth = 0;
+            this.user.Hint = "";
+            this.user.Location = new System.Drawing.Point(200, 165);
+            this.user.MouseState = MaterialSkin.MouseState.HOVER;
             this.user.Name = "user";
-            this.user.Size = new System.Drawing.Size(184, 20);
+            this.user.PasswordChar = '\0';
+            this.user.SelectedText = "";
+            this.user.SelectionLength = 0;
+            this.user.SelectionStart = 0;
+            this.user.Size = new System.Drawing.Size(201, 23);
             this.user.TabIndex = 9;
             this.user.Text = "root";
+            this.user.UseSystemPasswordChar = false;
             // 
             // password
             // 
-            this.password.Location = new System.Drawing.Point(222, 180);
+            this.password.Depth = 0;
+            this.password.Hint = "";
+            this.password.Location = new System.Drawing.Point(200, 205);
+            this.password.MouseState = MaterialSkin.MouseState.HOVER;
             this.password.Name = "password";
-            this.password.Size = new System.Drawing.Size(184, 20);
+            this.password.PasswordChar = '\0';
+            this.password.SelectedText = "";
+            this.password.SelectionLength = 0;
+            this.password.SelectionStart = 0;
+            this.password.Size = new System.Drawing.Size(201, 23);
             this.password.TabIndex = 10;
+            this.password.UseSystemPasswordChar = false;
+            // 
+            // materialLabel1
+            // 
+            this.materialLabel1.AutoSize = true;
+            this.materialLabel1.Depth = 0;
+            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel1.Location = new System.Drawing.Point(55, 87);
+            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel1.Name = "materialLabel1";
+            this.materialLabel1.Size = new System.Drawing.Size(68, 19);
+            this.materialLabel1.TabIndex = 11;
+            this.materialLabel1.Text = "SERVER:";
+            // 
+            // materialLabel2
+            // 
+            this.materialLabel2.AutoSize = true;
+            this.materialLabel2.Depth = 0;
+            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel2.Location = new System.Drawing.Point(55, 128);
+            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel2.Name = "materialLabel2";
+            this.materialLabel2.Size = new System.Drawing.Size(89, 19);
+            this.materialLabel2.TabIndex = 12;
+            this.materialLabel2.Text = "DATABASE:";
+            // 
+            // materialLabel3
+            // 
+            this.materialLabel3.AutoSize = true;
+            this.materialLabel3.Depth = 0;
+            this.materialLabel3.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel3.Location = new System.Drawing.Point(55, 169);
+            this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel3.Name = "materialLabel3";
+            this.materialLabel3.Size = new System.Drawing.Size(97, 19);
+            this.materialLabel3.TabIndex = 13;
+            this.materialLabel3.Text = "USER NAME:";
+            // 
+            // materialLabel4
+            // 
+            this.materialLabel4.AutoSize = true;
+            this.materialLabel4.Depth = 0;
+            this.materialLabel4.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel4.Location = new System.Drawing.Point(55, 209);
+            this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel4.Name = "materialLabel4";
+            this.materialLabel4.Size = new System.Drawing.Size(92, 19);
+            this.materialLabel4.TabIndex = 14;
+            this.materialLabel4.Text = "PASSWORD:";
             // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(480, 282);
+            this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.ClientSize = new System.Drawing.Size(480, 300);
+            this.Controls.Add(this.materialLabel4);
+            this.Controls.Add(this.materialLabel3);
+            this.Controls.Add(this.materialLabel2);
+            this.Controls.Add(this.materialLabel1);
             this.Controls.Add(this.password);
             this.Controls.Add(this.user);
             this.Controls.Add(this.database);
             this.Controls.Add(this.server);
             this.Controls.Add(this.connetti);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
             this.Name = "Login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
@@ -156,16 +189,14 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button connetti;
-        private System.Windows.Forms.TextBox server;
-        private System.Windows.Forms.TextBox database;
-        private System.Windows.Forms.TextBox user;
-        private System.Windows.Forms.TextBox password;
+        private MaterialSkin.Controls.MaterialSingleLineTextField server;
+        private MaterialSkin.Controls.MaterialSingleLineTextField database;
+        private MaterialSkin.Controls.MaterialSingleLineTextField user;
+        private MaterialSkin.Controls.MaterialSingleLineTextField password;
+        private MaterialSkin.Controls.MaterialLabel materialLabel1;
+        private MaterialSkin.Controls.MaterialLabel materialLabel2;
+        private MaterialSkin.Controls.MaterialLabel materialLabel3;
+        private MaterialSkin.Controls.MaterialLabel materialLabel4;
     }
 }

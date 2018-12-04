@@ -28,7 +28,7 @@ namespace Programma
         {
             InitializeComponent();
             dati = new List<string[]>();
-            /*query(new MySqlCommand("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '" + Program.database + "'",
+            query(new MySqlCommand("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '" + Program.database + "'",
                                Program.connection).ExecuteReader());
             foreach (string[] item in dati)
                 comboBox.Items.Add(item[0]);
@@ -36,12 +36,13 @@ namespace Programma
             {
                 comboBox.Text = comboBox.Items[0].ToString();
                 azioneComboBox(null, null);
-            }*/
+            }
+            leggiDatabase();
         }
 
         private void azioneComboBox(object sender, EventArgs e)
         {
-
+            leggiDatabase();
         }
 
         private void elimina(object sender, DataGridViewCellEventArgs e)
@@ -69,22 +70,22 @@ namespace Programma
 
         void leggiDatabase()
         {
-            /*grigliaLeggi.Columns.Clear();
-            grigliaLeggi.Rows.Clear();
+            grigliaValori.Columns.Clear();
+            grigliaValori.Rows.Clear();
             query(new MySqlCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '" + Program.database + "' AND TABLE_NAME = '" + comboBox.Text + "'",
                                    Program.connection).ExecuteReader());
             foreach (string[] item in dati)
             {
-                grigliaLeggi.Columns.Add(item[0], item[0]);
-                grigliaLeggi.Columns[grigliaLeggi.Columns.Count - 1].ReadOnly = true;
+                grigliaValori.Columns.Add(item[0], item[0]);
+                grigliaValori.Columns[grigliaValori.Columns.Count - 1].ReadOnly = true;
             }
             query(new MySqlCommand("SELECT * FROM " + comboBox.Text, Program.connection).ExecuteReader());
             foreach(string[] item in dati)
             {
-                grigliaLeggi.Rows.Add(item[0]);
+                grigliaValori.Rows.Add(item[0]);
                 for (int i = 1; i < item.Length; i++)
-                    grigliaLeggi.Rows[grigliaLeggi.Rows.Count - 1].Cells[i].Value = item[i];
-            }*/
+                    grigliaValori.Rows[grigliaValori.Rows.Count - 1].Cells[i].Value = item[i];
+            }
         }
     }
 }

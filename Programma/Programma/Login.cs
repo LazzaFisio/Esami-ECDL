@@ -8,10 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using MaterialSkin.Animations;
+using MaterialSkin.Controls;
 
 namespace Programma
 {
-    public partial class Login : Form
+    public partial class Login : MaterialForm
     {
         public Login()
         {
