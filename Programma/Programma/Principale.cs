@@ -47,10 +47,20 @@ namespace Programma
 
         private void elimina(object sender, DataGridViewCellEventArgs e)
         {
-            MessageBox.Show("Desideri elimare questo campo");
+            elimina();
         }
 
-        private void scelta(object sender, DataGridViewCellEventArgs e)
+        private void delete_Click(object sender, EventArgs e)
+        {
+            elimina();
+        }
+
+        private void modica_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void aggiungi_Click(object sender, EventArgs e)
         {
 
         }
@@ -86,6 +96,11 @@ namespace Programma
                 for (int i = 1; i < item.Length; i++)
                     grigliaValori.Rows[grigliaValori.Rows.Count - 1].Cells[i].Value = item[i];
             }
+        }
+
+        void elimina()
+        {
+            MessageBox.Show("Desideri elimare questo campo");
         }
     }
 }
