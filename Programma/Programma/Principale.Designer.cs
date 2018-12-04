@@ -28,136 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.leggi = new System.Windows.Forms.Button();
-            this.scrivi = new System.Windows.Forms.Button();
-            this.panelLeggi = new System.Windows.Forms.Panel();
-            this.grigliaLeggi = new System.Windows.Forms.DataGridView();
-            this.panelScrivi = new System.Windows.Forms.Panel();
-            this.nome = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.grigliaScrivi = new System.Windows.Forms.DataGridView();
-            this.nomeCampo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.daInserire = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.comboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.materialFlatButton1 = new MaterialSkin.Controls.MaterialFlatButton();
-            this.materialFlatButton2 = new MaterialSkin.Controls.MaterialFlatButton();
-            this.panelLeggi.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grigliaLeggi)).BeginInit();
-            this.panelScrivi.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grigliaScrivi)).BeginInit();
+            this.materialTabControl1 = new MaterialSkin.Controls.MaterialTabControl();
+            this.Defaut = new System.Windows.Forms.TabPage();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
+            this.materialTabControl1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // leggi
-            // 
-            this.leggi.BackColor = System.Drawing.Color.Lime;
-            this.leggi.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.leggi.Location = new System.Drawing.Point(191, 73);
-            this.leggi.Name = "leggi";
-            this.leggi.Size = new System.Drawing.Size(83, 29);
-            this.leggi.TabIndex = 1;
-            this.leggi.Text = "Leggi";
-            this.leggi.UseVisualStyleBackColor = false;
-            this.leggi.Click += new System.EventHandler(this.leggi_Click);
-            // 
-            // scrivi
-            // 
-            this.scrivi.BackColor = System.Drawing.Color.Honeydew;
-            this.scrivi.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.scrivi.Location = new System.Drawing.Point(421, 73);
-            this.scrivi.Name = "scrivi";
-            this.scrivi.Size = new System.Drawing.Size(83, 29);
-            this.scrivi.TabIndex = 2;
-            this.scrivi.Text = "Scrivi";
-            this.scrivi.UseVisualStyleBackColor = false;
-            this.scrivi.Click += new System.EventHandler(this.scrivi_Click);
-            // 
-            // panelLeggi
-            // 
-            this.panelLeggi.Controls.Add(this.grigliaLeggi);
-            this.panelLeggi.Location = new System.Drawing.Point(0, 159);
-            this.panelLeggi.Name = "panelLeggi";
-            this.panelLeggi.Size = new System.Drawing.Size(639, 293);
-            this.panelLeggi.TabIndex = 3;
-            // 
-            // grigliaLeggi
-            // 
-            this.grigliaLeggi.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.grigliaLeggi.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grigliaLeggi.Location = new System.Drawing.Point(12, 16);
-            this.grigliaLeggi.Name = "grigliaLeggi";
-            this.grigliaLeggi.Size = new System.Drawing.Size(614, 263);
-            this.grigliaLeggi.TabIndex = 2;
-            this.grigliaLeggi.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.elimina);
-            // 
-            // panelScrivi
-            // 
-            this.panelScrivi.Controls.Add(this.nome);
-            this.panelScrivi.Controls.Add(this.button1);
-            this.panelScrivi.Controls.Add(this.grigliaScrivi);
-            this.panelScrivi.Controls.Add(this.textBox1);
-            this.panelScrivi.Location = new System.Drawing.Point(0, 143);
-            this.panelScrivi.Name = "panelScrivi";
-            this.panelScrivi.Size = new System.Drawing.Size(642, 309);
-            this.panelScrivi.TabIndex = 4;
-            this.panelScrivi.Visible = false;
-            // 
-            // nome
-            // 
-            this.nome.AutoSize = true;
-            this.nome.Location = new System.Drawing.Point(188, 36);
-            this.nome.Name = "nome";
-            this.nome.Size = new System.Drawing.Size(117, 13);
-            this.nome.TabIndex = 12;
-            this.nome.Text = "SELEZIONA TABELLA";
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(253, 271);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(134, 28);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "CONFERMA";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // grigliaScrivi
-            // 
-            this.grigliaScrivi.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.grigliaScrivi.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grigliaScrivi.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.nomeCampo,
-            this.daInserire});
-            this.grigliaScrivi.Location = new System.Drawing.Point(12, 72);
-            this.grigliaScrivi.Name = "grigliaScrivi";
-            this.grigliaScrivi.Size = new System.Drawing.Size(614, 193);
-            this.grigliaScrivi.TabIndex = 8;
-            this.grigliaScrivi.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.scelta);
-            // 
-            // nomeCampo
-            // 
-            this.nomeCampo.HeaderText = "Nome campo";
-            this.nomeCampo.Name = "nomeCampo";
-            this.nomeCampo.ReadOnly = true;
-            // 
-            // daInserire
-            // 
-            this.daInserire.HeaderText = "dato da inserire";
-            this.daInserire.Name = "daInserire";
-            this.daInserire.ReadOnly = true;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(324, 29);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(162, 20);
-            this.textBox1.TabIndex = 10;
             // 
             // comboBox
             // 
             this.comboBox.FormattingEnabled = true;
-            this.comboBox.Location = new System.Drawing.Point(324, 114);
+            this.comboBox.Location = new System.Drawing.Point(286, 117);
             this.comboBox.Name = "comboBox";
             this.comboBox.Size = new System.Drawing.Size(141, 21);
             this.comboBox.TabIndex = 6;
@@ -166,91 +49,78 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(188, 117);
+            this.label3.Location = new System.Drawing.Point(150, 120);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(117, 13);
             this.label3.TabIndex = 5;
             this.label3.Text = "SELEZIONA TABELLA";
             // 
-            // materialFlatButton1
+            // materialTabControl1
             // 
-            this.materialFlatButton1.AutoSize = true;
-            this.materialFlatButton1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialFlatButton1.Depth = 0;
-            this.materialFlatButton1.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.materialFlatButton1.FlatAppearance.BorderSize = 2;
-            this.materialFlatButton1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.materialFlatButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.materialFlatButton1.Location = new System.Drawing.Point(0, 64);
-            this.materialFlatButton1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.materialFlatButton1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialFlatButton1.Name = "materialFlatButton1";
-            this.materialFlatButton1.Primary = false;
-            this.materialFlatButton1.Size = new System.Drawing.Size(50, 36);
-            this.materialFlatButton1.TabIndex = 7;
-            this.materialFlatButton1.Text = "Leggi";
-            this.materialFlatButton1.UseVisualStyleBackColor = true;
-            this.materialFlatButton1.Click += new System.EventHandler(this.leggi_Click);
+            this.materialTabControl1.Controls.Add(this.Defaut);
+            this.materialTabControl1.Controls.Add(this.tabPage3);
+            this.materialTabControl1.Depth = 0;
+            this.materialTabControl1.Location = new System.Drawing.Point(-1, 144);
+            this.materialTabControl1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialTabControl1.Name = "materialTabControl1";
+            this.materialTabControl1.SelectedIndex = 0;
+            this.materialTabControl1.Size = new System.Drawing.Size(639, 307);
+            this.materialTabControl1.TabIndex = 7;
             // 
-            // materialFlatButton2
+            // Defaut
             // 
-            this.materialFlatButton2.AutoSize = true;
-            this.materialFlatButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialFlatButton2.Depth = 0;
-            this.materialFlatButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.materialFlatButton2.Location = new System.Drawing.Point(82, 64);
-            this.materialFlatButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.materialFlatButton2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialFlatButton2.Name = "materialFlatButton2";
-            this.materialFlatButton2.Primary = false;
-            this.materialFlatButton2.Size = new System.Drawing.Size(54, 36);
-            this.materialFlatButton2.TabIndex = 8;
-            this.materialFlatButton2.Text = "Scrivi";
-            this.materialFlatButton2.UseVisualStyleBackColor = true;
-            this.materialFlatButton2.Click += new System.EventHandler(this.scrivi_Click);
+            this.Defaut.Location = new System.Drawing.Point(4, 22);
+            this.Defaut.Name = "Defaut";
+            this.Defaut.Size = new System.Drawing.Size(631, 281);
+            this.Defaut.TabIndex = 0;
+            this.Defaut.Text = "Default";
+            this.Defaut.UseVisualStyleBackColor = true;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(631, 269);
+            this.tabPage3.TabIndex = 1;
+            this.tabPage3.Text = "Fai query";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // materialTabSelector1
+            // 
+            this.materialTabSelector1.BaseTabControl = this.materialTabControl1;
+            this.materialTabSelector1.Depth = 0;
+            this.materialTabSelector1.Location = new System.Drawing.Point(-1, 61);
+            this.materialTabSelector1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialTabSelector1.Name = "materialTabSelector1";
+            this.materialTabSelector1.Size = new System.Drawing.Size(639, 26);
+            this.materialTabSelector1.TabIndex = 8;
+            this.materialTabSelector1.Text = "materialTabSelector1";
             // 
             // Principale
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(638, 450);
-            this.Controls.Add(this.materialFlatButton2);
-            this.Controls.Add(this.materialFlatButton1);
-            this.Controls.Add(this.panelScrivi);
+            this.Controls.Add(this.materialTabSelector1);
+            this.Controls.Add(this.materialTabControl1);
             this.Controls.Add(this.comboBox);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.scrivi);
-            this.Controls.Add(this.leggi);
-            this.Controls.Add(this.panelLeggi);
             this.Name = "Principale";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Gestionale";
-            this.panelLeggi.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.grigliaLeggi)).EndInit();
-            this.panelScrivi.ResumeLayout(false);
-            this.panelScrivi.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grigliaScrivi)).EndInit();
+            this.materialTabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Button leggi;
-        private System.Windows.Forms.Button scrivi;
-        private System.Windows.Forms.Panel panelLeggi;
-        private System.Windows.Forms.Panel panelScrivi;
-        private System.Windows.Forms.DataGridView grigliaLeggi;
         private System.Windows.Forms.ComboBox comboBox;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.DataGridView grigliaScrivi;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nomeCampo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn daInserire;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label nome;
-        private MaterialSkin.Controls.MaterialFlatButton materialFlatButton1;
-        private MaterialSkin.Controls.MaterialFlatButton materialFlatButton2;
+        private MaterialSkin.Controls.MaterialTabControl materialTabControl1;
+        private System.Windows.Forms.TabPage Defaut;
+        private System.Windows.Forms.TabPage tabPage3;
+        private MaterialSkin.Controls.MaterialTabSelector materialTabSelector1;
     }
 }
 
