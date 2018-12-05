@@ -36,6 +36,8 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Attributo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.valoreAssociato = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
+            this.lblValoreAttuale = new MaterialSkin.Controls.MaterialLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,12 +46,12 @@
             this.materialLabel1.AutoSize = true;
             this.materialLabel1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(12, 199);
+            this.materialLabel1.Location = new System.Drawing.Point(12, 219);
             this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(100, 18);
+            this.materialLabel1.Size = new System.Drawing.Size(102, 19);
             this.materialLabel1.TabIndex = 0;
             this.materialLabel1.Text = "Nuovo valore:";
             // 
@@ -57,7 +59,7 @@
             // 
             this.txtNuovoCampo.Depth = 0;
             this.txtNuovoCampo.Hint = "";
-            this.txtNuovoCampo.Location = new System.Drawing.Point(118, 199);
+            this.txtNuovoCampo.Location = new System.Drawing.Point(118, 219);
             this.txtNuovoCampo.MouseState = MaterialSkin.MouseState.HOVER;
             this.txtNuovoCampo.Name = "txtNuovoCampo";
             this.txtNuovoCampo.PasswordChar = '\0';
@@ -120,6 +122,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(294, 286);
             this.dataGridView1.TabIndex = 5;
+            this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
             // Attributo
             // 
@@ -133,11 +136,40 @@
             this.valoreAssociato.Name = "valoreAssociato";
             this.valoreAssociato.Width = 120;
             // 
+            // materialLabel3
+            // 
+            this.materialLabel3.AutoSize = true;
+            this.materialLabel3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.materialLabel3.Depth = 0;
+            this.materialLabel3.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel3.Location = new System.Drawing.Point(12, 185);
+            this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel3.Name = "materialLabel3";
+            this.materialLabel3.Size = new System.Drawing.Size(107, 19);
+            this.materialLabel3.TabIndex = 6;
+            this.materialLabel3.Text = "Valore attuale:";
+            // 
+            // lblValoreAttuale
+            // 
+            this.lblValoreAttuale.AutoSize = true;
+            this.lblValoreAttuale.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lblValoreAttuale.Depth = 0;
+            this.lblValoreAttuale.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.lblValoreAttuale.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblValoreAttuale.Location = new System.Drawing.Point(125, 185);
+            this.lblValoreAttuale.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblValoreAttuale.Name = "lblValoreAttuale";
+            this.lblValoreAttuale.Size = new System.Drawing.Size(0, 18);
+            this.lblValoreAttuale.TabIndex = 7;
+            // 
             // Modifiche
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(591, 371);
+            this.Controls.Add(this.lblValoreAttuale);
+            this.Controls.Add(this.materialLabel3);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.lblCampoSelezionato);
             this.Controls.Add(this.materialLabel2);
@@ -146,6 +178,7 @@
             this.Controls.Add(this.materialLabel1);
             this.Name = "Modifiche";
             this.Text = "Modifiche";
+            this.Load += new System.EventHandler(this.Modifiche_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -162,5 +195,7 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Attributo;
         private System.Windows.Forms.DataGridViewTextBoxColumn valoreAssociato;
+        private MaterialSkin.Controls.MaterialLabel materialLabel3;
+        private MaterialSkin.Controls.MaterialLabel lblValoreAttuale;
     }
 }
