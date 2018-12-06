@@ -36,9 +36,6 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Attributo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.valoreAssociato = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
-            this.lblValoreAttuale = new MaterialSkin.Controls.MaterialLabel();
-            this.btnConfModifica = new MaterialSkin.Controls.MaterialFlatButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,18 +46,18 @@
             this.materialLabel1.Depth = 0;
             this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(12, 205);
+            this.materialLabel1.Location = new System.Drawing.Point(12, 188);
             this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(102, 19);
+            this.materialLabel1.Size = new System.Drawing.Size(118, 19);
             this.materialLabel1.TabIndex = 0;
-            this.materialLabel1.Text = "Nuovo valore:";
+            this.materialLabel1.Text = "Valore attributo:";
             // 
             // txtNuovoCampo
             // 
             this.txtNuovoCampo.Depth = 0;
             this.txtNuovoCampo.Hint = "";
-            this.txtNuovoCampo.Location = new System.Drawing.Point(118, 205);
+            this.txtNuovoCampo.Location = new System.Drawing.Point(136, 188);
             this.txtNuovoCampo.MouseState = MaterialSkin.MouseState.HOVER;
             this.txtNuovoCampo.Name = "txtNuovoCampo";
             this.txtNuovoCampo.PasswordChar = '\0';
@@ -70,6 +67,7 @@
             this.txtNuovoCampo.Size = new System.Drawing.Size(125, 23);
             this.txtNuovoCampo.TabIndex = 1;
             this.txtNuovoCampo.UseSystemPasswordChar = false;
+            this.txtNuovoCampo.TextChanged += new System.EventHandler(this.txtNuovoCampo_TextChanged);
             // 
             // Conferma
             // 
@@ -137,57 +135,11 @@
             this.valoreAssociato.Name = "valoreAssociato";
             this.valoreAssociato.Width = 120;
             // 
-            // materialLabel3
-            // 
-            this.materialLabel3.AutoSize = true;
-            this.materialLabel3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.materialLabel3.Depth = 0;
-            this.materialLabel3.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel3.Location = new System.Drawing.Point(12, 171);
-            this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel3.Name = "materialLabel3";
-            this.materialLabel3.Size = new System.Drawing.Size(107, 19);
-            this.materialLabel3.TabIndex = 6;
-            this.materialLabel3.Text = "Valore attuale:";
-            // 
-            // lblValoreAttuale
-            // 
-            this.lblValoreAttuale.AutoSize = true;
-            this.lblValoreAttuale.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lblValoreAttuale.Depth = 0;
-            this.lblValoreAttuale.Font = new System.Drawing.Font("Roboto", 11F);
-            this.lblValoreAttuale.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblValoreAttuale.Location = new System.Drawing.Point(125, 171);
-            this.lblValoreAttuale.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblValoreAttuale.Name = "lblValoreAttuale";
-            this.lblValoreAttuale.Size = new System.Drawing.Size(0, 19);
-            this.lblValoreAttuale.TabIndex = 7;
-            // 
-            // btnConfModifica
-            // 
-            this.btnConfModifica.AutoSize = true;
-            this.btnConfModifica.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnConfModifica.Depth = 0;
-            this.btnConfModifica.Location = new System.Drawing.Point(60, 252);
-            this.btnConfModifica.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnConfModifica.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnConfModifica.Name = "btnConfModifica";
-            this.btnConfModifica.Primary = false;
-            this.btnConfModifica.Size = new System.Drawing.Size(152, 36);
-            this.btnConfModifica.TabIndex = 8;
-            this.btnConfModifica.Text = "Conferma Modifica";
-            this.btnConfModifica.UseVisualStyleBackColor = true;
-            this.btnConfModifica.Click += new System.EventHandler(this.btnConfModifica_Click);
-            // 
             // Modifiche
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(591, 371);
-            this.Controls.Add(this.btnConfModifica);
-            this.Controls.Add(this.lblValoreAttuale);
-            this.Controls.Add(this.materialLabel3);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.lblCampoSelezionato);
             this.Controls.Add(this.materialLabel2);
@@ -212,8 +164,5 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Attributo;
         private System.Windows.Forms.DataGridViewTextBoxColumn valoreAssociato;
-        private MaterialSkin.Controls.MaterialLabel materialLabel3;
-        private MaterialSkin.Controls.MaterialLabel lblValoreAttuale;
-        private MaterialSkin.Controls.MaterialFlatButton btnConfModifica;
     }
 }
