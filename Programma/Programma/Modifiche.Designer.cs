@@ -84,6 +84,7 @@
             this.Conferma.TabIndex = 2;
             this.Conferma.Text = "Conferma";
             this.Conferma.UseVisualStyleBackColor = false;
+            this.Conferma.Click += new System.EventHandler(this.Conferma_Click);
             // 
             // materialLabel2
             // 

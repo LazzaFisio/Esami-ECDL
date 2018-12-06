@@ -68,7 +68,7 @@ namespace Programma
             List<string> colonne = new List<string>();
             foreach (DataGridViewColumn item in grigliaValori.Columns)
                 colonne.Add(item.HeaderText);
-            new Modifiche(colonne).ShowDialog();
+            new Modifiche(colonne,comboBox.Text).ShowDialog();
         }
 
         void query(MySqlDataReader reader)
