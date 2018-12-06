@@ -32,7 +32,7 @@ namespace Programma
                 new Principale().ShowDialog();
                 Show();
             }
-            catch { MessageBox.Show("Errore nel tentativo di creazione di una connessione", "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+            catch { MessageBox.Show("Errore nel tentativo di creazione di una connessione", "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); Show(); }
         }
     }
 }

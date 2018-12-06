@@ -66,10 +66,11 @@ namespace Programma
             {
                 index = dataGridView1.SelectedRows[0].Index;
             }
-            if (index != int.MaxValue)
+            if (index != int.MaxValue && dataGridView1.SelectedRows.Count > 0)
             {
                 lblCampoSelezionato.Text = dataGridView1.SelectedRows[index].Cells[0].Value.ToString();
-                txtNuovoCampo.Text = dataGridView1.SelectedRows[index].Cells[1].Value.ToString();
+                try { txtNuovoCampo.Text = dataGridView1.SelectedRows[index].Cells[1].Value.ToString(); }
+                catch { txtNuovoCampo.Text = ""; }
             }
         }
 
