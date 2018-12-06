@@ -35,9 +35,9 @@
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.grigliaValori = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.aggiungi = new System.Windows.Forms.Button();
+            this.modica = new System.Windows.Forms.Button();
+            this.delete = new System.Windows.Forms.Button();
             this.materialTabControl1.SuspendLayout();
             this.Defaut.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grigliaValori)).BeginInit();
@@ -67,9 +67,9 @@
             // 
             // Defaut
             // 
-            this.Defaut.Controls.Add(this.button3);
-            this.Defaut.Controls.Add(this.button2);
-            this.Defaut.Controls.Add(this.button1);
+            this.Defaut.Controls.Add(this.delete);
+            this.Defaut.Controls.Add(this.modica);
+            this.Defaut.Controls.Add(this.aggiungi);
             this.Defaut.Controls.Add(this.grigliaValori);
             this.Defaut.Controls.Add(this.materialLabel1);
             this.Defaut.Controls.Add(this.comboBox);
@@ -122,32 +122,35 @@
             this.grigliaValori.Size = new System.Drawing.Size(614, 218);
             this.grigliaValori.TabIndex = 10;
             // 
-            // button1
+            // aggiungi
             // 
-            this.button1.Location = new System.Drawing.Point(48, 293);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(118, 30);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "Aggiungi";
-            this.button1.UseVisualStyleBackColor = true;
+            this.aggiungi.Location = new System.Drawing.Point(48, 293);
+            this.aggiungi.Name = "aggiungi";
+            this.aggiungi.Size = new System.Drawing.Size(118, 30);
+            this.aggiungi.TabIndex = 11;
+            this.aggiungi.Text = "Aggiungi";
+            this.aggiungi.UseVisualStyleBackColor = true;
+            this.aggiungi.Click += new System.EventHandler(this.aggiungi_Click);
             // 
-            // button2
+            // modica
             // 
-            this.button2.Location = new System.Drawing.Point(233, 293);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(118, 30);
-            this.button2.TabIndex = 12;
-            this.button2.Text = "Modifica";
-            this.button2.UseVisualStyleBackColor = true;
+            this.modica.Location = new System.Drawing.Point(233, 293);
+            this.modica.Name = "modica";
+            this.modica.Size = new System.Drawing.Size(118, 30);
+            this.modica.TabIndex = 12;
+            this.modica.Text = "Modifica";
+            this.modica.UseVisualStyleBackColor = true;
+            this.modica.Click += new System.EventHandler(this.modica_Click);
             // 
-            // button3
+            // delete
             // 
-            this.button3.Location = new System.Drawing.Point(415, 293);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(118, 30);
-            this.button3.TabIndex = 13;
-            this.button3.Text = "Elimina";
-            this.button3.UseVisualStyleBackColor = true;
+            this.delete.Location = new System.Drawing.Point(415, 293);
+            this.delete.Name = "delete";
+            this.delete.Size = new System.Drawing.Size(118, 30);
+            this.delete.TabIndex = 13;
+            this.delete.Text = "Elimina";
+            this.delete.UseVisualStyleBackColor = true;
+            this.delete.Click += new System.EventHandler(this.delete_Click);
             // 
             // Principale
             // 
@@ -175,9 +178,9 @@
         private System.Windows.Forms.TabPage tabPage3;
         private MaterialSkin.Controls.MaterialTabSelector materialTabSelector1;
         private MaterialSkin.Controls.MaterialLabel materialLabel1;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button delete;
+        private System.Windows.Forms.Button modica;
+        private System.Windows.Forms.Button aggiungi;
         private System.Windows.Forms.DataGridView grigliaValori;
     }
 }

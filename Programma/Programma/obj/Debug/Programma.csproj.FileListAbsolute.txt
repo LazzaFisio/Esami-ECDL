@@ -49,3 +49,5 @@ I:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.cspro
 I:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.exe
 I:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.pdb
 F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\bin\Debug\MaterialSkin.dll
+F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Modifiche.resources
+C:\Users\User\Desktop\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Modifiche.resources

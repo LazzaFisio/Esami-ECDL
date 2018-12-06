@@ -22,6 +22,9 @@ namespace Programma
         //SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'nome del database'
         //Query per ottenere il nome delle colonne di un database
 
+        //SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = 'tabella' AND TABLE_SCHEMA = 'database'
+        //Query per ottenere il nome delle chiavi primarie di una tabella
+
         List<string[]> dati;
 
         public Principale()
@@ -47,12 +50,25 @@ namespace Programma
 
         private void elimina(object sender, DataGridViewCellEventArgs e)
         {
-            MessageBox.Show("Desideri elimare questo campo");
+            elimina();
         }
 
-        private void scelta(object sender, DataGridViewCellEventArgs e)
+        private void delete_Click(object sender, EventArgs e)
+        {
+            elimina();
+        }
+
+        private void modica_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void aggiungi_Click(object sender, EventArgs e)
+        {
+            List<string> colonne = new List<string>();
+            foreach (DataGridViewColumn item in grigliaValori.Columns)
+                colonne.Add(item.HeaderText);
+            new Modifiche(colonne).ShowDialog();
         }
 
         void query(MySqlDataReader reader)
@@ -86,6 +102,19 @@ namespace Programma
                 for (int i = 1; i < item.Length; i++)
                     grigliaValori.Rows[grigliaValori.Rows.Count - 1].Cells[i].Value = item[i];
             }
+        }
+
+        void elimina()
+        {
+            DialogResult result = MessageBox.Show("Desideri elimare il campo selezionato", "ATTENZIONE", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+            if(result == DialogResult.Yes)
+                if(grigliaValori.SelectedCells.Count > 0 || grigliaValori.SelectedRows.Count > 0)
+                {
+                    query(new MySqlCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = '" + comboBox.Text + 
+                                           "' AND TABLE_SCHEMA = '" + Program.database + "'", 
+                    Program.connection).ExecuteReader());
+                    string condizione = "";
+                }
         }
     }
 }
