@@ -15,7 +15,8 @@ namespace Programma
 {
     public partial class Modifiche : MaterialForm
     {
-        int index = 0;
+        int index = int.MaxValue;
+        bool insert = false;
 
         /// <summary>
         /// Costruttore con passaggio della lista degli attributi della tabella
@@ -28,6 +29,7 @@ namespace Programma
             dataGridView1.RowCount = attributi.Count + 1;
             for (int i = 0; i < attributi.Count; i++)
                 dataGridView1.Rows[i].Cells[0].Value = attributi[i];
+            insert = true;
         }
 
         /// <summary>
@@ -45,6 +47,7 @@ namespace Programma
                 dataGridView1.Rows[i].Cells[0].Value = attributi[i];
                 dataGridView1.Rows[i].Cells[1].Value = campi[i];
             }
+            insert = false;
         }
 
         /// <summary>
@@ -63,30 +66,16 @@ namespace Programma
             {
                 index = dataGridView1.SelectedRows[0].Index;
             }
-            try
+            if (index != int.MaxValue)
             {
-                if (dataGridView1.SelectedRows.Count == 1)
-                    if (dataGridView1.SelectedRows[0].Index != dataGridView1.RowCount - 1)
-                    {
-                        lblCampoSelezionato.Text = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
-                        lblValoreAttuale.Text = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
-                    }
-            }
-            catch
-            {
-                if (dataGridView1.SelectedCells.Count == 1)
-                    if (dataGridView1.SelectedCells[0].RowIndex != dataGridView1.RowCount - 1)
-                    {
-                        index = dataGridView1.SelectedCells[0].RowIndex;
-                        lblCampoSelezionato.Text = dataGridView1.Rows[index].Cells[0].Value.ToString();
-                        lblValoreAttuale.Text = dataGridView1.Rows[index].Cells[1].Value.ToString();
-                    }
+                lblCampoSelezionato.Text = dataGridView1.SelectedRows[index].Cells[0].Value.ToString();
+                txtNuovoCampo.Text = dataGridView1.SelectedRows[index].Cells[1].Value.ToString();
             }
         }
 
-        private void btnConfModifica_Click(object sender, EventArgs e)
+        private void txtNuovoCampo_TextChanged(object sender, EventArgs e)
         {
-
+            dataGridView1.Rows[index].Cells[1].Value = txtNuovoCampo.Text;
         }
     }
 }
