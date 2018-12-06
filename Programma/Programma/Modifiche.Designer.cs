@@ -38,6 +38,7 @@
             this.valoreAssociato = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
             this.lblValoreAttuale = new MaterialSkin.Controls.MaterialLabel();
+            this.btnConfModifica = new MaterialSkin.Controls.MaterialFlatButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -48,7 +49,7 @@
             this.materialLabel1.Depth = 0;
             this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(12, 219);
+            this.materialLabel1.Location = new System.Drawing.Point(12, 205);
             this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel1.Name = "materialLabel1";
             this.materialLabel1.Size = new System.Drawing.Size(102, 19);
@@ -59,7 +60,7 @@
             // 
             this.txtNuovoCampo.Depth = 0;
             this.txtNuovoCampo.Hint = "";
-            this.txtNuovoCampo.Location = new System.Drawing.Point(118, 219);
+            this.txtNuovoCampo.Location = new System.Drawing.Point(118, 205);
             this.txtNuovoCampo.MouseState = MaterialSkin.MouseState.HOVER;
             this.txtNuovoCampo.Name = "txtNuovoCampo";
             this.txtNuovoCampo.PasswordChar = '\0';
@@ -76,7 +77,7 @@
             this.Conferma.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Conferma.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.Conferma.Depth = 0;
-            this.Conferma.Location = new System.Drawing.Point(91, 298);
+            this.Conferma.Location = new System.Drawing.Point(92, 310);
             this.Conferma.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.Conferma.MouseState = MaterialSkin.MouseState.HOVER;
             this.Conferma.Name = "Conferma";
@@ -93,7 +94,7 @@
             this.materialLabel2.Depth = 0;
             this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel2.Location = new System.Drawing.Point(12, 130);
+            this.materialLabel2.Location = new System.Drawing.Point(12, 115);
             this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel2.Name = "materialLabel2";
             this.materialLabel2.Size = new System.Drawing.Size(143, 19);
@@ -106,7 +107,7 @@
             this.lblCampoSelezionato.Depth = 0;
             this.lblCampoSelezionato.Font = new System.Drawing.Font("Roboto", 11F);
             this.lblCampoSelezionato.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblCampoSelezionato.Location = new System.Drawing.Point(161, 130);
+            this.lblCampoSelezionato.Location = new System.Drawing.Point(161, 115);
             this.lblCampoSelezionato.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblCampoSelezionato.Name = "lblCampoSelezionato";
             this.lblCampoSelezionato.Size = new System.Drawing.Size(0, 19);
@@ -143,7 +144,7 @@
             this.materialLabel3.Depth = 0;
             this.materialLabel3.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel3.Location = new System.Drawing.Point(12, 185);
+            this.materialLabel3.Location = new System.Drawing.Point(12, 171);
             this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel3.Name = "materialLabel3";
             this.materialLabel3.Size = new System.Drawing.Size(107, 19);
@@ -155,19 +156,36 @@
             this.lblValoreAttuale.AutoSize = true;
             this.lblValoreAttuale.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.lblValoreAttuale.Depth = 0;
-            this.lblValoreAttuale.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.lblValoreAttuale.Font = new System.Drawing.Font("Roboto", 11F);
             this.lblValoreAttuale.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblValoreAttuale.Location = new System.Drawing.Point(125, 185);
+            this.lblValoreAttuale.Location = new System.Drawing.Point(125, 171);
             this.lblValoreAttuale.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblValoreAttuale.Name = "lblValoreAttuale";
-            this.lblValoreAttuale.Size = new System.Drawing.Size(0, 18);
+            this.lblValoreAttuale.Size = new System.Drawing.Size(0, 19);
             this.lblValoreAttuale.TabIndex = 7;
+            // 
+            // btnConfModifica
+            // 
+            this.btnConfModifica.AutoSize = true;
+            this.btnConfModifica.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnConfModifica.Depth = 0;
+            this.btnConfModifica.Location = new System.Drawing.Point(60, 252);
+            this.btnConfModifica.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnConfModifica.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnConfModifica.Name = "btnConfModifica";
+            this.btnConfModifica.Primary = false;
+            this.btnConfModifica.Size = new System.Drawing.Size(152, 36);
+            this.btnConfModifica.TabIndex = 8;
+            this.btnConfModifica.Text = "Conferma Modifica";
+            this.btnConfModifica.UseVisualStyleBackColor = true;
+            this.btnConfModifica.Click += new System.EventHandler(this.btnConfModifica_Click);
             // 
             // Modifiche
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(591, 371);
+            this.Controls.Add(this.btnConfModifica);
             this.Controls.Add(this.lblValoreAttuale);
             this.Controls.Add(this.materialLabel3);
             this.Controls.Add(this.dataGridView1);
@@ -178,7 +196,6 @@
             this.Controls.Add(this.materialLabel1);
             this.Name = "Modifiche";
             this.Text = "Modifiche";
-            this.Load += new System.EventHandler(this.Modifiche_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -197,5 +214,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn valoreAssociato;
         private MaterialSkin.Controls.MaterialLabel materialLabel3;
         private MaterialSkin.Controls.MaterialLabel lblValoreAttuale;
+        private MaterialSkin.Controls.MaterialFlatButton btnConfModifica;
     }
 }
