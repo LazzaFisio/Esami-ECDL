@@ -116,6 +116,12 @@ namespace Programma
                 catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
             }
 
+<<<<<<< HEAD
+=======
+            try { new MySqlCommand(query, Program.connection).ExecuteNonQuery(); this.Close(); }
+            catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+        }   
+>>>>>>> Baricchio
         }
     }
 }
