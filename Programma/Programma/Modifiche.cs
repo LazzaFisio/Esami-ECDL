@@ -100,13 +100,14 @@ namespace Programma
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     query += dataGridView1.Rows[i].Cells[0].Value.ToString() + ", ";
                 query = query.Remove(query.Length - 2, 1);
-                query += ") VALUES ( ";
+                query += ") VALUES ( '";
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                    query += dataGridView1.Rows[i].Cells[1].Value.ToString() + ", ";
-                query = query.Remove(query.Length - 2, 1);
+                    query += dataGridView1.Rows[i].Cells[1].Value.ToString() + "', '";
+                query = query.Remove(query.Length - 4, 3);
                 query += ")";
 
-                new MySqlCommand(query, Program.connection).ExecuteNonQuery();
+                try{ new MySqlCommand(query, Program.connection).ExecuteNonQuery();}
+                catch (Exception err){ MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
             }
             else
             {

@@ -114,6 +114,19 @@ namespace Programma
                                            "' AND TABLE_SCHEMA = '" + Program.database + "'", 
                     Program.connection).ExecuteReader());
                     string condizione = "";
+                    int index = 0;
+                    if (grigliaValori.SelectedCells.Count == 1)
+                    {
+                        if (grigliaValori.SelectedCells[0].RowIndex != grigliaValori.RowCount - 1)
+                            index = grigliaValori.SelectedCells[0].RowIndex;
+                    }
+                    else if (grigliaValori.SelectedRows.Count == 1)
+                    {
+                        index = grigliaValori.SelectedRows[0].Index;
+                    }
+                    for (int i = 0; i < dati.Count; i++)
+                        condizione += dati[i] + " = '" + grigliaValori.Rows[0].Cells[i].Value.ToString() + "' AND";
+                    condizione = condizione.Remove(condizione.Length - 4, 3);
                 }
         }
     }
