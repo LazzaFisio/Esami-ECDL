@@ -69,7 +69,7 @@ namespace Programma
                 List<string> campi = new List<string>();
                 foreach (DataGridViewCell item in grigliaValori.Rows[index].Cells)
                     campi.Add(item.Value.ToString());
-                new Modifiche(colonne, campi, new List<string>() {"idCittà"}, comboBox.Text).Show();
+                new Modifiche(colonne, campi, comboBox.Text).Show();
                 leggiDatabase();
             }
         }
