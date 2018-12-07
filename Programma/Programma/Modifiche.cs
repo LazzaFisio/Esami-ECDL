@@ -106,14 +106,15 @@ namespace Programma
                 query = query.Remove(query.Length - 4, 3);
                 query += ")";
 
-                try{ new MySqlCommand(query, Program.connection).ExecuteNonQuery();}
-                catch (Exception err){ MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+                try { new MySqlCommand(query, Program.connection).ExecuteNonQuery(); }
+                catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
             }
             else
             {
 
-            try { new MySqlCommand(query, Program.connection).ExecuteNonQuery(); this.Close(); }
-            catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+                try { new MySqlCommand(query, Program.connection).ExecuteNonQuery(); this.Close(); }
+                catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+            }
 
         }
     }
