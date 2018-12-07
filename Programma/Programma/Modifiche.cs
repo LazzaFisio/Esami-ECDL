@@ -94,10 +94,9 @@ namespace Programma
         /// <param name="e"></param>
         private void Conferma_Click(object sender, EventArgs e)
         {
-            string query = "";
             if (insert)
             {
-                query = "INSERT INTO " + tabella + "( ";
+                string query = "INSERT INTO " + tabella + "( ";
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     query += dataGridView1.Rows[i].Cells[0].Value.ToString() + ", ";
                 query = query.Remove(query.Length - 2, 1);
@@ -107,16 +106,11 @@ namespace Programma
                 query = query.Remove(query.Length - 4, 3);
                 query += ")";
 
-                
+                try{ new MySqlCommand(query, Program.connection).ExecuteNonQuery();}
+                catch (Exception err){ MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
             }
             else
             {
-                query = "UPDATE " + tabella + "SET ";
-                for (int i = 1; i < dataGridView1.Rows.Count; i++)
-                    query += dataGridView1.Rows[i].Cells[0].Value.ToString() + " = " + dataGridView1.Rows[i].Cells[0].Value.ToString() + ", ";
-                query = query.Remove(query.Length - 2, 1);
-                query += "WHERE " + dataGridView1.Rows[0].Cells[0].Value.ToString() + " = " + dataGridView1.Rows[0].Cells[0].Value.ToString() + ";";
-            }
 
             try { new MySqlCommand(query, Program.connection).ExecuteNonQuery(); this.Close(); }
             catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
