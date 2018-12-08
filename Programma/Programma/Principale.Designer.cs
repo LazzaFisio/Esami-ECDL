@@ -31,13 +31,13 @@
             this.comboBox = new System.Windows.Forms.ComboBox();
             this.materialTabControl1 = new MaterialSkin.Controls.MaterialTabControl();
             this.Defaut = new System.Windows.Forms.TabPage();
+            this.delete = new System.Windows.Forms.Button();
+            this.modica = new System.Windows.Forms.Button();
+            this.aggiungi = new System.Windows.Forms.Button();
+            this.grigliaValori = new System.Windows.Forms.DataGridView();
+            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
-            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
-            this.grigliaValori = new System.Windows.Forms.DataGridView();
-            this.aggiungi = new System.Windows.Forms.Button();
-            this.modica = new System.Windows.Forms.Button();
-            this.delete = new System.Windows.Forms.Button();
             this.materialTabControl1.SuspendLayout();
             this.Defaut.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grigliaValori)).BeginInit();
@@ -80,6 +80,58 @@
             this.Defaut.Text = "Default";
             this.Defaut.UseVisualStyleBackColor = true;
             // 
+            // delete
+            // 
+            this.delete.Location = new System.Drawing.Point(415, 293);
+            this.delete.Name = "delete";
+            this.delete.Size = new System.Drawing.Size(118, 30);
+            this.delete.TabIndex = 13;
+            this.delete.Text = "Elimina";
+            this.delete.UseVisualStyleBackColor = true;
+            this.delete.Click += new System.EventHandler(this.delete_Click);
+            // 
+            // modica
+            // 
+            this.modica.Location = new System.Drawing.Point(233, 293);
+            this.modica.Name = "modica";
+            this.modica.Size = new System.Drawing.Size(118, 30);
+            this.modica.TabIndex = 12;
+            this.modica.Text = "Modifica";
+            this.modica.UseVisualStyleBackColor = true;
+            this.modica.Click += new System.EventHandler(this.modica_Click);
+            // 
+            // aggiungi
+            // 
+            this.aggiungi.Location = new System.Drawing.Point(48, 293);
+            this.aggiungi.Name = "aggiungi";
+            this.aggiungi.Size = new System.Drawing.Size(118, 30);
+            this.aggiungi.TabIndex = 11;
+            this.aggiungi.Text = "Aggiungi";
+            this.aggiungi.UseVisualStyleBackColor = true;
+            this.aggiungi.Click += new System.EventHandler(this.aggiungi_Click);
+            // 
+            // grigliaValori
+            // 
+            this.grigliaValori.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.grigliaValori.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grigliaValori.Location = new System.Drawing.Point(9, 69);
+            this.grigliaValori.Name = "grigliaValori";
+            this.grigliaValori.Size = new System.Drawing.Size(614, 218);
+            this.grigliaValori.TabIndex = 10;
+            // 
+            // materialLabel1
+            // 
+            this.materialLabel1.AutoSize = true;
+            this.materialLabel1.Depth = 0;
+            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel1.Location = new System.Drawing.Point(122, 25);
+            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel1.Name = "materialLabel1";
+            this.materialLabel1.Size = new System.Drawing.Size(155, 19);
+            this.materialLabel1.TabIndex = 9;
+            this.materialLabel1.Text = "SELEZIONA TABELLA";
+            // 
             // tabPage3
             // 
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
@@ -100,58 +152,6 @@
             this.materialTabSelector1.TabIndex = 8;
             this.materialTabSelector1.Text = "materialTabSelector1";
             // 
-            // materialLabel1
-            // 
-            this.materialLabel1.AutoSize = true;
-            this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(122, 25);
-            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(155, 19);
-            this.materialLabel1.TabIndex = 9;
-            this.materialLabel1.Text = "SELEZIONA TABELLA";
-            // 
-            // grigliaValori
-            // 
-            this.grigliaValori.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.grigliaValori.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grigliaValori.Location = new System.Drawing.Point(9, 69);
-            this.grigliaValori.Name = "grigliaValori";
-            this.grigliaValori.Size = new System.Drawing.Size(614, 218);
-            this.grigliaValori.TabIndex = 10;
-            // 
-            // aggiungi
-            // 
-            this.aggiungi.Location = new System.Drawing.Point(48, 293);
-            this.aggiungi.Name = "aggiungi";
-            this.aggiungi.Size = new System.Drawing.Size(118, 30);
-            this.aggiungi.TabIndex = 11;
-            this.aggiungi.Text = "Aggiungi";
-            this.aggiungi.UseVisualStyleBackColor = true;
-            this.aggiungi.Click += new System.EventHandler(this.aggiungi_Click);
-            // 
-            // modica
-            // 
-            this.modica.Location = new System.Drawing.Point(233, 293);
-            this.modica.Name = "modica";
-            this.modica.Size = new System.Drawing.Size(118, 30);
-            this.modica.TabIndex = 12;
-            this.modica.Text = "Modifica";
-            this.modica.UseVisualStyleBackColor = true;
-            this.modica.Click += new System.EventHandler(this.modica_Click);
-            // 
-            // delete
-            // 
-            this.delete.Location = new System.Drawing.Point(415, 293);
-            this.delete.Name = "delete";
-            this.delete.Size = new System.Drawing.Size(118, 30);
-            this.delete.TabIndex = 13;
-            this.delete.Text = "Elimina";
-            this.delete.UseVisualStyleBackColor = true;
-            this.delete.Click += new System.EventHandler(this.delete_Click);
-            // 
             // Principale
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -160,7 +160,9 @@
             this.ClientSize = new System.Drawing.Size(638, 445);
             this.Controls.Add(this.materialTabSelector1);
             this.Controls.Add(this.materialTabControl1);
+            this.MaximizeBox = false;
             this.Name = "Principale";
+            this.Sizable = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Gestionale";
             this.materialTabControl1.ResumeLayout(false);

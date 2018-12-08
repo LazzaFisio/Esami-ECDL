@@ -147,7 +147,9 @@
             this.Controls.Add(this.Conferma);
             this.Controls.Add(this.txtNuovoCampo);
             this.Controls.Add(this.materialLabel1);
+            this.MaximizeBox = false;
             this.Name = "Modifiche";
+            this.Sizable = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Modifiche";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
