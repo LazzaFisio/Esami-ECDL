@@ -37,10 +37,17 @@
             this.grigliaValori = new System.Windows.Forms.DataGridView();
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
+            this.textQuery = new System.Windows.Forms.RichTextBox();
+            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
+            this.grigliaRisultati = new System.Windows.Forms.DataGridView();
+            this.esegui = new System.Windows.Forms.Button();
             this.materialTabControl1.SuspendLayout();
             this.Defaut.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grigliaValori)).BeginInit();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grigliaRisultati)).BeginInit();
             this.SuspendLayout();
             // 
             // comboBox
@@ -134,12 +141,51 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.esegui);
+            this.tabPage3.Controls.Add(this.grigliaRisultati);
+            this.tabPage3.Controls.Add(this.materialLabel3);
+            this.tabPage3.Controls.Add(this.textQuery);
+            this.tabPage3.Controls.Add(this.materialLabel2);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(631, 332);
             this.tabPage3.TabIndex = 1;
             this.tabPage3.Text = "Fai query";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // materialLabel3
+            // 
+            this.materialLabel3.AutoSize = true;
+            this.materialLabel3.Depth = 0;
+            this.materialLabel3.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel3.Location = new System.Drawing.Point(231, 80);
+            this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel3.Name = "materialLabel3";
+            this.materialLabel3.Size = new System.Drawing.Size(146, 19);
+            this.materialLabel3.TabIndex = 2;
+            this.materialLabel3.Text = "Risultato della query";
+            // 
+            // textQuery
+            // 
+            this.textQuery.Location = new System.Drawing.Point(152, 21);
+            this.textQuery.Name = "textQuery";
+            this.textQuery.Size = new System.Drawing.Size(395, 47);
+            this.textQuery.TabIndex = 1;
+            this.textQuery.Text = "";
+            // 
+            // materialLabel2
+            // 
+            this.materialLabel2.AutoSize = true;
+            this.materialLabel2.Depth = 0;
+            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel2.Location = new System.Drawing.Point(14, 37);
+            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel2.Name = "materialLabel2";
+            this.materialLabel2.Size = new System.Drawing.Size(132, 19);
+            this.materialLabel2.TabIndex = 0;
+            this.materialLabel2.Text = "Scrivi qui la query:";
             // 
             // materialTabSelector1
             // 
@@ -151,6 +197,25 @@
             this.materialTabSelector1.Size = new System.Drawing.Size(639, 26);
             this.materialTabSelector1.TabIndex = 8;
             this.materialTabSelector1.Text = "materialTabSelector1";
+            // 
+            // grigliaRisultati
+            // 
+            this.grigliaRisultati.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.grigliaRisultati.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grigliaRisultati.Location = new System.Drawing.Point(9, 111);
+            this.grigliaRisultati.Name = "grigliaRisultati";
+            this.grigliaRisultati.Size = new System.Drawing.Size(614, 207);
+            this.grigliaRisultati.TabIndex = 3;
+            // 
+            // esegui
+            // 
+            this.esegui.Location = new System.Drawing.Point(553, 33);
+            this.esegui.Name = "esegui";
+            this.esegui.Size = new System.Drawing.Size(75, 23);
+            this.esegui.TabIndex = 4;
+            this.esegui.Text = "Esegui";
+            this.esegui.UseVisualStyleBackColor = true;
+            this.esegui.Click += new System.EventHandler(this.esegui_Click);
             // 
             // Principale
             // 
@@ -169,6 +234,9 @@
             this.Defaut.ResumeLayout(false);
             this.Defaut.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grigliaValori)).EndInit();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grigliaRisultati)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -184,6 +252,11 @@
         private System.Windows.Forms.Button modica;
         private System.Windows.Forms.Button aggiungi;
         private System.Windows.Forms.DataGridView grigliaValori;
+        private MaterialSkin.Controls.MaterialLabel materialLabel2;
+        private MaterialSkin.Controls.MaterialLabel materialLabel3;
+        private System.Windows.Forms.RichTextBox textQuery;
+        private System.Windows.Forms.DataGridView grigliaRisultati;
+        private System.Windows.Forms.Button esegui;
     }
 }
 

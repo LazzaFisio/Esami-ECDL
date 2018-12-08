@@ -156,5 +156,37 @@ namespace Programma
             }
             return index;
         }
+
+        private void esegui_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                query(new MySqlCommand(textQuery.Text, Program.connection).ExecuteReader());
+                leggiRisultatiQuery(dati);
+            }
+            catch {
+                try
+                {
+                    new MySqlCommand(textQuery.Text, Program.connection).ExecuteNonQuery();
+                    leggiRisultatiQuery(new List<string[]>() { new string[] { "Completato" } });
+                }
+                catch { MessageBox.Show("Errore nella sintassi della query", "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+            }
+        }
+
+        void leggiRisultatiQuery(List<string[]> vs)
+        {
+            grigliaRisultati.Columns.Clear();
+            grigliaRisultati.Rows.Clear();
+            for (int i = 0; i < vs[0].Length; i++)
+                grigliaRisultati.Columns.Add("Campo" + i.ToString(), "Campo " + i.ToString());
+            foreach(string[] item in vs)
+            {
+                grigliaRisultati.Rows.Add(item[0]);
+                for (int i = 1; i < item.Length; i++)
+                    grigliaRisultati.Rows[grigliaRisultati.Rows.Count - 2].Cells[i].Value = item[i];
+            }
+        }
+
     }
 }
