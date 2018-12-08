@@ -132,10 +132,10 @@ namespace Programma
                                                "' AND TABLE_SCHEMA = '" + Program.database + "'",
                         Program.connection).ExecuteReader());
                         for (int i = 0; i < dati[0].Length; i++)
-                            condizione += dati[0][i] + " = '" + grigliaValori.Rows[0].Cells[i].Value.ToString() + "' AND";
+                            condizione += dati[0][i] + " = '" + grigliaValori.Rows[index].Cells[i].Value.ToString() + "' AND";
                         condizione = condizione.Remove(condizione.Length - 4, 4);
                         try {
-                            new MySqlCommand("DELETE FROM " + comboBox.Text + " WHERE " + condizione).ExecuteNonQuery();
+                            new MySqlCommand("DELETE FROM " + comboBox.Text + " WHERE " + condizione, Program.connection).ExecuteNonQuery();
                             leggiDatabase();
                         }catch(Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
                     }
