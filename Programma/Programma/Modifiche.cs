@@ -108,9 +108,6 @@ namespace Programma
                     query += dataGridView1.Rows[i].Cells[1].Value.ToString() + "', '";
                 query = query.Remove(query.Length - 4, 3);
                 query += ")";
-
-                try { new MySqlCommand(query, Program.connection).ExecuteNonQuery(); }
-                catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
             }
             else
             { 

@@ -69,7 +69,9 @@ namespace Programma
                 List<string> campi = new List<string>();
                 foreach (DataGridViewCell item in grigliaValori.Rows[index].Cells)
                     campi.Add(item.Value.ToString());
-                new Modifiche(colonne, campi, comboBox.Text).Show();
+                query(new MySqlCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = '" + comboBox.Text +
+                                               "' AND TABLE_SCHEMA = '" + Program.database + "'", Program.connection).ExecuteReader());
+                new Modifiche(colonne, campi, dati[0].ToList(), comboBox.Text).ShowDialog();
                 leggiDatabase();
             }
         }
