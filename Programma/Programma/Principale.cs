@@ -71,7 +71,7 @@ namespace Programma
                     campi.Add(item.Value.ToString());
                 query(new MySqlCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = '" + comboBox.Text +
                                                "' AND TABLE_SCHEMA = '" + Program.database + "'", Program.connection).ExecuteReader());
-                new Modifiche(colonne, campi, dati[0].ToList(), comboBox.Text).ShowDialog();
+                new Modifiche(colonne, campi, dati, comboBox.Text).ShowDialog();
                 leggiDatabase();
             }
         }
