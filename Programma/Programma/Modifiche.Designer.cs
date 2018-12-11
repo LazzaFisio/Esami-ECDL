@@ -33,9 +33,9 @@
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.lblCampoSelezionato = new MaterialSkin.Controls.MaterialLabel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.conferma = new System.Windows.Forms.Button();
             this.Attributo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.valoreAssociato = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.conferma = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -107,18 +107,6 @@
             this.dataGridView1.TabIndex = 5;
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
-            // Attributo
-            // 
-            this.Attributo.HeaderText = "Attributo";
-            this.Attributo.Name = "Attributo";
-            this.Attributo.Width = 130;
-            // 
-            // valoreAssociato
-            // 
-            this.valoreAssociato.HeaderText = "Valore associato";
-            this.valoreAssociato.Name = "valoreAssociato";
-            this.valoreAssociato.Width = 120;
-            // 
             // conferma
             // 
             this.conferma.Location = new System.Drawing.Point(78, 292);
@@ -128,6 +116,20 @@
             this.conferma.Text = "Conferma";
             this.conferma.UseVisualStyleBackColor = true;
             this.conferma.Click += new System.EventHandler(this.Conferma_Click);
+            // 
+            // Attributo
+            // 
+            this.Attributo.HeaderText = "Attributo";
+            this.Attributo.Name = "Attributo";
+            this.Attributo.ReadOnly = true;
+            this.Attributo.Width = 130;
+            // 
+            // valoreAssociato
+            // 
+            this.valoreAssociato.HeaderText = "Valore associato";
+            this.valoreAssociato.Name = "valoreAssociato";
+            this.valoreAssociato.ReadOnly = true;
+            this.valoreAssociato.Width = 120;
             // 
             // Modifiche
             // 
@@ -158,8 +160,8 @@
         private MaterialSkin.Controls.MaterialLabel materialLabel2;
         private MaterialSkin.Controls.MaterialLabel lblCampoSelezionato;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button conferma;
         private System.Windows.Forms.DataGridViewTextBoxColumn Attributo;
         private System.Windows.Forms.DataGridViewTextBoxColumn valoreAssociato;
-        private System.Windows.Forms.Button conferma;
     }
 }
