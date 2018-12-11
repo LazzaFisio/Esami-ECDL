@@ -37,12 +37,12 @@
             this.grigliaValori = new System.Windows.Forms.DataGridView();
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.esegui = new System.Windows.Forms.Button();
+            this.grigliaRisultati = new System.Windows.Forms.DataGridView();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
             this.textQuery = new System.Windows.Forms.RichTextBox();
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
-            this.grigliaRisultati = new System.Windows.Forms.DataGridView();
-            this.esegui = new System.Windows.Forms.Button();
             this.materialTabControl1.SuspendLayout();
             this.Defaut.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grigliaValori)).BeginInit();
@@ -153,6 +153,24 @@
             this.tabPage3.Text = "Fai query";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // esegui
+            // 
+            this.esegui.Location = new System.Drawing.Point(553, 33);
+            this.esegui.Name = "esegui";
+            this.esegui.Size = new System.Drawing.Size(75, 23);
+            this.esegui.TabIndex = 4;
+            this.esegui.Text = "Esegui";
+            this.esegui.UseVisualStyleBackColor = true;
+            this.esegui.Click += new System.EventHandler(this.esegui_Click);
+            // 
+            // grigliaRisultati
+            // 
+            this.grigliaRisultati.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grigliaRisultati.Location = new System.Drawing.Point(9, 111);
+            this.grigliaRisultati.Name = "grigliaRisultati";
+            this.grigliaRisultati.Size = new System.Drawing.Size(614, 207);
+            this.grigliaRisultati.TabIndex = 3;
+            // 
             // materialLabel3
             // 
             this.materialLabel3.AutoSize = true;
@@ -197,25 +215,6 @@
             this.materialTabSelector1.Size = new System.Drawing.Size(639, 26);
             this.materialTabSelector1.TabIndex = 8;
             this.materialTabSelector1.Text = "materialTabSelector1";
-            // 
-            // grigliaRisultati
-            // 
-            this.grigliaRisultati.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.grigliaRisultati.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grigliaRisultati.Location = new System.Drawing.Point(9, 111);
-            this.grigliaRisultati.Name = "grigliaRisultati";
-            this.grigliaRisultati.Size = new System.Drawing.Size(614, 207);
-            this.grigliaRisultati.TabIndex = 3;
-            // 
-            // esegui
-            // 
-            this.esegui.Location = new System.Drawing.Point(553, 33);
-            this.esegui.Name = "esegui";
-            this.esegui.Size = new System.Drawing.Size(75, 23);
-            this.esegui.TabIndex = 4;
-            this.esegui.Text = "Esegui";
-            this.esegui.UseVisualStyleBackColor = true;
-            this.esegui.Click += new System.EventHandler(this.esegui_Click);
             // 
             // Principale
             // 
