@@ -19,7 +19,7 @@ namespace Programma
         int index = int.MaxValue;
         bool insert = false;
         string tabella = "";
-        List<string> primarykey = new List<string>();
+        List<string> primarykey = new List<string>(), campi = new List<string>();
 
         /// <summary>
         /// Costruttore con passaggio della lista degli attributi della tabella
@@ -56,6 +56,7 @@ namespace Programma
             }
             insert = false;
             this.tabella = tabella;
+            this.campi = campi;
             primarykey = primary;
         }
 
@@ -119,13 +120,12 @@ namespace Programma
 
                 query = "UPDATE " + tabella + " SET ";
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                    if (!app.Contains(i))
-                        query += dataGridView1.Rows[i].Cells[0].Value.ToString() + " = '" + dataGridView1.Rows[i].Cells[1].Value.ToString() + "', ";
+                    query += dataGridView1.Rows[i].Cells[0].Value.ToString() + " = '" + dataGridView1.Rows[i].Cells[1].Value.ToString() + "', ";
                 query = query.Remove(query.Length - 2, 1);
                 query += " WHERE ";
 
                 for (int i = 0; i < app.Length; i++)
-                    query += dataGridView1.Rows[app[i]].Cells[0].Value.ToString() + " = '" + dataGridView1.Rows[app[i]].Cells[1].Value.ToString() + "', ";
+                    query += dataGridView1.Rows[app[i]].Cells[0].Value.ToString() + " = '" + campi[app[i]] + "', ";
                 query = query.Remove(query.Length - 2, 1);
                 query += ";";
             }
