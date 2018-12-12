@@ -19,6 +19,7 @@ namespace Programma
         int index = int.MaxValue;
         bool insert = false;
         string tabella = "";
+        List<string> primarykey = new List<string>(), campi = new List<string>();
 
         /// <summary>
         /// Costruttore con passaggio della lista degli attributi della tabella
@@ -43,7 +44,7 @@ namespace Programma
         /// </summary>
         /// <param name="attributi">Lista degli attributi del database</param>
         /// <param name="campi">Lista dei campi della tabella</param>
-        public Modifiche(List<string> attributi, List<string> campi, string tabella)
+        public Modifiche(List<string> attributi, List<string> campi,List<string> primary, string tabella)
         {
             InitializeComponent();
 
@@ -55,6 +56,8 @@ namespace Programma
             }
             insert = false;
             this.tabella = tabella;
+            this.campi = campi;
+            primarykey = primary;
         }
 
         /// <summary>
@@ -94,9 +97,10 @@ namespace Programma
         /// <param name="e"></param>
         private void Conferma_Click(object sender, EventArgs e)
         {
+            string query = "";
             if (insert)
             {
-                string query = "INSERT INTO " + tabella + "( ";
+                query = "INSERT INTO " + tabella + "( ";
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     query += dataGridView1.Rows[i].Cells[0].Value.ToString() + ", ";
                 query = query.Remove(query.Length - 2, 1);
@@ -105,23 +109,28 @@ namespace Programma
                     query += dataGridView1.Rows[i].Cells[1].Value.ToString() + "', '";
                 query = query.Remove(query.Length - 4, 3);
                 query += ")";
-
-                try { new MySqlCommand(query, Program.connection).ExecuteNonQuery(); }
-                catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
             }
             else
-            {
+            { 
+                int[] app = new int[primarykey.Count];
+                for (int i = 0; i < primarykey.Count; i++)
+                    for (int j = 0; j < dataGridView1.Rows.Count; j++)
+                        if (dataGridView1.Rows[j].Cells[0].Value.ToString() == primarykey[i])
+                            app[i] = j;
 
-                try { new MySqlCommand(query, Program.connection).ExecuteNonQuery(); this.Close(); }
-                catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+                query = "UPDATE " + tabella + " SET ";
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    query += dataGridView1.Rows[i].Cells[0].Value.ToString() + " = '" + dataGridView1.Rows[i].Cells[1].Value.ToString() + "', ";
+                query = query.Remove(query.Length - 2, 1);
+                query += " WHERE ";
+
+                for (int i = 0; i < app.Length; i++)
+                    query += dataGridView1.Rows[app[i]].Cells[0].Value.ToString() + " = '" + campi[app[i]] + "', ";
+                query = query.Remove(query.Length - 2, 1);
+                query += ";";
             }
-
-<<<<<<< HEAD
-=======
             try { new MySqlCommand(query, Program.connection).ExecuteNonQuery(); this.Close(); }
             catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
-        }   
->>>>>>> Baricchio
         }
     }
 }

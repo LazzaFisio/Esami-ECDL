@@ -51,3 +51,4 @@ I:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.pdb
 F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\bin\Debug\MaterialSkin.dll
 F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Modifiche.resources
 C:\Users\User\Desktop\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Modifiche.resources
+I:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Modifiche.resources

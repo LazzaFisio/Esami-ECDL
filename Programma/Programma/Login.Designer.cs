@@ -180,7 +180,9 @@
             this.Controls.Add(this.database);
             this.Controls.Add(this.server);
             this.Controls.Add(this.connetti);
+            this.MaximizeBox = false;
             this.Name = "Login";
+            this.Sizable = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
             this.ResumeLayout(false);

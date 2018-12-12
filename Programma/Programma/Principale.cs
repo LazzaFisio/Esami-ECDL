@@ -69,7 +69,7 @@ namespace Programma
                 List<string> campi = new List<string>();
                 foreach (DataGridViewCell item in grigliaValori.Rows[index].Cells)
                     campi.Add(item.Value.ToString());
-                new Modifiche(colonne, campi, comboBox.Text).Show();
+                new Modifiche(colonne, campi, chiaviPrimarie(), comboBox.Text).ShowDialog();
                 leggiDatabase();
             }
         }
@@ -126,14 +126,13 @@ namespace Programma
                 if (result == DialogResult.Yes)
                     if (grigliaValori.SelectedCells.Count > 0 || grigliaValori.SelectedRows.Count > 0)
                     {
-                        query(new MySqlCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = '" + comboBox.Text +
-                                               "' AND TABLE_SCHEMA = '" + Program.database + "'",
-                        Program.connection).ExecuteReader());
-                        for (int i = 0; i < dati[0].Length; i++)
-                            condizione += dati[0][i] + " = '" + grigliaValori.Rows[0].Cells[i].Value.ToString() + "' AND";
+                        List<string> chiavi = chiaviPrimarie();
+                        for (int i = 0; i < grigliaValori.Rows[index].Cells.Count; i++)
+                            if (chiavi.Contains(grigliaValori.Columns[i].HeaderText))
+                                condizione += grigliaValori.Columns[i].HeaderText + " = '" + grigliaValori.Rows[index].Cells[i].Value.ToString() + "' AND ";
                         condizione = condizione.Remove(condizione.Length - 4, 4);
                         try {
-                            new MySqlCommand("DELETE FROM " + comboBox.Text + " WHERE " + condizione).ExecuteNonQuery();
+                            new MySqlCommand("DELETE FROM " + comboBox.Text + " WHERE " + condizione, Program.connection).ExecuteNonQuery();
                             leggiDatabase();
                         }catch(Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
                     }
@@ -154,5 +153,46 @@ namespace Programma
             }
             return index;
         }
+
+        private void esegui_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                query(new MySqlCommand(textQuery.Text, Program.connection).ExecuteReader());
+                leggiRisultatiQuery(dati);
+            }
+            catch {
+                try
+                {
+                    new MySqlCommand(textQuery.Text, Program.connection).ExecuteNonQuery();
+                    leggiRisultatiQuery(new List<string[]>() { new string[] { "Completato" } });
+                }
+                catch { MessageBox.Show("Errore nella sintassi della query", "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+            }
+        }
+
+        void leggiRisultatiQuery(List<string[]> vs)
+        {
+            grigliaRisultati.Columns.Clear();
+            grigliaRisultati.Rows.Clear();
+            for (int i = 0; i < vs[0].Length; i++)
+                grigliaRisultati.Columns.Add("Campo" + i.ToString(), "Campo " + i.ToString());
+            foreach(string[] item in vs)
+            {
+                grigliaRisultati.Rows.Add(item[0]);
+                for (int i = 1; i < item.Length; i++)
+                    grigliaRisultati.Rows[grigliaRisultati.Rows.Count - 2].Cells[i].Value = item[i];
+            }
+        }
+
+        List<string> chiaviPrimarie()
+        {
+            List<string> chiavi = new List<string>();
+            query(new MySqlCommand("SHOW KEYS FROM " + comboBox.Text + " WHERE KEY_NAME = 'Primary'", Program.connection).ExecuteReader());
+            foreach (string[] item in dati)
+                chiavi.Add(item[4]);
+            return chiavi;
+        }
+
     }
 }

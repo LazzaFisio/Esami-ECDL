@@ -30,10 +30,10 @@
         {
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.txtNuovoCampo = new MaterialSkin.Controls.MaterialSingleLineTextField();
-            this.Conferma = new MaterialSkin.Controls.MaterialFlatButton();
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.lblCampoSelezionato = new MaterialSkin.Controls.MaterialLabel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.conferma = new System.Windows.Forms.Button();
             this.Attributo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.valoreAssociato = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -68,23 +68,6 @@
             this.txtNuovoCampo.TabIndex = 1;
             this.txtNuovoCampo.UseSystemPasswordChar = false;
             this.txtNuovoCampo.TextChanged += new System.EventHandler(this.txtNuovoCampo_TextChanged);
-            // 
-            // Conferma
-            // 
-            this.Conferma.AutoSize = true;
-            this.Conferma.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.Conferma.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.Conferma.Depth = 0;
-            this.Conferma.Location = new System.Drawing.Point(92, 310);
-            this.Conferma.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.Conferma.MouseState = MaterialSkin.MouseState.HOVER;
-            this.Conferma.Name = "Conferma";
-            this.Conferma.Primary = false;
-            this.Conferma.Size = new System.Drawing.Size(85, 36);
-            this.Conferma.TabIndex = 2;
-            this.Conferma.Text = "Conferma";
-            this.Conferma.UseVisualStyleBackColor = false;
-            this.Conferma.Click += new System.EventHandler(this.Conferma_Click);
             // 
             // materialLabel2
             // 
@@ -124,16 +107,28 @@
             this.dataGridView1.TabIndex = 5;
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
+            // conferma
+            // 
+            this.conferma.Location = new System.Drawing.Point(78, 292);
+            this.conferma.Name = "conferma";
+            this.conferma.Size = new System.Drawing.Size(104, 33);
+            this.conferma.TabIndex = 6;
+            this.conferma.Text = "Conferma";
+            this.conferma.UseVisualStyleBackColor = true;
+            this.conferma.Click += new System.EventHandler(this.Conferma_Click);
+            // 
             // Attributo
             // 
             this.Attributo.HeaderText = "Attributo";
             this.Attributo.Name = "Attributo";
+            this.Attributo.ReadOnly = true;
             this.Attributo.Width = 130;
             // 
             // valoreAssociato
             // 
             this.valoreAssociato.HeaderText = "Valore associato";
             this.valoreAssociato.Name = "valoreAssociato";
+            this.valoreAssociato.ReadOnly = true;
             this.valoreAssociato.Width = 120;
             // 
             // Modifiche
@@ -141,13 +136,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(591, 371);
+            this.Controls.Add(this.conferma);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.lblCampoSelezionato);
             this.Controls.Add(this.materialLabel2);
-            this.Controls.Add(this.Conferma);
             this.Controls.Add(this.txtNuovoCampo);
             this.Controls.Add(this.materialLabel1);
+            this.MaximizeBox = false;
             this.Name = "Modifiche";
+            this.Sizable = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Modifiche";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -160,10 +157,10 @@
 
         private MaterialSkin.Controls.MaterialLabel materialLabel1;
         private MaterialSkin.Controls.MaterialSingleLineTextField txtNuovoCampo;
-        private MaterialSkin.Controls.MaterialFlatButton Conferma;
         private MaterialSkin.Controls.MaterialLabel materialLabel2;
         private MaterialSkin.Controls.MaterialLabel lblCampoSelezionato;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button conferma;
         private System.Windows.Forms.DataGridViewTextBoxColumn Attributo;
         private System.Windows.Forms.DataGridViewTextBoxColumn valoreAssociato;
     }
