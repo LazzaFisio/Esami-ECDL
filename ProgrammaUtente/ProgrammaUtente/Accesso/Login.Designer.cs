@@ -37,6 +37,8 @@
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.infoConnessione = new System.Windows.Forms.Label();
+            this.connetti = new System.Windows.Forms.Button();
             this.passwordDatabase = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.username = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.materialLabel6 = new MaterialSkin.Controls.MaterialLabel();
@@ -47,8 +49,6 @@
             this.materialLabel5 = new MaterialSkin.Controls.MaterialLabel();
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
-            this.connetti = new System.Windows.Forms.Button();
-            this.infoConnessione = new System.Windows.Forms.Label();
             this.materialTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -182,6 +182,27 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "DATABASE";
             // 
+            // infoConnessione
+            // 
+            this.infoConnessione.AutoSize = true;
+            this.infoConnessione.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.infoConnessione.ForeColor = System.Drawing.Color.Black;
+            this.infoConnessione.Location = new System.Drawing.Point(224, 13);
+            this.infoConnessione.Name = "infoConnessione";
+            this.infoConnessione.Size = new System.Drawing.Size(46, 18);
+            this.infoConnessione.TabIndex = 16;
+            this.infoConnessione.Text = "label1";
+            // 
+            // connetti
+            // 
+            this.connetti.Location = new System.Drawing.Point(227, 226);
+            this.connetti.Name = "connetti";
+            this.connetti.Size = new System.Drawing.Size(121, 36);
+            this.connetti.TabIndex = 15;
+            this.connetti.Text = "CONNETTI";
+            this.connetti.UseVisualStyleBackColor = true;
+            this.connetti.Click += new System.EventHandler(this.connetti_Click);
+            // 
             // passwordDatabase
             // 
             this.passwordDatabase.BackColor = System.Drawing.SystemColors.Control;
@@ -312,7 +333,7 @@
             this.materialTabSelector1.Location = new System.Drawing.Point(0, 61);
             this.materialTabSelector1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialTabSelector1.Name = "materialTabSelector1";
-            this.materialTabSelector1.Size = new System.Drawing.Size(801, 34);
+            this.materialTabSelector1.Size = new System.Drawing.Size(600, 34);
             this.materialTabSelector1.TabIndex = 1;
             this.materialTabSelector1.Text = "materialTabSelector1";
             // 
@@ -329,27 +350,6 @@
             this.materialLabel1.Size = new System.Drawing.Size(95, 19);
             this.materialLabel1.TabIndex = 2;
             this.materialLabel1.Text = "ESAMI ECDL";
-            // 
-            // connetti
-            // 
-            this.connetti.Location = new System.Drawing.Point(227, 226);
-            this.connetti.Name = "connetti";
-            this.connetti.Size = new System.Drawing.Size(121, 36);
-            this.connetti.TabIndex = 15;
-            this.connetti.Text = "CONNETTI";
-            this.connetti.UseVisualStyleBackColor = true;
-            this.connetti.Click += new System.EventHandler(this.connetti_Click);
-            // 
-            // infoConnessione
-            // 
-            this.infoConnessione.AutoSize = true;
-            this.infoConnessione.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.infoConnessione.ForeColor = System.Drawing.Color.Black;
-            this.infoConnessione.Location = new System.Drawing.Point(224, 13);
-            this.infoConnessione.Name = "infoConnessione";
-            this.infoConnessione.Size = new System.Drawing.Size(46, 18);
-            this.infoConnessione.TabIndex = 16;
-            this.infoConnessione.Text = "label1";
             // 
             // Login
             // 
