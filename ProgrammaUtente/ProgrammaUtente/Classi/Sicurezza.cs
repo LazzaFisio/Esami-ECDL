@@ -31,7 +31,11 @@ namespace ProgrammaUtente
             }
             alfabeto[63] = ' ';
         }
-
+        /// <summary>
+        /// Cripta la frase
+        /// </summary>
+        /// <param name="frase"></param>
+        /// <returns></returns>
         public string cripta(string frase)
         {
             string criptato = "";
@@ -41,7 +45,11 @@ namespace ProgrammaUtente
                         criptato += Convert.ToChar((Convert.ToInt32(alfabeto[y]) + (i / 2)) - (10 - alfabeto.Length / (i + 1)));
             return criptato;
         }
-
+        /// <summary>
+        /// Decripta la frase
+        /// </summary>
+        /// <param name="frase"></param>
+        /// <returns></returns>
         public string decripta(string frase)
         {
             string deciptato = "";
