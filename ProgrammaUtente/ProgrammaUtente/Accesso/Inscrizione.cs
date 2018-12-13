@@ -17,5 +17,15 @@ namespace ProgrammaUtente.Accesso
         {
             InitializeComponent();
         }
+
+        private void salva_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void annulla_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }
