@@ -84,7 +84,7 @@
             // 
             // inscriviti
             // 
-            this.inscriviti.Location = new System.Drawing.Point(239, 195);
+            this.inscriviti.Location = new System.Drawing.Point(239, 211);
             this.inscriviti.Name = "inscriviti";
             this.inscriviti.Size = new System.Drawing.Size(121, 37);
             this.inscriviti.TabIndex = 8;
@@ -94,9 +94,9 @@
             // 
             // accedi
             // 
-            this.accedi.Location = new System.Drawing.Point(239, 143);
+            this.accedi.Location = new System.Drawing.Point(239, 159);
             this.accedi.Name = "accedi";
-            this.accedi.Size = new System.Drawing.Size(121, 37);
+            this.accedi.Size = new System.Drawing.Size(121, 38);
             this.accedi.TabIndex = 7;
             this.accedi.Text = "ACCEDI";
             this.accedi.UseVisualStyleBackColor = true;

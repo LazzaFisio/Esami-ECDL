@@ -34,29 +34,29 @@
             this.salva = new System.Windows.Forms.Button();
             this.annulla = new System.Windows.Forms.Button();
             this.panelInsegnante = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
-            this.nomeSede = new MaterialSkin.Controls.MaterialSingleLineTextField();
-            this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
             this.cittaInsegnante = new System.Windows.Forms.ComboBox();
+            this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
+            this.nomeSede = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
+            this.panelUtente = new System.Windows.Forms.Panel();
+            this.professione = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.cognome = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.nome = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.femmina = new System.Windows.Forms.RadioButton();
+            this.maschio = new System.Windows.Forms.RadioButton();
+            this.materialLabel9 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel8 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel7 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel6 = new MaterialSkin.Controls.MaterialLabel();
             this.cittàUtente = new System.Windows.Forms.ComboBox();
             this.materialLabel5 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel6 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel7 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel8 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel9 = new MaterialSkin.Controls.MaterialLabel();
-            this.maschio = new System.Windows.Forms.RadioButton();
-            this.femmina = new System.Windows.Forms.RadioButton();
-            this.nome = new MaterialSkin.Controls.MaterialSingleLineTextField();
-            this.cognome = new MaterialSkin.Controls.MaterialSingleLineTextField();
-            this.professione = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.materialLabel10 = new MaterialSkin.Controls.MaterialLabel();
             this.password = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.materialLabel11 = new MaterialSkin.Controls.MaterialLabel();
             this.email = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.panelInsegnante.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.panelUtente.SuspendLayout();
             this.SuspendLayout();
             // 
             // materialLabel1
@@ -86,6 +86,7 @@
             this.utente.TabStop = true;
             this.utente.Text = "Utente";
             this.utente.UseVisualStyleBackColor = false;
+            this.utente.CheckedChanged += new System.EventHandler(this.utente_CheckedChanged);
             // 
             // insegnante
             // 
@@ -98,10 +99,11 @@
             this.insegnante.TabIndex = 2;
             this.insegnante.Text = "Insegnante";
             this.insegnante.UseVisualStyleBackColor = false;
+            this.insegnante.CheckedChanged += new System.EventHandler(this.insegnante_CheckedChanged);
             // 
             // salva
             // 
-            this.salva.Location = new System.Drawing.Point(138, 403);
+            this.salva.Location = new System.Drawing.Point(149, 398);
             this.salva.Name = "salva";
             this.salva.Size = new System.Drawing.Size(105, 29);
             this.salva.TabIndex = 3;
@@ -111,7 +113,7 @@
             // 
             // annulla
             // 
-            this.annulla.Location = new System.Drawing.Point(304, 403);
+            this.annulla.Location = new System.Drawing.Point(344, 398);
             this.annulla.Name = "annulla";
             this.annulla.Size = new System.Drawing.Size(105, 29);
             this.annulla.TabIndex = 4;
@@ -132,52 +134,30 @@
             this.panelInsegnante.Size = new System.Drawing.Size(339, 163);
             this.panelInsegnante.TabIndex = 5;
             // 
-            // panel2
+            // cittaInsegnante
             // 
-            this.panel2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.panel2.Controls.Add(this.professione);
-            this.panel2.Controls.Add(this.cognome);
-            this.panel2.Controls.Add(this.nome);
-            this.panel2.Controls.Add(this.femmina);
-            this.panel2.Controls.Add(this.maschio);
-            this.panel2.Controls.Add(this.materialLabel9);
-            this.panel2.Controls.Add(this.materialLabel8);
-            this.panel2.Controls.Add(this.materialLabel7);
-            this.panel2.Controls.Add(this.materialLabel6);
-            this.panel2.Controls.Add(this.cittàUtente);
-            this.panel2.Controls.Add(this.materialLabel5);
-            this.panel2.Location = new System.Drawing.Point(84, 215);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(382, 166);
-            this.panel2.TabIndex = 6;
+            this.cittaInsegnante.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cittaInsegnante.FormattingEnabled = true;
+            this.cittaInsegnante.Location = new System.Drawing.Point(152, 104);
+            this.cittaInsegnante.Name = "cittaInsegnante";
+            this.cittaInsegnante.Size = new System.Drawing.Size(121, 21);
+            this.cittaInsegnante.TabIndex = 5;
+            this.cittaInsegnante.Tag = "1";
+            this.cittaInsegnante.SelectedIndexChanged += new System.EventHandler(this.cittàUtente_SelectedIndexChanged);
             // 
-            // materialLabel2
+            // materialLabel4
             // 
-            this.materialLabel2.AutoSize = true;
-            this.materialLabel2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.materialLabel2.Depth = 0;
-            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel2.Location = new System.Drawing.Point(115, 16);
-            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel2.Name = "materialLabel2";
-            this.materialLabel2.Size = new System.Drawing.Size(42, 19);
-            this.materialLabel2.TabIndex = 1;
-            this.materialLabel2.Text = "Sede";
-            // 
-            // materialLabel3
-            // 
-            this.materialLabel3.AutoSize = true;
-            this.materialLabel3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.materialLabel3.Depth = 0;
-            this.materialLabel3.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel3.Location = new System.Drawing.Point(35, 58);
-            this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel3.Name = "materialLabel3";
-            this.materialLabel3.Size = new System.Drawing.Size(54, 19);
-            this.materialLabel3.TabIndex = 2;
-            this.materialLabel3.Text = "Nome:";
+            this.materialLabel4.AutoSize = true;
+            this.materialLabel4.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.materialLabel4.Depth = 0;
+            this.materialLabel4.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel4.Location = new System.Drawing.Point(77, 107);
+            this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel4.Name = "materialLabel4";
+            this.materialLabel4.Size = new System.Drawing.Size(45, 19);
+            this.materialLabel4.TabIndex = 4;
+            this.materialLabel4.Text = "Città:";
             // 
             // nomeSede
             // 
@@ -194,149 +174,68 @@
             this.nomeSede.TabIndex = 3;
             this.nomeSede.UseSystemPasswordChar = false;
             // 
-            // materialLabel4
+            // materialLabel3
             // 
-            this.materialLabel4.AutoSize = true;
-            this.materialLabel4.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.materialLabel4.Depth = 0;
-            this.materialLabel4.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel4.Location = new System.Drawing.Point(77, 107);
-            this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel4.Name = "materialLabel4";
-            this.materialLabel4.Size = new System.Drawing.Size(45, 19);
-            this.materialLabel4.TabIndex = 4;
-            this.materialLabel4.Text = "Città:";
+            this.materialLabel3.AutoSize = true;
+            this.materialLabel3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.materialLabel3.Depth = 0;
+            this.materialLabel3.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel3.Location = new System.Drawing.Point(35, 58);
+            this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel3.Name = "materialLabel3";
+            this.materialLabel3.Size = new System.Drawing.Size(54, 19);
+            this.materialLabel3.TabIndex = 2;
+            this.materialLabel3.Text = "Nome:";
             // 
-            // cittaInsegnante
+            // materialLabel2
             // 
-            this.cittaInsegnante.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cittaInsegnante.FormattingEnabled = true;
-            this.cittaInsegnante.Location = new System.Drawing.Point(152, 104);
-            this.cittaInsegnante.Name = "cittaInsegnante";
-            this.cittaInsegnante.Size = new System.Drawing.Size(121, 21);
-            this.cittaInsegnante.TabIndex = 5;
+            this.materialLabel2.AutoSize = true;
+            this.materialLabel2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.materialLabel2.Depth = 0;
+            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel2.Location = new System.Drawing.Point(115, 16);
+            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel2.Name = "materialLabel2";
+            this.materialLabel2.Size = new System.Drawing.Size(42, 19);
+            this.materialLabel2.TabIndex = 1;
+            this.materialLabel2.Text = "Sede";
             // 
-            // cittàUtente
+            // panelUtente
             // 
-            this.cittàUtente.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cittàUtente.FormattingEnabled = true;
-            this.cittàUtente.Location = new System.Drawing.Point(169, 136);
-            this.cittàUtente.Name = "cittàUtente";
-            this.cittàUtente.Size = new System.Drawing.Size(121, 21);
-            this.cittàUtente.TabIndex = 7;
+            this.panelUtente.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.panelUtente.Controls.Add(this.professione);
+            this.panelUtente.Controls.Add(this.cognome);
+            this.panelUtente.Controls.Add(this.nome);
+            this.panelUtente.Controls.Add(this.femmina);
+            this.panelUtente.Controls.Add(this.maschio);
+            this.panelUtente.Controls.Add(this.materialLabel9);
+            this.panelUtente.Controls.Add(this.materialLabel8);
+            this.panelUtente.Controls.Add(this.materialLabel7);
+            this.panelUtente.Controls.Add(this.materialLabel6);
+            this.panelUtente.Controls.Add(this.cittàUtente);
+            this.panelUtente.Controls.Add(this.materialLabel5);
+            this.panelUtente.Location = new System.Drawing.Point(84, 215);
+            this.panelUtente.Name = "panelUtente";
+            this.panelUtente.Size = new System.Drawing.Size(382, 166);
+            this.panelUtente.TabIndex = 6;
             // 
-            // materialLabel5
+            // professione
             // 
-            this.materialLabel5.AutoSize = true;
-            this.materialLabel5.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.materialLabel5.Depth = 0;
-            this.materialLabel5.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel5.Location = new System.Drawing.Point(94, 139);
-            this.materialLabel5.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel5.Name = "materialLabel5";
-            this.materialLabel5.Size = new System.Drawing.Size(45, 19);
-            this.materialLabel5.TabIndex = 6;
-            this.materialLabel5.Text = "Città:";
-            // 
-            // materialLabel6
-            // 
-            this.materialLabel6.AutoSize = true;
-            this.materialLabel6.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.materialLabel6.Depth = 0;
-            this.materialLabel6.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel6.Location = new System.Drawing.Point(85, 16);
-            this.materialLabel6.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel6.Name = "materialLabel6";
-            this.materialLabel6.Size = new System.Drawing.Size(54, 19);
-            this.materialLabel6.TabIndex = 8;
-            this.materialLabel6.Text = "Nome:";
-            // 
-            // materialLabel7
-            // 
-            this.materialLabel7.AutoSize = true;
-            this.materialLabel7.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.materialLabel7.Depth = 0;
-            this.materialLabel7.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel7.Location = new System.Drawing.Point(61, 43);
-            this.materialLabel7.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel7.Name = "materialLabel7";
-            this.materialLabel7.Size = new System.Drawing.Size(78, 19);
-            this.materialLabel7.TabIndex = 9;
-            this.materialLabel7.Text = "Cognome:";
-            // 
-            // materialLabel8
-            // 
-            this.materialLabel8.AutoSize = true;
-            this.materialLabel8.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.materialLabel8.Depth = 0;
-            this.materialLabel8.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel8.Location = new System.Drawing.Point(84, 77);
-            this.materialLabel8.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel8.Name = "materialLabel8";
-            this.materialLabel8.Size = new System.Drawing.Size(55, 19);
-            this.materialLabel8.TabIndex = 10;
-            this.materialLabel8.Text = "Sesso:";
-            // 
-            // materialLabel9
-            // 
-            this.materialLabel9.AutoSize = true;
-            this.materialLabel9.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.materialLabel9.Depth = 0;
-            this.materialLabel9.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel9.Location = new System.Drawing.Point(45, 106);
-            this.materialLabel9.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel9.Name = "materialLabel9";
-            this.materialLabel9.Size = new System.Drawing.Size(94, 19);
-            this.materialLabel9.TabIndex = 11;
-            this.materialLabel9.Text = "Professione:";
-            // 
-            // maschio
-            // 
-            this.maschio.AutoSize = true;
-            this.maschio.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.maschio.Checked = true;
-            this.maschio.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.maschio.Location = new System.Drawing.Point(180, 76);
-            this.maschio.Name = "maschio";
-            this.maschio.Size = new System.Drawing.Size(37, 20);
-            this.maschio.TabIndex = 7;
-            this.maschio.TabStop = true;
-            this.maschio.Text = "M";
-            this.maschio.UseVisualStyleBackColor = false;
-            // 
-            // femmina
-            // 
-            this.femmina.AutoSize = true;
-            this.femmina.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.femmina.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.femmina.Location = new System.Drawing.Point(233, 76);
-            this.femmina.Name = "femmina";
-            this.femmina.Size = new System.Drawing.Size(34, 20);
-            this.femmina.TabIndex = 7;
-            this.femmina.Text = "F";
-            this.femmina.UseVisualStyleBackColor = false;
-            // 
-            // nome
-            // 
-            this.nome.BackColor = System.Drawing.SystemColors.Control;
-            this.nome.Depth = 0;
-            this.nome.Hint = "";
-            this.nome.Location = new System.Drawing.Point(158, 12);
-            this.nome.MouseState = MaterialSkin.MouseState.HOVER;
-            this.nome.Name = "nome";
-            this.nome.PasswordChar = '\0';
-            this.nome.SelectedText = "";
-            this.nome.SelectionLength = 0;
-            this.nome.SelectionStart = 0;
-            this.nome.Size = new System.Drawing.Size(182, 23);
-            this.nome.TabIndex = 12;
-            this.nome.UseSystemPasswordChar = false;
+            this.professione.BackColor = System.Drawing.SystemColors.Control;
+            this.professione.Depth = 0;
+            this.professione.Hint = "";
+            this.professione.Location = new System.Drawing.Point(158, 102);
+            this.professione.MouseState = MaterialSkin.MouseState.HOVER;
+            this.professione.Name = "professione";
+            this.professione.PasswordChar = '\0';
+            this.professione.SelectedText = "";
+            this.professione.SelectionLength = 0;
+            this.professione.SelectionStart = 0;
+            this.professione.Size = new System.Drawing.Size(182, 23);
+            this.professione.TabIndex = 14;
+            this.professione.UseSystemPasswordChar = false;
             // 
             // cognome
             // 
@@ -354,21 +253,128 @@
             this.cognome.TabIndex = 13;
             this.cognome.UseSystemPasswordChar = false;
             // 
-            // professione
+            // nome
             // 
-            this.professione.BackColor = System.Drawing.SystemColors.Control;
-            this.professione.Depth = 0;
-            this.professione.Hint = "";
-            this.professione.Location = new System.Drawing.Point(158, 102);
-            this.professione.MouseState = MaterialSkin.MouseState.HOVER;
-            this.professione.Name = "professione";
-            this.professione.PasswordChar = '\0';
-            this.professione.SelectedText = "";
-            this.professione.SelectionLength = 0;
-            this.professione.SelectionStart = 0;
-            this.professione.Size = new System.Drawing.Size(182, 23);
-            this.professione.TabIndex = 14;
-            this.professione.UseSystemPasswordChar = false;
+            this.nome.BackColor = System.Drawing.SystemColors.Control;
+            this.nome.Depth = 0;
+            this.nome.Hint = "";
+            this.nome.Location = new System.Drawing.Point(158, 12);
+            this.nome.MouseState = MaterialSkin.MouseState.HOVER;
+            this.nome.Name = "nome";
+            this.nome.PasswordChar = '\0';
+            this.nome.SelectedText = "";
+            this.nome.SelectionLength = 0;
+            this.nome.SelectionStart = 0;
+            this.nome.Size = new System.Drawing.Size(182, 23);
+            this.nome.TabIndex = 12;
+            this.nome.UseSystemPasswordChar = false;
+            // 
+            // femmina
+            // 
+            this.femmina.AutoSize = true;
+            this.femmina.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.femmina.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.femmina.Location = new System.Drawing.Point(233, 76);
+            this.femmina.Name = "femmina";
+            this.femmina.Size = new System.Drawing.Size(34, 20);
+            this.femmina.TabIndex = 7;
+            this.femmina.Text = "F";
+            this.femmina.UseVisualStyleBackColor = false;
+            // 
+            // maschio
+            // 
+            this.maschio.AutoSize = true;
+            this.maschio.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.maschio.Checked = true;
+            this.maschio.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.maschio.Location = new System.Drawing.Point(180, 76);
+            this.maschio.Name = "maschio";
+            this.maschio.Size = new System.Drawing.Size(37, 20);
+            this.maschio.TabIndex = 7;
+            this.maschio.TabStop = true;
+            this.maschio.Text = "M";
+            this.maschio.UseVisualStyleBackColor = false;
+            // 
+            // materialLabel9
+            // 
+            this.materialLabel9.AutoSize = true;
+            this.materialLabel9.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.materialLabel9.Depth = 0;
+            this.materialLabel9.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel9.Location = new System.Drawing.Point(45, 106);
+            this.materialLabel9.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel9.Name = "materialLabel9";
+            this.materialLabel9.Size = new System.Drawing.Size(94, 19);
+            this.materialLabel9.TabIndex = 11;
+            this.materialLabel9.Text = "Professione:";
+            // 
+            // materialLabel8
+            // 
+            this.materialLabel8.AutoSize = true;
+            this.materialLabel8.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.materialLabel8.Depth = 0;
+            this.materialLabel8.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel8.Location = new System.Drawing.Point(84, 77);
+            this.materialLabel8.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel8.Name = "materialLabel8";
+            this.materialLabel8.Size = new System.Drawing.Size(55, 19);
+            this.materialLabel8.TabIndex = 10;
+            this.materialLabel8.Text = "Sesso:";
+            // 
+            // materialLabel7
+            // 
+            this.materialLabel7.AutoSize = true;
+            this.materialLabel7.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.materialLabel7.Depth = 0;
+            this.materialLabel7.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel7.Location = new System.Drawing.Point(61, 43);
+            this.materialLabel7.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel7.Name = "materialLabel7";
+            this.materialLabel7.Size = new System.Drawing.Size(78, 19);
+            this.materialLabel7.TabIndex = 9;
+            this.materialLabel7.Text = "Cognome:";
+            // 
+            // materialLabel6
+            // 
+            this.materialLabel6.AutoSize = true;
+            this.materialLabel6.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.materialLabel6.Depth = 0;
+            this.materialLabel6.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel6.Location = new System.Drawing.Point(85, 16);
+            this.materialLabel6.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel6.Name = "materialLabel6";
+            this.materialLabel6.Size = new System.Drawing.Size(54, 19);
+            this.materialLabel6.TabIndex = 8;
+            this.materialLabel6.Text = "Nome:";
+            // 
+            // cittàUtente
+            // 
+            this.cittàUtente.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cittàUtente.FormattingEnabled = true;
+            this.cittàUtente.Location = new System.Drawing.Point(169, 136);
+            this.cittàUtente.Name = "cittàUtente";
+            this.cittàUtente.Size = new System.Drawing.Size(121, 21);
+            this.cittàUtente.TabIndex = 7;
+            this.cittàUtente.Tag = "0";
+            this.cittàUtente.SelectedIndexChanged += new System.EventHandler(this.cittàUtente_SelectedIndexChanged);
+            // 
+            // materialLabel5
+            // 
+            this.materialLabel5.AutoSize = true;
+            this.materialLabel5.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.materialLabel5.Depth = 0;
+            this.materialLabel5.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel5.Location = new System.Drawing.Point(94, 139);
+            this.materialLabel5.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel5.Name = "materialLabel5";
+            this.materialLabel5.Size = new System.Drawing.Size(45, 19);
+            this.materialLabel5.TabIndex = 6;
+            this.materialLabel5.Text = "Città:";
             // 
             // materialLabel10
             // 
@@ -438,21 +444,21 @@
             this.Controls.Add(this.email);
             this.Controls.Add(this.password);
             this.Controls.Add(this.materialLabel11);
-            this.Controls.Add(this.panel2);
             this.Controls.Add(this.materialLabel10);
-            this.Controls.Add(this.panelInsegnante);
             this.Controls.Add(this.annulla);
             this.Controls.Add(this.salva);
             this.Controls.Add(this.insegnante);
             this.Controls.Add(this.utente);
             this.Controls.Add(this.materialLabel1);
+            this.Controls.Add(this.panelUtente);
+            this.Controls.Add(this.panelInsegnante);
             this.Name = "Inscrizione";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Inscrizione";
             this.panelInsegnante.ResumeLayout(false);
             this.panelInsegnante.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.panelUtente.ResumeLayout(false);
+            this.panelUtente.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -466,7 +472,7 @@
         private System.Windows.Forms.Button salva;
         private System.Windows.Forms.Button annulla;
         private System.Windows.Forms.Panel panelInsegnante;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panelUtente;
         private System.Windows.Forms.ComboBox cittaInsegnante;
         private MaterialSkin.Controls.MaterialLabel materialLabel4;
         private MaterialSkin.Controls.MaterialSingleLineTextField nomeSede;

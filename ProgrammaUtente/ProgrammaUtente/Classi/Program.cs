@@ -11,7 +11,7 @@ namespace ProgrammaUtente
     {
         public static MySqlConnection connection;
         public static string database, idUtente;
-        public static List<string[]> dati;
+        public static List<string[]> dati = new List<string[]>();
 
         /// <summary>
         /// Punto di ingresso principale dell'applicazione.
@@ -34,6 +34,7 @@ namespace ProgrammaUtente
 
         public static void query(MySqlDataReader reader)
         {
+            Program.dati.Clear();
             while (reader.Read())
             {
                 string[] dati = new string[reader.FieldCount];
