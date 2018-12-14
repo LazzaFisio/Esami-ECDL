@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MaterialSkin.Controls;
 
-namespace ProgrammaUtente
+namespace ProgrammaUtente.Interfacce
 {
-    public partial class Form1 : MaterialForm
+    public partial class Insegnante : MaterialForm
     {
-        public Form1()
+        public Insegnante()
         {
             InitializeComponent();
         }
