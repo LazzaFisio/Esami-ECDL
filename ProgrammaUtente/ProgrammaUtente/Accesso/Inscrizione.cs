@@ -34,7 +34,11 @@ namespace ProgrammaUtente.Accesso
             if (controlloEmail())
                 try
                 {
-                    string appoggio = "", idcittà = "";
+                    string appoggio = "", idcittà = "", sesso = "";
+                    if (maschio.Checked)
+                        sesso = "M";
+                    else
+                        sesso = "F";
                     if (utente.Checked)
                     {
                         appoggio = "'UTE%'";
@@ -50,7 +54,13 @@ namespace ProgrammaUtente.Accesso
                     Program.query(new MySqlCommand("SELECT COUNT(idUtenti) FROM utenti WHERE idUtenti like " + appoggio, Program.connection).ExecuteReader());
                     appoggio = appoggio.Remove(4, 1);
                     appoggio = appoggio.Insert(4, " " + (Convert.ToInt32(Program.dati[0][0]) + 1).ToString());
+                    //scrittura nel database
                     new MySqlCommand("INSERT INTO utenti VALUES (" + appoggio + ", '" + email.Text + "', '" + password.Text + "')", Program.connection).ExecuteNonQuery();
+                    if (utente.Checked)
+                        new MySqlCommand("INSERT INTO esaminandi VALUES ('" + appoggio.Substring(appoggio.Length - 2) + ", '" + nome.Text + "', '" + cognome.Text + "', '" +
+                                         sesso + "','" + idcittà + "', " + appoggio + ")", Program.connection).ExecuteNonQuery();
+                    else
+                        new MySqlCommand("", Program.connection).ExecuteNonQuery();
 
                     MessageBox.Show("Inscrizione completata", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
