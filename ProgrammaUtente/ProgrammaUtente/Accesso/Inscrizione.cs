@@ -34,15 +34,24 @@ namespace ProgrammaUtente.Accesso
             if (controlloEmail())
                 try
                 {
-                    string appoggio = "";
+                    string appoggio = "", idcittà = "";
                     if (utente.Checked)
+                    {
                         appoggio = "'UTE%'";
+                        Program.query(new MySqlCommand("SELECT idCittà FROM città WHERE nome = '" + cittàUtente.Text + "'", Program.connection).ExecuteReader());
+                        idcittà = Program.dati[0][0];
+                    }
                     else
+                    {
                         appoggio = "'INS%'";
+                        Program.query(new MySqlCommand("SELECT idCittà FROM città WHERE nome = '" + cittaInsegnante.Text + "'", Program.connection).ExecuteReader());
+                        idcittà = Program.dati[0][0];
+                    }
                     Program.query(new MySqlCommand("SELECT COUNT(idUtenti) FROM utenti WHERE idUtenti like " + appoggio, Program.connection).ExecuteReader());
                     appoggio = appoggio.Remove(4, 1);
                     appoggio = appoggio.Insert(4, " " + (Convert.ToInt32(Program.dati[0][0]) + 1).ToString());
                     new MySqlCommand("INSERT INTO utenti VALUES (" + appoggio + ", '" + email.Text + "', '" + password.Text + "')", Program.connection).ExecuteNonQuery();
+
                     MessageBox.Show("Inscrizione completata", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch { MessageBox.Show("Controlla la connessione al database e riempi tutti i campi", "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
