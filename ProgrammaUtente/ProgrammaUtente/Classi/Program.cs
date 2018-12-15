@@ -21,7 +21,7 @@ namespace ProgrammaUtente
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Login());
+            Application.Run(new Interfacce.Utente());
         }
 
         public static bool passwordValida(string password, string idUtente)
