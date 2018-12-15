@@ -34,7 +34,7 @@ namespace ProgrammaUtente.Accesso
             if (controlloEmail())
                 try
                 {
-                    string appoggio = "", idcittà = "", sesso = "";
+                    string appoggio = "", idcittà = "", sesso = "", idsede = "";
                     if (maschio.Checked)
                         sesso = "M";
                     else
@@ -47,21 +47,25 @@ namespace ProgrammaUtente.Accesso
                     }
                     else
                     {
-                        appoggio = "'INS%'";
+                        appoggio = "'ESA%'";
                         Program.query(new MySqlCommand("SELECT idCittà FROM città WHERE nome = '" + cittaInsegnante.Text + "'", Program.connection).ExecuteReader());
                         idcittà = Program.dati[0][0];
+                        Program.query(new MySqlCommand("SELECT idsede FROM sede", Program.connection).ExecuteReader());
+                        if (Program.dati.Count > 0)
+                            idsede = (Convert.ToInt32(Program.dati[Program.dati.Count - 1][0]) + 1).ToString();
+                        else
+                            idsede = "1";
                     }
                     Program.query(new MySqlCommand("SELECT COUNT(idUtenti) FROM utenti WHERE idUtenti like " + appoggio, Program.connection).ExecuteReader());
                     appoggio = appoggio.Remove(4, 1);
                     appoggio = appoggio.Insert(4, " " + (Convert.ToInt32(Program.dati[0][0]) + 1).ToString());
                     //scrittura nel database
-                    new MySqlCommand("INSERT INTO utenti VALUES (" + appoggio + ", '" + email.Text + "', '" + password.Text + "')", Program.connection).ExecuteNonQuery();
+                    new MySqlCommand("INSERT INTO utenti VALUES (" + appoggio + ", '" + email.Text + "', '" + new Sicurezza().cripta(password.Text) + "')", Program.connection).ExecuteNonQuery();
                     if (utente.Checked)
                         new MySqlCommand("INSERT INTO esaminandi VALUES ('" + appoggio.Substring(appoggio.Length - 2) + ", '" + nome.Text + "', '" + cognome.Text + "', '" +
                                          sesso + "','" + idcittà + "', " + appoggio + ")", Program.connection).ExecuteNonQuery();
                     else
-                        new MySqlCommand("", Program.connection).ExecuteNonQuery();
-
+                        new MySqlCommand("INSERT INTO sede VALUES ('" + idsede + "', '" + nomeSede.Text + "', '" + idcittà + "')", Program.connection).ExecuteNonQuery();
                     MessageBox.Show("Inscrizione completata", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch { MessageBox.Show("Controlla la connessione al database e riempi tutti i campi", "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }

@@ -81,10 +81,10 @@
             this.utente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.utente.Location = new System.Drawing.Point(110, 132);
             this.utente.Name = "utente";
-            this.utente.Size = new System.Drawing.Size(65, 20);
+            this.utente.Size = new System.Drawing.Size(102, 20);
             this.utente.TabIndex = 1;
             this.utente.TabStop = true;
-            this.utente.Text = "Utente";
+            this.utente.Text = "Esaminando";
             this.utente.UseVisualStyleBackColor = false;
             this.utente.CheckedChanged += new System.EventHandler(this.utente_CheckedChanged);
             // 
@@ -95,9 +95,9 @@
             this.insegnante.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.insegnante.Location = new System.Drawing.Point(357, 132);
             this.insegnante.Name = "insegnante";
-            this.insegnante.Size = new System.Drawing.Size(92, 20);
+            this.insegnante.Size = new System.Drawing.Size(102, 20);
             this.insegnante.TabIndex = 2;
-            this.insegnante.Text = "Insegnante";
+            this.insegnante.Text = "Esaminatore";
             this.insegnante.UseVisualStyleBackColor = false;
             this.insegnante.CheckedChanged += new System.EventHandler(this.insegnante_CheckedChanged);
             // 
