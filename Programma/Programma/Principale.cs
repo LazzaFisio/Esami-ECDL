@@ -77,7 +77,9 @@ namespace Programma
             Controls.Add(Program.creaLabel(new Point(dimSchermo.Width / 21 * 10, dimSchermo.Height / 18 * 2), "ESAMI ECDL"));
             Controls.Add(Program.creaPanel(new Size(dimSchermo.Width, dimSchermo.Height / 6 * 5), new Point(MaximumSize.Width / 12, 140), "Principale", false));
             Panel principale = (Panel)Controls.Find("Principale", true)[0];
-            principale.Controls.Add(Program.creaPanel(new Size(dimSchermo.Width / 5, principale.Height), new Point(0, 0), "1", true));
+            principale.Controls.Add(Program.creaPanel(new Size(dimSchermo.Width / 5, principale.Height), new Point(0, 0), "Citta", false));
+            Panel città = (Panel)Controls.Find("Citta", true)[0];
+            città.Controls.Add(Program.creaPanel(new Size(città.Width, città.Height / 8), new Point(0, 0), "ID", true));
         }
 
         void query(MySqlDataReader reader)

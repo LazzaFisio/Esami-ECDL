@@ -51,7 +51,7 @@ namespace Programma
             panel.Location = point;
             panel.Name = name;
             if (test)
-                panel.BackColor = Color.Black;
+                panel.BackColor = Color.LightBlue;
             else
                 panel.BackColor = Color.White;
             return panel;
