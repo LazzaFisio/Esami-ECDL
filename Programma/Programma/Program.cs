@@ -44,16 +44,14 @@ namespace Programma
             return label;
         }
 
-        public static Panel creaPanel(Size size, Point point, string name, bool test)
+        public static Panel creaPanel(Size size, Point point, string name, Color color, bool allowScroll)
         {
             Panel panel = new Panel();
             panel.Size = size;
             panel.Location = point;
             panel.Name = name;
-            if (test)
-                panel.BackColor = Color.LightBlue;
-            else
-                panel.BackColor = Color.White;
+            panel.BackColor = color;
+            panel.AutoScroll = allowScroll;
             return panel;
         }
     }
