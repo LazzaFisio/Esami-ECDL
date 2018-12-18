@@ -31,8 +31,7 @@ namespace Programma
         {
             InitializeComponent();
             dati = new List<string[]>();
-            query(new MySqlCommand("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '" + Program.database + "'",
-                               Program.connection).ExecuteReader());
+            creaTutto();
         }
 
         private void azioneComboBox(object sender, EventArgs e)
@@ -69,6 +68,18 @@ namespace Programma
                 colonne.Add(item.HeaderText);
             new Modifiche(colonne, comboBox.Text).ShowDialog();*/
             leggiDatabase();
+        }
+
+        void creaTutto()
+        {
+            Size dimSchermo = new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+            Controls.Add(Program.creaBottone(new Point(dimSchermo.Width / 10 * 9, dimSchermo.Height / 10), "modifica", aggiungi_Click));
+            Controls.Add(Program.creaLabel(new Point(dimSchermo.Width / 21 * 10, dimSchermo.Height / 18 * 2), "ESAMI ECDL"));
+            Controls.Add(Program.creaPanel(new Size(dimSchermo.Width, dimSchermo.Height / 6 * 5), new Point(MaximumSize.Width / 12, 140), "Principale", false));
+            Panel principale = (Panel)Controls.Find("Principale", true)[0];
+            principale.Controls.Add(Program.creaPanel(new Size(dimSchermo.Width / 5, principale.Height), new Point(0, 0), "Citta", false));
+            Panel città = (Panel)Controls.Find("Citta", true)[0];
+            città.Controls.Add(Program.creaPanel(new Size(città.Width, città.Height / 8), new Point(0, 0), "ID", true));
         }
 
         void query(MySqlDataReader reader)
