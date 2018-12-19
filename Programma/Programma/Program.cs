@@ -35,12 +35,12 @@ namespace Programma
             return button;
         }
 
-        public static MaterialLabel creaLabel(Point point, string text)
+        public static Label creaLabel(Point point, string text)
         {
-            MaterialLabel label = new MaterialLabel();
+            Label label = new Label();
             label.Text = text;
             label.Location = point;
-            label.BackColor = Color.White;
+            label.Font = new Font("Verdana", 10);
             return label;
         }
 

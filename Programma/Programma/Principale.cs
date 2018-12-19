@@ -75,6 +75,7 @@ namespace Programma
             Size dimSchermo = new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
             Controls.Add(Program.creaBottone(new Point(dimSchermo.Width / 10 * 9, dimSchermo.Height / 10), "modifica", aggiungi_Click));
             Controls.Add(Program.creaLabel(new Point(dimSchermo.Width / 21 * 10, dimSchermo.Height / 18 * 2), "ESAMI ECDL"));
+            Controls[Controls.Count - 1].BackColor = Color.White;
             Controls.Add(Program.creaPanel(new Size(dimSchermo.Width, dimSchermo.Height / 6 * 5), new Point(MaximumSize.Width / 12, 140), "Principale", Color.White, true));
 
             Panel principale = (Panel)Controls.Find("Principale", true)[0];
@@ -84,7 +85,7 @@ namespace Programma
                 nomedatabase.Add(item[0]);
             for(int i = 0; i < nomedatabase.Count; i++)
             {
-                principale.Controls.Add(Program.creaPanel(new Size(dimSchermo.Width / 5, principale.Height), new Point(dimSchermo.Width / 5 * i, 0), nomedatabase[i], Color.White, true));
+                principale.Controls.Add(Program.creaPanel(new Size(dimSchermo.Width / 5, principale.Height), new Point(dimSchermo.Width / 5 * i), nomedatabase[i], Color.White, true));
                 creaSezione(nomedatabase[i]);
             }
         }
@@ -104,14 +105,15 @@ namespace Programma
             {
                 int altezza = principale.Height / 40 + principale.Controls[0].Size.Height;
                 if (principale.Controls.Count > 1)
-                    altezza = principale.Controls[principale.Controls.Count - 1].Height + principale.Controls[principale.Controls.Count - 1].Size.Height / 3;
-                Panel panel = Program.creaPanel(new Size(principale.Width, principale.Height / 7), new Point(0, altezza), (i + 1).ToString(), Color.White, false);
+                    altezza = principale.Controls[principale.Controls.Count - 1].Height + principale.Controls[principale.Controls.Count - 1].Size.Height / 3 + 3;
+                Panel panel = Program.creaPanel(new Size(principale.Width, principale.Height / 7), new Point(0, altezza), (i + 1).ToString(), Color.LightBlue, false);
                 for (int y = 0; y < colonne.Length; y++)
                 {
                     query(new MySqlCommand("SELECT " + colonne[y] + " FROM " + tag, Program.connection).ExecuteReader());
                     panel.Controls.Add(Program.creaLabel(new Point(panel.Size.Width / 7, panel.Size.Height / colonne.Length * y), colonne[y] + ":"));
                     panel.Controls.Add(Program.creaLabel(new Point(panel.Size.Width / 7 * 4, panel.Size.Height / colonne.Length * y), dati[i][0]));
                 }
+                panel.BorderStyle = BorderStyle.FixedSingle;
                 principale.Controls.Add(panel);
             }
         }
