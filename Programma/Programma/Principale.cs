@@ -25,12 +25,9 @@ namespace Programma
         //SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = 'tabella' AND TABLE_SCHEMA = 'database'
         //Query per ottenere il nome delle chiavi primarie di una tabella
 
-        List<string[]> dati;
-
         public Principale()
         {
             InitializeComponent();
-            dati = new List<string[]>();
             creaTutto();
         }
 
@@ -75,37 +72,60 @@ namespace Programma
             Size dimSchermo = new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
             Controls.Add(Program.creaBottone(new Point(dimSchermo.Width / 10 * 9, dimSchermo.Height / 10), "modifica", aggiungi_Click));
             Controls.Add(Program.creaLabel(new Point(dimSchermo.Width / 21 * 10, dimSchermo.Height / 18 * 2), "ESAMI ECDL"));
-            Controls.Add(Program.creaPanel(new Size(dimSchermo.Width, dimSchermo.Height / 6 * 5), new Point(MaximumSize.Width / 12, 140), "Principale", false));
+            Controls[Controls.Count - 1].BackColor = Color.White;
+            Controls.Add(Program.creaPanel(new Size(dimSchermo.Width, dimSchermo.Height / 6 * 5), new Point(MaximumSize.Width / 12, 140), "Principale", Color.White, true));
+
             Panel principale = (Panel)Controls.Find("Principale", true)[0];
-            principale.Controls.Add(Program.creaPanel(new Size(dimSchermo.Width / 5, principale.Height), new Point(0, 0), "Citta", false));
-            Panel città = (Panel)Controls.Find("Citta", true)[0];
-            città.Controls.Add(Program.creaPanel(new Size(città.Width, città.Height / 8), new Point(0, 0), "ID", true));
+            Program.query(new MySqlCommand("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'esami ecdl'", Program.connection).ExecuteReader());
+            List<string> nomedatabase = new List<string>();
+            foreach (string[] item in Program.risQuery)
+                nomedatabase.Add(item[0]);
+            for(int i = 0; i < nomedatabase.Count; i++)
+            {
+                principale.Controls.Add(Program.creaPanel(new Size(dimSchermo.Width / 5, principale.Height), new Point(dimSchermo.Width / 5 * i), nomedatabase[i], Color.White, true));
+                creaSezione(nomedatabase[i]);
+            }
         }
 
-        void query(MySqlDataReader reader)
+        void creaSezione(string tag)
         {
-            this.dati.Clear();
-            while (reader.Read())
+            Panel principale = (Panel)Controls.Find(tag, true)[0];
+            principale.Controls.Add(Program.creaPanel(new Size(principale.Width, principale.Height / 40), new Point(0, 0), "Titolo", Color.White, false));
+            principale.Controls[0].Controls.Add(Program.creaLabel(new Point(principale.Controls[0].Size.Width / 23 * 10, principale.Controls[0].Size.Height / 7), tag));
+            Program.query(new MySqlCommand("SELECT COUNT(*) FROM " + tag, Program.connection).ExecuteReader());
+            int index = Convert.ToInt32(Program.risQuery[0][0]);
+            Program.query(new MySqlCommand("SELECT DISTINCT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'esami ecdl' AND TABLE_NAME = '" + tag + "'", Program.connection).ExecuteReader());
+            string[] colonne = new string[Program.risQuery.Count];
+            for (int i = 0; i < colonne.Length; i++)
+                colonne[i] = Program.risQuery[i][0];
+            for(int i = 0; i < index; i++)
             {
-                string[] dati = new string[reader.FieldCount];
-                for (int i = 0; i < dati.Length; i++)
-                    dati[i] = reader.GetValue(i).ToString();
-                this.dati.Add(dati);
+                int altezza = principale.Height / 40 + principale.Controls[0].Size.Height;
+                if (principale.Controls.Count > 1)
+                    altezza = principale.Controls[principale.Controls.Count - 1].Height + principale.Controls[principale.Controls.Count - 1].Size.Height / 3 + 3;
+                Panel panel = Program.creaPanel(new Size(principale.Width, principale.Height / 7), new Point(0, altezza), (i + 1).ToString(), Color.LightBlue, false);
+                for (int y = 0; y < colonne.Length; y++)
+                {
+                    Program.query(new MySqlCommand("SELECT " + colonne[y] + " FROM " + tag, Program.connection).ExecuteReader());
+                    panel.Controls.Add(Program.creaLabel(new Point(panel.Size.Width / 7, panel.Size.Height / colonne.Length * y), colonne[y] + ":"));
+                    panel.Controls.Add(Program.creaLabel(new Point(panel.Size.Width / 7 * 4, panel.Size.Height / colonne.Length * y), Program.risQuery[i][0]));
+                }
+                panel.BorderStyle = BorderStyle.FixedSingle;
+                principale.Controls.Add(panel);
             }
-            reader.Close();
         }
 
         void leggiDatabase()
         {
             /*query(new MySqlCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '" + Program.database + "' AND TABLE_NAME = '" + comboBox.Text + "'",
                                    Program.connection).ExecuteReader());
-            foreach (string[] item in dati)
+            foreach (string[] item in Program.risQuery)
             {
                 grigliaValori.Columns.Add(item[0], item[0]);
                 grigliaValori.Columns[grigliaValori.Columns.Count - 1].ReadOnly = true;
             }
             query(new MySqlCommand("SELECT * FROM " + comboBox.Text, Program.connection).ExecuteReader());
-            foreach(string[] item in dati)
+            foreach(string[] item in Program.risQuery)
             {
                 grigliaValori.Rows.Add(item[0]);
                 for (int i = 1; i < item.Length; i++)
@@ -122,8 +142,8 @@ namespace Programma
                 /*List<string> chiavi = chiaviPrimarie();
                 for (int i = 0; i < grigliaValori.Rows[index].Cells.Count; i++)
                     if (chiavi.Contains(grigliaValori.Columns[i].HeaderText))
-                        condizione += grigliaValori.Columns[i].HeaderText + " = '" + grigliaValori.Rows[index].Cells[i].Value.ToString() + "' AND ";*/
-                condizione = condizione.Remove(condizione.Length - 4, 4);
+                        condizione += grigliaValori.Columns[i].HeaderText + " = '" + grigliaValori.Rows[index].Cells[i].Value.ToString() + "' AND ";
+                condizione = condizione.Remove(condizione.Length - 4, 4);*/
                 try
                 {
                     //new MySqlCommand("DELETE FROM " + comboBox.Text + " WHERE " + condizione, Program.connection).ExecuteNonQuery();
