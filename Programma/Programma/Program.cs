@@ -13,6 +13,7 @@ namespace Programma
     {
         public static MySqlConnection connection;
         public static string database;
+        public static List<string[]> risQuery = new List<string[]>();
 
         /// <summary>
         /// Punto di ingresso principale dell'applicazione.
@@ -24,6 +25,19 @@ namespace Programma
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Login());
+        }
+
+        public static void query(MySqlDataReader reader)
+        {
+            Program.risQuery.Clear();
+            while (reader.Read())
+            {
+                string[] dati = new string[reader.FieldCount];
+                for (int i = 0; i < dati.Length; i++)
+                    dati[i] = reader.GetValue(i).ToString();
+                Program.risQuery.Add(dati);
+            }
+            reader.Close();
         }
 
         public static MaterialFlatButton creaBottone(Point point, string text, EventHandler action)
