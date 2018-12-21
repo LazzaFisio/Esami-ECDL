@@ -17,11 +17,14 @@ namespace Programma
     public partial class Modifiche : MaterialForm
     {
         string tabella;
+        List<string> gerarchie = new List<string>{ "città", "sedi", "sessioni", "esami" };
 
         public Modifiche(string tabella)
         {
             InitializeComponent();
             this.tabella = tabella;
+            panel1.Show();
+            creaOggetti();
         }
 
         private void rb_CheckedChanged(object sender, EventArgs e)
@@ -35,14 +38,50 @@ namespace Programma
                 panel2.Show();
         }
 
-        private void Aggiorna()
+        private void creaOggetti()
         {
             Program.query(new MySqlCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '" + tabella + "'", Program.connection).ExecuteReader());
             List<string[]> campi = Program.risQuery;
 
             List<string> primary = Program.chiaviPrimarie(tabella);
 
-            
+            for (int i = 0, j = 0; i < campi.Count - primary.Count; i++,j++)
+            {
+                MaterialLabel nuova = new MaterialLabel();
+                nuova.Location = new Point(panel1.Height / 5 * i + 5, 5);
+                nuova.Name = "lbl" + i;
+                while(primary.Contains(campi[0][j]))
+                    j++;
+                nuova.Text = campi[0][j];
+                MaterialSingleLineTextField testo = new MaterialSingleLineTextField();
+                testo.Location = new Point(panel1.Height / 5 * i + 5, panel1.Width / 2);
+                testo.Name = "txt" + i;
+                panel1.Controls.Add(nuova);
+                panel1.Controls.Add(testo);
+            }
+
+            if (tabella == "città")
+                cmb1.Enabled = false;
+            else
+            {
+                int index = gerarchie.FindIndex(dato => dato == tabella);
+                index--;
+
+                Program.query(new MySqlCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '" + gerarchie[index] + "'", Program.connection).ExecuteReader());
+                campi = Program.risQuery;
+
+                for (int i = 0; i < campi.Count; i++)
+                    cmb1.Items.Add(campi[i][1]);
+            }
+        }
+
+        private void materialFlatButton1_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Attenzione","Vuoi aggiungere questo campo",MessageBoxButtons.YesNoCancel,MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+
+            }
         }
     }
 }
