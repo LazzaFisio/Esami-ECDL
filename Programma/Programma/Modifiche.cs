@@ -22,6 +22,8 @@ namespace Programma
         {
             InitializeComponent();
             this.tabella = tabella;
+            panel1.Show();
+            Aggiorna();
         }
 
         private void rb_CheckedChanged(object sender, EventArgs e)
@@ -42,7 +44,21 @@ namespace Programma
 
             List<string> primary = Program.chiaviPrimarie(tabella);
 
-            
+            for (int i = 0, j = 0; i < campi.Count - primary.Count; i++,j++)
+            {
+                MaterialLabel nuova = new MaterialLabel();
+                nuova.Location = new Point(panel1.Height / 5 * i + 5, 5);
+                nuova.Name = "lbl" + i;
+                while(primary.Contains(campi[0][j]))
+                    j++;
+                nuova.Text = campi[0][j];
+                MaterialSingleLineTextField testo = new MaterialSingleLineTextField();
+                testo.Location = new Point(panel1.Height / 5 * i + 5, panel1.Width / 2);
+                testo.Name = "txt" + i;
+                panel1.Controls.Add(nuova);
+                panel1.Controls.Add(testo);
+            }
         }
+
     }
 }
