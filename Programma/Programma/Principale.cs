@@ -50,13 +50,14 @@ namespace Programma
         {
             Panel principale = (Panel)Controls.Find("Principale", true)[0];
             principale.Controls.Add(Program.creaPanel(new Size(dimSchermo.Width / 5, principale.Height), new Point(dimSchermo.Width / 5 * pos), elemento, elemento, Color.LightGray, true));
+            ((Panel)principale.Controls[principale.Controls.Count - 1]).BorderStyle = BorderStyle.FixedSingle;
             creaSezione(elemento);
         }
 
         void creaSezione(string tag)
         {
             Panel principale = (Panel)Controls.Find(tag, true)[0];
-            principale.Controls.Add(Program.creaPanel(new Size(principale.Width, principale.Height / 40 * 2), new Point(0, 0), "Titolo", "Titolo", Color.White, false));
+            principale.Controls.Add(Program.creaPanel(new Size(principale.Width - 2, principale.Height / 40 * 2), new Point(0, 0), "Titolo", "Titolo", Color.White, false));
             principale.Controls[0].Controls.Add(Program.creaLabel(new Point(principale.Controls[0].Size.Width / 23 * 10, principale.Controls[0].Size.Height / 7), tag , tag, tag));
             Program.query(new MySqlCommand("SELECT COUNT(*) FROM " + tag, Program.connection).ExecuteReader());
             int index = Convert.ToInt32(Program.risQuery[0][0]);
@@ -69,7 +70,7 @@ namespace Programma
                 int altezza = principale.Controls[0].Location.Y + principale.Controls[0].Size.Height;
                 if (principale.Controls.Count > 1)
                     altezza = principale.Controls[principale.Controls.Count - 1].Location.Y + principale.Controls[principale.Controls.Count - 1].Size.Height + 1;
-                Panel panel = Program.creaPanel(new Size(principale.Width, principale.Height / 7), new Point(0, altezza), tag + (i + 1).ToString(), tag, Color.LightBlue, false);
+                Panel panel = Program.creaPanel(new Size(principale.Width - 2, principale.Height / 7), new Point(0, altezza), tag + (i + 1).ToString(), tag, Color.LightBlue, false);
                 for (int y = 0; y < colonne.Length; y++)
                 {
                     Program.query(new MySqlCommand("SELECT " + colonne[y] + " FROM " + tag, Program.connection).ExecuteReader());
@@ -88,14 +89,15 @@ namespace Programma
             }
         }
 
+        void aggiornaSezione(Panel padre)
+        {
+            string tabella = padre.Controls[0].Controls[0].Text;
+        }
+
         void azioneDoubleClick(object sender, EventArgs e)
         {
             Panel padre = new Panel(), panel = new Panel();
             trovaPanelli(ref padre, ref panel, sender);
-            if (panel.BackColor == Color.LightBlue)
-                cambiaColore(padre, panel, Color.Lime);
-            else
-                cambiaColore(padre, panel, Color.LightBlue);
             List<string> campi = new List<string>();
             if (panel.Name == "Principale")
             {
@@ -117,25 +119,38 @@ namespace Programma
         {
             Panel padre = new Panel(), panel = new Panel();
             trovaPanelli(ref padre, ref panel, sender);
-            if(panel.BackColor == Color.LightBlue)
-                cambiaColore(padre, panel, Color.Lime);
-            else
-                cambiaColore(padre, panel, Color.LightBlue);
-        }
-
-        void cambiaColore(Panel padre, Panel panel, Color color)
-        {
-            foreach (Control control in padre.Controls)
-                if (control.Name != "Titolo" && control.BackColor == Color.Lime)
+            int index = mostra.ToList().FindIndex(dato => dato == padre.Name) + 1;
+            if(index < mostra.Length)
+            {
+                if (panel.BackColor == Color.LightBlue)
+                {
+                    foreach (Control control in padre.Controls)
+                        if (control.Name != "Titolo" && control.BackColor == Color.Lime)
+                            cambiaColoreAiCampi((Panel)control, Color.LightBlue);
+                    cambiaColoreAiCampi(panel, Color.Lime);
+                }
+                else
                     cambiaColoreAiCampi(panel, Color.LightBlue);
-            cambiaColoreAiCampi(panel, Color.Lime);
+                Panel principale = (Panel)Controls.Find("Principale", true)[0];
+                if(Controls.Find(mostra[index], true).Length == 0)
+                    creaContenitore(mostra[index], index);
+                for (int i = 0; i < principale.Controls.Count; i++)
+                {
+                    if (i <= index)
+                        principale.Controls[i].Visible = true;
+                    else
+                        principale.Controls[i].Visible = false;
+                }
+                if (panel.BackColor == Color.LightBlue)
+                    principale.Controls[index].Visible = false;
+            }
         }
 
         void cambiaColoreAiCampi(Panel panel, Color color)
         {
-            panel.BackColor = color;
             foreach (Control control in panel.Controls)
                 control.BackColor = color;
+            panel.BackColor = color;
         }
 
         void trovaPanelli(ref Panel padre, ref Panel panel, object sender)
