@@ -16,121 +16,39 @@ namespace Programma
 {
     public partial class Modifiche : MaterialForm
     {
-        int index = int.MaxValue;
-        bool insert = false;
-        string tabella = "";
-        List<string> primarykey = new List<string>(), campi = new List<string>();
+        string tabella;
+        List<string> padri = new List<string>();
+        List<string> esistenti = new List<string>();
 
-        /// <summary>
-        /// Costruttore con passaggio della lista degli attributi della tabella
-        /// </summary>
-        /// <param name="attributi"> Lista di attributi della tabella</param>
-        public Modifiche(List<string> attributi, string tabella)
+        public Modifiche(string tabella, List<string> padri, List<string> esistenti)
         {
             InitializeComponent();
-
-            dataGridView1.RowCount = attributi.Count;
-            for (int i = 0; i < attributi.Count; i++)
-            {
-                dataGridView1.Rows[i].Cells[0].Value = attributi[i];
-                dataGridView1.Rows[i].Cells[1].Value = "";
-            }
-            insert = true;
             this.tabella = tabella;
+            this.padri = padri;
+            this.esistenti = esistenti;
         }
 
-        /// <summary>
-        /// Costruttore con passaggio della lista degli attributi e dei relativi campi
-        /// </summary>
-        /// <param name="attributi">Lista degli attributi del database</param>
-        /// <param name="campi">Lista dei campi della tabella</param>
-        public Modifiche(List<string> attributi, List<string> campi,List<string> primary, string tabella)
+        private void rb_CheckedChanged(object sender, EventArgs e)
         {
-            InitializeComponent();
+            panel1.Hide();
+            panel2.Hide();
 
-            dataGridView1.RowCount = attributi.Count;
-            for (int i = 0; i < attributi.Count; i++)
-            {
-                dataGridView1.Rows[i].Cells[0].Value = attributi[i];
-                dataGridView1.Rows[i].Cells[1].Value = campi[i];
-            }
-            insert = false;
-            this.tabella = tabella;
-            this.campi = campi;
-            primarykey = primary;
-        }
-
-        /// <summary>
-        /// Funzione di modifica delle label in base alla riga selezionata
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
-        {
-            //&& dataGridView1.SelectedCells[0].RowIndex != dataGridView1.RowCount - 1
-            if (dataGridView1.SelectedCells.Count == 1 )
-                    index = dataGridView1.SelectedCells[0].RowIndex;
-            else if (dataGridView1.SelectedRows.Count == 1 )
-                    index = dataGridView1.SelectedRows[0].Index;
-
-            if (index != int.MaxValue)
-            {
-                lblCampoSelezionato.Text = dataGridView1.Rows[index].Cells[0].Value.ToString();
-                txtNuovoCampo.Text = dataGridView1.Rows[index].Cells[1].Value.ToString();
-            }
-        }
-
-        /// <summary>
-        /// Evento generato dal text change della text box
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void txtNuovoCampo_TextChanged(object sender, EventArgs e)
-        {
-            dataGridView1.Rows[index].Cells[1].Value = txtNuovoCampo.Text;
-        }
-
-        /// <summary>
-        /// funzione che si verifica quando viene premuto il bottone
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Conferma_Click(object sender, EventArgs e)
-        {
-            string query = "";
-            if (insert)
-            {
-                query = "INSERT INTO " + tabella + "( ";
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                    query += dataGridView1.Rows[i].Cells[0].Value.ToString() + ", ";
-                query = query.Remove(query.Length - 2, 1);
-                query += ") VALUES ( '";
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                    query += dataGridView1.Rows[i].Cells[1].Value.ToString() + "', '";
-                query = query.Remove(query.Length - 4, 3);
-                query += ")";
-            }
+            if (rbNuovo.Checked)
+                panel1.Show();
             else
-            { 
-                int[] app = new int[primarykey.Count];
-                for (int i = 0; i < primarykey.Count; i++)
-                    for (int j = 0; j < dataGridView1.Rows.Count; j++)
-                        if (dataGridView1.Rows[j].Cells[0].Value.ToString() == primarykey[i])
-                            app[i] = j;
+                panel2.Show();
+        }
 
-                query = "UPDATE " + tabella + " SET ";
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                    query += dataGridView1.Rows[i].Cells[0].Value.ToString() + " = '" + dataGridView1.Rows[i].Cells[1].Value.ToString() + "', ";
-                query = query.Remove(query.Length - 2, 1);
-                query += " WHERE ";
+        private void Aggiorna(List<string> padri, List<string> esistenti)
+        {
+            if (padri.Count != 0)
+                foreach (string item in padri)
+                    cmb1.Items.Add(item);
+            else
+                cmb1.Enabled = false;
 
-                for (int i = 0; i < app.Length; i++)
-                    query += dataGridView1.Rows[app[i]].Cells[0].Value.ToString() + " = '" + campi[app[i]] + "', ";
-                query = query.Remove(query.Length - 2, 1);
-                query += ";";
-            }
-            try { new MySqlCommand(query, Program.connection).ExecuteNonQuery(); this.Close(); }
-            catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+            foreach (string item in esistenti)
+                cmbEsistente.Items.Add(item);
         }
     }
 }
