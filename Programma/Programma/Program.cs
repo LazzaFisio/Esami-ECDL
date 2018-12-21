@@ -12,7 +12,7 @@ namespace Programma
     static class Program
     {
         public static MySqlConnection connection;
-        public static string database;
+        public static string titolo;
         public static List<string[]> risQuery = new List<string[]>();
 
         /// <summary>
