@@ -17,15 +17,11 @@ namespace Programma
     public partial class Modifiche : MaterialForm
     {
         string tabella;
-        List<string> padri = new List<string>();
-        List<string> esistenti = new List<string>();
 
-        public Modifiche(string tabella, List<string> padri, List<string> esistenti)
+        public Modifiche(string tabella)
         {
             InitializeComponent();
             this.tabella = tabella;
-            this.padri = padri;
-            this.esistenti = esistenti;
         }
 
         private void rb_CheckedChanged(object sender, EventArgs e)
@@ -39,16 +35,14 @@ namespace Programma
                 panel2.Show();
         }
 
-        private void Aggiorna(List<string> padri, List<string> esistenti)
+        private void Aggiorna()
         {
-            if (padri.Count != 0)
-                foreach (string item in padri)
-                    cmb1.Items.Add(item);
-            else
-                cmb1.Enabled = false;
+            Program.query(new MySqlCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '" + tabella + "'", Program.connection).ExecuteReader());
+            List<string[]> campi = Program.risQuery;
 
-            foreach (string item in esistenti)
-                cmbEsistente.Items.Add(item);
+            List<string> primary = Program.chiaviPrimarie(tabella);
+
+            
         }
     }
 }
