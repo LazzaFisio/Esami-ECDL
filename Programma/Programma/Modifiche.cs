@@ -49,6 +49,12 @@ namespace Programma
 
             foreach (string item in esistenti)
                 cmbEsistente.Items.Add(item);
+
+            Program.query(new MySqlCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '" + tabella + "'", Program.connection).ExecuteReader());
+            List<string[]> campi = Program.risQuery;
+
+            
+            
         }
     }
 }
