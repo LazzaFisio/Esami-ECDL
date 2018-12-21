@@ -17,13 +17,14 @@ namespace Programma
     public partial class Modifiche : MaterialForm
     {
         string tabella;
+        List<string> gerarchie = new List<string>{ "città", "sedi", "sessioni", "esami" };
 
         public Modifiche(string tabella)
         {
             InitializeComponent();
             this.tabella = tabella;
             panel1.Show();
-            Aggiorna();
+            creaOggetti();
         }
 
         private void rb_CheckedChanged(object sender, EventArgs e)
@@ -37,7 +38,7 @@ namespace Programma
                 panel2.Show();
         }
 
-        private void Aggiorna()
+        private void creaOggetti()
         {
             Program.query(new MySqlCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '" + tabella + "'", Program.connection).ExecuteReader());
             List<string[]> campi = Program.risQuery;
@@ -57,6 +58,20 @@ namespace Programma
                 testo.Name = "txt" + i;
                 panel1.Controls.Add(nuova);
                 panel1.Controls.Add(testo);
+            }
+
+            if (tabella == "città")
+                cmb1.Enabled = false;
+            else
+            {
+                int index = gerarchie.FindIndex(dato => dato == tabella);
+                index--;
+
+                Program.query(new MySqlCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '" + gerarchie[index] + "'", Program.connection).ExecuteReader());
+                campi = Program.risQuery;
+
+                for (int i = 0; i < campi.Count; i++)
+                    cmb1.Items.Add(campi[i][1]);
             }
         }
 
