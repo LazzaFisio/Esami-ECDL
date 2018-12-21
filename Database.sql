@@ -20,7 +20,7 @@ ENGINE = InnoDB;
 -- Table `Esami ECDL`.`Città`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `Esami ECDL`.`Città` (
-  `idCittà` VARCHAR(45) NOT NULL ,
+  `idCittà` INT NOT NULL AUTO_INCREMENT ,
   `nome` VARCHAR(45) NULL ,
   `comune` VARCHAR(45) NULL ,
   `provincia` VARCHAR(45) NULL ,
@@ -37,7 +37,7 @@ CREATE  TABLE IF NOT EXISTS `Esami ECDL`.`Esaminandi` (
   `nome` VARCHAR(45) NULL ,
   `cognome` VARCHAR(45) NULL ,
   `sesso` VARCHAR(45) NULL ,
-  `Città_idCittà` VARCHAR(45) NOT NULL ,
+  `Città_idCittà` INT NOT NULL ,
   PRIMARY KEY (`codice`) ,
   INDEX `fk_Esaminandi_Città1_idx` (`Città_idCittà` ASC) ,
   CONSTRAINT `fk_Esaminandi_Città1`
@@ -54,7 +54,7 @@ ENGINE = InnoDB;
 CREATE  TABLE IF NOT EXISTS `Esami ECDL`.`Sede` (
   `idSede` INT NOT NULL ,
   `nome` VARCHAR(45) NULL ,
-  `Città_idCittà` VARCHAR(45) NOT NULL ,
+  `Città_idCittà` INT NOT NULL ,
   PRIMARY KEY (`idSede`) ,
   INDEX `fk_Sede_Città1_idx` (`Città_idCittà` ASC) ,
   CONSTRAINT `fk_Sede_Città1`
