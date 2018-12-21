@@ -10,7 +10,6 @@ USE `Esami ECDL` ;
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `Esami ECDL`.`Esami` (
   `idEsami` INT NOT NULL AUTO_INCREMENT ,
-  `data` DATETIME NULL ,
   `tipo` VARCHAR(45) NULL ,
   `percMinima` VARCHAR(45) NULL ,
   PRIMARY KEY (`idEsami`) )
@@ -38,7 +37,6 @@ CREATE  TABLE IF NOT EXISTS `Esami ECDL`.`Esaminandi` (
   `nome` VARCHAR(45) NULL ,
   `cognome` VARCHAR(45) NULL ,
   `sesso` VARCHAR(45) NULL ,
-  `professione` VARCHAR(45) NULL ,
   `Città_idCittà` VARCHAR(45) NOT NULL ,
   PRIMARY KEY (`codice`) ,
   INDEX `fk_Esaminandi_Città1_idx` (`Città_idCittà` ASC) ,
@@ -68,48 +66,82 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Esami ECDL`.`Risultato`
+-- Table `Esami ECDL`.`SkillCard`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `Esami ECDL`.`Risultato` (
-  `esaminandiCodice` INT NOT NULL ,
-  `idEsami` INT NOT NULL ,
-  `esito` VARCHAR(45) NULL ,
-  `percentuale` VARCHAR(45) NULL ,
-  PRIMARY KEY (`esaminandiCodice`, `idEsami`) ,
-  INDEX `fk_Esaminandi_has_Esami_Esami1_idx` (`idEsami` ASC) ,
-  INDEX `fk_Esaminandi_has_Esami_Esaminandi_idx` (`esaminandiCodice` ASC) ,
-  CONSTRAINT `fk_Esaminandi_has_Esami_Esaminandi`
-    FOREIGN KEY (`esaminandiCodice` )
+CREATE  TABLE IF NOT EXISTS `Esami ECDL`.`SkillCard` (
+  `idSkillCard` INT NOT NULL AUTO_INCREMENT ,
+  `DataEmissione` DATETIME NULL ,
+  `DataScadenza` DATETIME NULL ,
+  `Esaminandi_codice` INT NOT NULL ,
+  PRIMARY KEY (`idSkillCard`) ,
+  INDEX `fk_SkillCard_Esaminandi1_idx` (`Esaminandi_codice` ASC) ,
+  CONSTRAINT `fk_SkillCard_Esaminandi1`
+    FOREIGN KEY (`Esaminandi_codice` )
     REFERENCES `Esami ECDL`.`Esaminandi` (`codice` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Esaminandi_has_Esami_Esami1`
-    FOREIGN KEY (`idEsami` )
-    REFERENCES `Esami ECDL`.`Esami` (`idEsami` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Esami ECDL`.`CaratEsami`
+-- Table `Esami ECDL`.`Risultato`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `Esami ECDL`.`CaratEsami` (
+CREATE  TABLE IF NOT EXISTS `Esami ECDL`.`Risultato` (
   `idEsami` INT NOT NULL ,
-  `idSede` INT NOT NULL ,
-  `effettuato` VARCHAR(45) NULL ,
-  `pianificato` VARCHAR(45) NULL ,
-  PRIMARY KEY (`idEsami`, `idSede`) ,
-  INDEX `fk_Esami_has_Sede_Sede1_idx` (`idSede` ASC) ,
-  INDEX `fk_Esami_has_Sede_Esami1_idx` (`idEsami` ASC) ,
-  CONSTRAINT `fk_Esami_has_Sede_Esami1`
+  `idSkillCard` INT NOT NULL ,
+  `esito` VARCHAR(45) NULL ,
+  `percentuale` VARCHAR(45) NULL ,
+  PRIMARY KEY (`idEsami`, `idSkillCard`) ,
+  INDEX `fk_Esaminandi_has_Esami_Esami1_idx` (`idEsami` ASC) ,
+  INDEX `fk_Risultato_SkillCard1_idx` (`idSkillCard` ASC) ,
+  CONSTRAINT `fk_Esaminandi_has_Esami_Esami1`
     FOREIGN KEY (`idEsami` )
     REFERENCES `Esami ECDL`.`Esami` (`idEsami` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Esami_has_Sede_Sede1`
-    FOREIGN KEY (`idSede` )
+  CONSTRAINT `fk_Risultato_SkillCard1`
+    FOREIGN KEY (`idSkillCard` )
+    REFERENCES `Esami ECDL`.`SkillCard` (`idSkillCard` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Esami ECDL`.`Sessione`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `Esami ECDL`.`Sessione` (
+  `idSessione` INT NOT NULL AUTO_INCREMENT ,
+  `data` DATETIME NULL ,
+  `Sede_idSede` INT NOT NULL ,
+  PRIMARY KEY (`idSessione`) ,
+  INDEX `fk_Sessione_Sede1_idx` (`Sede_idSede` ASC) ,
+  CONSTRAINT `fk_Sessione_Sede1`
+    FOREIGN KEY (`Sede_idSede` )
     REFERENCES `Esami ECDL`.`Sede` (`idSede` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Esami ECDL`.`EsameSessione`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `Esami ECDL`.`EsameSessione` (
+  `idEsami` INT NOT NULL ,
+  `idSessione` INT NOT NULL ,
+  `DurataEsame` VARCHAR(45) NULL ,
+  PRIMARY KEY (`idEsami`, `idSessione`) ,
+  INDEX `fk_Esami_has_Sessione_Sessione1_idx` (`idSessione` ASC) ,
+  INDEX `fk_Esami_has_Sessione_Esami1_idx` (`idEsami` ASC) ,
+  CONSTRAINT `fk_Esami_has_Sessione_Esami1`
+    FOREIGN KEY (`idEsami` )
+    REFERENCES `Esami ECDL`.`Esami` (`idEsami` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Esami_has_Sessione_Sessione1`
+    FOREIGN KEY (`idSessione` )
+    REFERENCES `Esami ECDL`.`Sessione` (`idSessione` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
