@@ -15,9 +15,30 @@ namespace Programma
 {
     public partial class Messaggio : MaterialForm
     {
-        public Messaggio()
+        List<string> campi;
+
+        public Messaggio(List<string> campi)
         {
             InitializeComponent();
+            this.campi = campi;
+            if (campi.Count == 0)
+                modifica.Enabled = elimina.Enabled = false;
+        }
+
+        private void aggiungi_Click(object sender, EventArgs e)
+        {
+            Program.scelta = "aggiungi";
+            Close();
+        }
+
+        private void modifica_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void elimina_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
