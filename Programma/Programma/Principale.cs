@@ -25,15 +25,15 @@ namespace Programma
         //SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = 'tabella' AND TABLE_SCHEMA = 'database'
         //Query per ottenere il nome delle chiavi primarie di una tabella
 
+        string[] mostra;
+        Size dimSchermo;
+        
         public Principale()
         {
             InitializeComponent();
+            mostra = new string[] { "città", "sede", "sessione", "esami", "risultati", "esaminandi" };
+            dimSchermo = new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
             creaTutto();
-        }
-
-        private void azioneComboBox(object sender, EventArgs e)
-        {
-            leggiDatabase();
         }
 
         private void elimina(object sender, DataGridViewCellEventArgs e)
@@ -48,50 +48,36 @@ namespace Programma
 
         private void modica_Click(object sender, EventArgs e)
         {
-            /*List<string> colonne = new List<string>();
-            foreach (DataGridViewColumn item in grigliaValori.Columns)
-                colonne.Add(item.HeaderText);
-            List<string> campi = new List<string>();
-            foreach (DataGridViewCell item in grigliaValori.Rows[index].Cells)
-                campi.Add(item.Value.ToString());
-            new Modifiche(colonne, campi, chiaviPrimarie(), comboBox.Text).ShowDialog();*/
-            leggiDatabase();
+
         }
 
         private void aggiungi_Click(object sender, EventArgs e)
         {
-           /* List<string> colonne = new List<string>();
-            foreach (DataGridViewColumn item in grigliaValori.Columns)
-                colonne.Add(item.HeaderText);
-            new Modifiche(colonne, comboBox.Text).ShowDialog();*/
-            leggiDatabase();
+          
         }
 
         void creaTutto()
         {
-            Size dimSchermo = new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
-            Controls.Add(Program.creaBottone(new Point(dimSchermo.Width / 10 * 9, dimSchermo.Height / 10), "modifica", aggiungi_Click));
-            Controls.Add(Program.creaLabel(new Point(dimSchermo.Width / 21 * 10, dimSchermo.Height / 18 * 2), "ESAMI ECDL"));
+            Controls.Add(Program.creaBottone(new Point(dimSchermo.Width / 10 * 9, dimSchermo.Height / 10), "modifica", modica_Click));
+            Controls.Add(Program.creaBottone(new Point(dimSchermo.Width / 10 * 8, dimSchermo.Height / 10), "aggiungi", aggiungi_Click));
+            Controls.Add(Program.creaLabel(new Point(dimSchermo.Width / 21 * 10, dimSchermo.Height / 18 * 2), "ESAMI ECDL", "Nientes"));
             Controls[Controls.Count - 1].BackColor = Color.White;
             Controls.Add(Program.creaPanel(new Size(dimSchermo.Width, dimSchermo.Height / 6 * 5), new Point(MaximumSize.Width / 12, 140), "Principale", Color.White, true));
+            creaContenitore(mostra[0], 0);
+        }
 
+        void creaContenitore(string elemento, int pos)
+        {
             Panel principale = (Panel)Controls.Find("Principale", true)[0];
-            Program.query(new MySqlCommand("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'esami ecdl'", Program.connection).ExecuteReader());
-            List<string> nomedatabase = new List<string>();
-            foreach (string[] item in Program.risQuery)
-                nomedatabase.Add(item[0]);
-            for(int i = 0; i < nomedatabase.Count; i++)
-            {
-                principale.Controls.Add(Program.creaPanel(new Size(dimSchermo.Width / 5, principale.Height), new Point(dimSchermo.Width / 5 * i), nomedatabase[i], Color.White, true));
-                creaSezione(nomedatabase[i]);
-            }
+            principale.Controls.Add(Program.creaPanel(new Size(dimSchermo.Width / 5, principale.Height), new Point(dimSchermo.Width / 5 * pos), elemento, Color.White, true));
+            creaSezione(elemento);
         }
 
         void creaSezione(string tag)
         {
             Panel principale = (Panel)Controls.Find(tag, true)[0];
             principale.Controls.Add(Program.creaPanel(new Size(principale.Width, principale.Height / 40), new Point(0, 0), "Titolo", Color.White, false));
-            principale.Controls[0].Controls.Add(Program.creaLabel(new Point(principale.Controls[0].Size.Width / 23 * 10, principale.Controls[0].Size.Height / 7), tag));
+            principale.Controls[0].Controls.Add(Program.creaLabel(new Point(principale.Controls[0].Size.Width / 23 * 10, principale.Controls[0].Size.Height / 7), tag , tag));
             Program.query(new MySqlCommand("SELECT COUNT(*) FROM " + tag, Program.connection).ExecuteReader());
             int index = Convert.ToInt32(Program.risQuery[0][0]);
             Program.query(new MySqlCommand("SELECT DISTINCT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'esami ecdl' AND TABLE_NAME = '" + tag + "'", Program.connection).ExecuteReader());
@@ -107,30 +93,19 @@ namespace Programma
                 for (int y = 0; y < colonne.Length; y++)
                 {
                     Program.query(new MySqlCommand("SELECT " + colonne[y] + " FROM " + tag, Program.connection).ExecuteReader());
-                    panel.Controls.Add(Program.creaLabel(new Point(panel.Size.Width / 7, panel.Size.Height / colonne.Length * y), colonne[y] + ":"));
-                    panel.Controls.Add(Program.creaLabel(new Point(panel.Size.Width / 7 * 4, panel.Size.Height / colonne.Length * y), Program.risQuery[i][0]));
+                    panel.Controls.Add(Program.creaLabel(new Point(panel.Size.Width / 7, panel.Size.Height / colonne.Length * y), colonne[y] + ":", tag));
+                    panel.Controls.Add(Program.creaLabel(new Point(panel.Size.Width / 7 * 4, panel.Size.Height / colonne.Length * y), Program.risQuery[i][0], tag));
                 }
                 panel.BorderStyle = BorderStyle.FixedSingle;
+                foreach (Control control in panel.Controls)
+                    control.Click += azione;
                 principale.Controls.Add(panel);
             }
         }
 
-        void leggiDatabase()
+        void azione(object sender, EventArgs e)
         {
-            /*query(new MySqlCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '" + Program.database + "' AND TABLE_NAME = '" + comboBox.Text + "'",
-                                   Program.connection).ExecuteReader());
-            foreach (string[] item in Program.risQuery)
-            {
-                grigliaValori.Columns.Add(item[0], item[0]);
-                grigliaValori.Columns[grigliaValori.Columns.Count - 1].ReadOnly = true;
-            }
-            query(new MySqlCommand("SELECT * FROM " + comboBox.Text, Program.connection).ExecuteReader());
-            foreach(string[] item in Program.risQuery)
-            {
-                grigliaValori.Rows.Add(item[0]);
-                for (int i = 1; i < item.Length; i++)
-                    grigliaValori.Rows[grigliaValori.Rows.Count - 2].Cells[i].Value = item[i];
-            }*/
+            
         }
 
         void elimina()
@@ -139,17 +114,7 @@ namespace Programma
             DialogResult result = MessageBox.Show("Desideri elimare il campo selezionato", "ATTENZIONE", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
-                /*List<string> chiavi = chiaviPrimarie();
-                for (int i = 0; i < grigliaValori.Rows[index].Cells.Count; i++)
-                    if (chiavi.Contains(grigliaValori.Columns[i].HeaderText))
-                        condizione += grigliaValori.Columns[i].HeaderText + " = '" + grigliaValori.Rows[index].Cells[i].Value.ToString() + "' AND ";
-                condizione = condizione.Remove(condizione.Length - 4, 4);*/
-                try
-                {
-                    //new MySqlCommand("DELETE FROM " + comboBox.Text + " WHERE " + condizione, Program.connection).ExecuteNonQuery();
-                    leggiDatabase();
-                }
-                catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+                
             }
         }
     }

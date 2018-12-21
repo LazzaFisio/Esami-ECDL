@@ -40,6 +40,15 @@ namespace Programma
             reader.Close();
         }
 
+        public static List<string> chiaviPrimarie(string tabella)
+        {
+            List<string> chiavi = new List<string>();
+            query(new MySqlCommand("SHOW KEYS FROM " + tabella + " WHERE KEY_NAME = 'Primary'", Program.connection).ExecuteReader());
+            foreach (string[] item in Program.risQuery)
+                chiavi.Add(item[4]);
+            return chiavi;
+        }
+
         public static MaterialFlatButton creaBottone(Point point, string text, EventHandler action)
         {
             MaterialFlatButton button = new MaterialFlatButton();
@@ -49,10 +58,11 @@ namespace Programma
             return button;
         }
 
-        public static Label creaLabel(Point point, string text)
+        public static Label creaLabel(Point point, string text, string tag)
         {
             Label label = new Label();
             label.Text = text;
+            label.Tag = tag;
             label.Location = point;
             label.Font = new Font("Verdana", 10);
             return label;
@@ -64,6 +74,7 @@ namespace Programma
             panel.Size = size;
             panel.Location = point;
             panel.Name = name;
+            panel.Tag = name;
             panel.BackColor = color;
             panel.AutoScroll = allowScroll;
             return panel;
