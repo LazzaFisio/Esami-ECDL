@@ -75,5 +75,13 @@ namespace Programma
             }
         }
 
+        private void materialFlatButton1_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Attenzione","Vuoi aggiungere questo campo",MessageBoxButtons.YesNoCancel,MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+
+            }
+        }
     }
 }
