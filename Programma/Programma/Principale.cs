@@ -31,37 +31,15 @@ namespace Programma
         public Principale()
         {
             InitializeComponent();
-            mostra = new string[] { "città", "sede", "sessione", "esami", "risultati", "esaminandi" };
+            mostra = new string[] { "città", "sede", "sessione", "esami", "esaminandi", "risultati" , "skillcard"};
             dimSchermo = new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
             creaTutto();
         }
 
-        private void elimina(object sender, DataGridViewCellEventArgs e)
-        {
-            elimina();
-        }
-
-        private void delete_Click(object sender, EventArgs e)
-        {
-            elimina();
-        }
-
-        private void modica_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void aggiungi_Click(object sender, EventArgs e)
-        {
-          
-        }
-
         void creaTutto()
         {
-            Controls.Add(Program.creaBottone(new Point(dimSchermo.Width / 10 * 9, dimSchermo.Height / 10), "modifica", modica_Click));
-            Controls.Add(Program.creaBottone(new Point(dimSchermo.Width / 10 * 8, dimSchermo.Height / 10), "aggiungi", aggiungi_Click));
             Controls.Add(Program.creaLabel(new Point(dimSchermo.Width / 21 * 10, dimSchermo.Height / 18 * 2), "ESAMI ECDL", "Nientes"));
-            Controls[Controls.Count - 1].BackColor = Color.White;
+            Controls[0].BackColor = Color.White;
             Controls.Add(Program.creaPanel(new Size(dimSchermo.Width, dimSchermo.Height / 6 * 5), new Point(MaximumSize.Width / 12, 140), "Principale", Color.White, true));
             creaContenitore(mostra[0], 0);
         }
