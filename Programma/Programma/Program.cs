@@ -12,7 +12,7 @@ namespace Programma
     static class Program
     {
         public static MySqlConnection connection;
-        public static string database;
+        public static string scelta;
         public static List<string[]> risQuery = new List<string[]>();
 
         /// <summary>
@@ -58,23 +58,24 @@ namespace Programma
             return button;
         }
 
-        public static Label creaLabel(Point point, string text, string tag)
+        public static Label creaLabel(Point point, string text, string name, string tag)
         {
             Label label = new Label();
             label.Text = text;
+            label.Name = name;
             label.Tag = tag;
             label.Location = point;
             label.Font = new Font("Verdana", 10);
             return label;
         }
 
-        public static Panel creaPanel(Size size, Point point, string name, Color color, bool allowScroll)
+        public static Panel creaPanel(Size size, Point point, string name, string tag, Color color, bool allowScroll)
         {
             Panel panel = new Panel();
             panel.Size = size;
             panel.Location = point;
             panel.Name = name;
-            panel.Tag = name;
+            panel.Tag = tag;
             panel.BackColor = color;
             panel.AutoScroll = allowScroll;
             return panel;
