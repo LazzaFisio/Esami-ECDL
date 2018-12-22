@@ -48,8 +48,6 @@ namespace Programma
             Controls.Add(Program.creaLabel(new Point(dimSchermo.Width / 21 * 10, dimSchermo.Height / 20 * 2), "ESAMI ECDL", "Niente", "Niente"));
             Controls[0].BackColor = Color.White;
             Controls.Add(Program.creaPanel(new Size(dimSchermo.Width, dimSchermo.Height / 6 * 5), new Point(MaximumSize.Width / 12, 140), "Principale", "Principale", Color.White, true));
-            ((Panel)Controls.Find("Principale", true)[0]).DoubleClick += azioneDoubleClick;
-            ((Panel)Controls.Find("Principale", true)[0]).Click += azioneClick;
             creaContenitore(mostra[0], 0, null);
         }
 
@@ -58,6 +56,7 @@ namespace Programma
             Panel principale = (Panel)Controls.Find("Principale", true)[0];
             principale.Controls.Add(Program.creaPanel(new Size(dimSchermo.Width / 5, principale.Height), new Point(dimSchermo.Width / 5 * pos), elemento, elemento, Color.LightGray, true));
             ((Panel)principale.Controls[principale.Controls.Count - 1]).BorderStyle = BorderStyle.FixedSingle;
+            ((Panel)principale.Controls[principale.Controls.Count - 1]).DoubleClick += azioneDoubleClick;
             creaSezione(elemento, panel);
         }
 
