@@ -45,7 +45,7 @@ namespace Programma
 
         void creaTutto()
         {
-            Controls.Add(Program.creaLabel(new Point(dimSchermo.Width / 21 * 10, dimSchermo.Height / 18 * 2), "ESAMI ECDL", "Niente", "Niente"));
+            Controls.Add(Program.creaLabel(new Point(dimSchermo.Width / 21 * 10, dimSchermo.Height / 20 * 2), "ESAMI ECDL", "Niente", "Niente"));
             Controls[0].BackColor = Color.White;
             Controls.Add(Program.creaPanel(new Size(dimSchermo.Width, dimSchermo.Height / 6 * 5), new Point(MaximumSize.Width / 12, 140), "Principale", "Principale", Color.White, true));
             ((Panel)Controls.Find("Principale", true)[0]).DoubleClick += azioneDoubleClick;
@@ -64,11 +64,11 @@ namespace Programma
         void creaSezione(string tag, Panel panel)
         {
             Panel principale = (Panel)Controls.Find(tag, true)[0];
-            principale.Controls.Add(Program.creaPanel(new Size(principale.Width - 2, principale.Height / 40 * 2), new Point(0, 0), "Titolo", "Titolo", Color.White, false));
+            principale.Controls.Add(Program.creaPanel(new Size(principale.Width - 4, principale.Height / 40 * 2), new Point(0, 0), "Titolo", "Titolo", Color.White, false));
             principale.Controls[0].Controls.Add(Program.creaLabel(new Point(principale.Controls[0].Size.Width / 23 * 10, principale.Controls[0].Size.Height / 7), tag , tag, tag));
-            int index = 3;
+            int index = 0;
             string cond = "";
-            condizione(tag, ref index, ref cond, null);
+            condizione(tag, ref index, ref cond, panel);
             Program.query(new MySqlCommand("SELECT DISTINCT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'esami ecdl' AND TABLE_NAME = '" + tag + "'", Program.connection).ExecuteReader());
             string[] colonne = new string[Program.risQuery.Count];
             for (int i = 0; i < colonne.Length; i++)
@@ -78,12 +78,12 @@ namespace Programma
                 int altezza = principale.Controls[0].Location.Y + principale.Controls[0].Size.Height;
                 if (principale.Controls.Count > 1)
                     altezza = principale.Controls[principale.Controls.Count - 1].Location.Y + principale.Controls[principale.Controls.Count - 1].Size.Height + 1;
-                Panel appoggio = Program.creaPanel(new Size(principale.Width - 2, principale.Height / 12 * 2), new Point(0, altezza), tag + (i + 1).ToString(), tag, Color.LightBlue, false);
+                Panel appoggio = Program.creaPanel(new Size(principale.Width - 3, principale.Height / 12 * 2), new Point(0, altezza), tag + (i + 1).ToString(), tag, Color.LightBlue, false);
                 for (int y = 0; y < colonne.Length; y++)
                 {
                     Program.query(new MySqlCommand("SELECT " + colonne[y] + " FROM " + tag + cond, Program.connection).ExecuteReader());
-                    appoggio.Controls.Add(Program.creaLabel(new Point(appoggio.Size.Width / 7, appoggio.Size.Height / colonne.Length * y), colonne[y] + ":", tag, tag + (i + 1).ToString()));
-                    appoggio.Controls.Add(Program.creaLabel(new Point(appoggio.Size.Width / 7 * 4, appoggio.Size.Height / colonne.Length * y), Program.risQuery[i][0], tag, tag + (i + 1).ToString()));
+                    appoggio.Controls.Add(Program.creaLabel(new Point(appoggio.Size.Width / 7, appoggio.Size.Height / colonne.Length * y + 1), colonne[y] + ":", tag, tag + (i + 1).ToString()));
+                    appoggio.Controls.Add(Program.creaLabel(new Point(appoggio.Size.Width / 7 * 4, appoggio.Size.Height / colonne.Length * y + 1), Program.risQuery[i][0], tag, tag + (i + 1).ToString()));
                 }
                 appoggio.BorderStyle = BorderStyle.FixedSingle;
                 appoggio.DoubleClick += azioneDoubleClick;
@@ -102,10 +102,23 @@ namespace Programma
             int appoggio = Program.tabelle.ToList().FindIndex(dato => dato == tabella) - 1;
             if (appoggio < 0)
                 appoggio = 0;
-            List<string> chiavi = Program.chiaviPrimarie(Program.tabelle[index]);
+            List<string> chiavi = Program.chiaviPrimarie(Program.tabelle[appoggio]);
+            condizione = " WHERE ";
             if(panel != null)
             {
-                Program.query(new MySqlCommand("", Program.connection).ExecuteReader());
+                string colonna = "";
+                foreach (string item in chiavi)
+                    colonna += "REFERENCED_COLUMN_NAME = '" + item + "' AND ";
+                colonna = colonna.Remove(colonna.Length - 4, 3);
+                Program.query(new MySqlCommand("SELECT COLUMN_NAME FROM information_schema.KEY_COLUMN_USAGE ke WHERE ke.referenced_table_name IS NOT NULL AND TABLE_NAME = '" + tabella + "' AND " + colonna, Program.connection).ExecuteReader());
+                colonna = Program.risQuery[0][0];
+                for (int i = 0; i < panel.Controls.Count - 1; i += 2)
+                    if (chiavi.Contains(panel.Controls[i].Text.Remove(panel.Controls[i].Text.Length - 1, 1)))
+                        condizione += colonna + " = '" + panel.Controls[i + 1].Text + "' ";
+                if (condizione.Length == 7)
+                    condizione = "";
+                Program.query(new MySqlCommand("SELECT COUNT(*) FROM " + tabella + condizione, Program.connection).ExecuteReader());
+                index = Convert.ToInt32(Program.risQuery[0][0]);
             }
             else
             {
@@ -115,13 +128,12 @@ namespace Programma
             }
         }
 
-        void aggiornaSezione(Panel padre)
+        void aggiornaSezione(Panel padre, Panel selezionato)
         {
-            string tabella = padre.Controls[0].Controls[0].Text;
-            Program.query(new MySqlCommand("SELECT * FROM " + tabella, Program.connection).ExecuteReader());
-            for (int i = 1; i < padre.Controls.Count; i++)
-                for (int y = 0, t = 0; y < padre.Controls[i].Controls.Count; y += 2, t++)
-                    t = 0;
+            string tabella = Program.tabelle[Program.tabelle.ToList().FindIndex(dato => dato == padre.Controls[0].Controls[0].Text) + 1];
+            Panel panel = (Panel)Controls.Find(tabella, true)[0];
+            panel.Controls.Clear();
+            creaSezione(tabella, selezionato);
         }
 
         void azioneDoubleClick(object sender, EventArgs e)
@@ -162,10 +174,13 @@ namespace Programma
                 else
                     cambiaColoreAiCampi(panel, Color.LightBlue);
                 Panel principale = (Panel)Controls.Find("Principale", true)[0];
-                if (Controls.Find(mostra[index], true).Length == 0)
-                    creaContenitore(mostra[index], index, panel);
-                else
-                    aggiornaSezione(padre);
+                if (panel.BackColor == Color.Lime)
+                {
+                    if (Controls.Find(mostra[index], true).Length == 0)
+                        creaContenitore(mostra[index], index, panel);
+                    else
+                        aggiornaSezione(padre, panel);
+                }
                 for (int i = 0; i < principale.Controls.Count; i++)
                 {
                     if (i <= index)
