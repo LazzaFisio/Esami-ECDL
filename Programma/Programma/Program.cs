@@ -14,6 +14,7 @@ namespace Programma
         public static MySqlConnection connection;
         public static string scelta;
         public static List<string[]> risQuery = new List<string[]>();
+        public static string[] tabelle = new string[] { "città", "sede", "sessione", "esamesessione", "esami", "risultato", "skillcard", "esaminandi"};
 
         /// <summary>
         /// Punto di ingresso principale dell'applicazione.

@@ -31,7 +31,7 @@ namespace Programma
                 new Principale().ShowDialog();
                 Show();
             }
-            catch { MessageBox.Show("Errore nel tentativo di creazione di una connessione", "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); Show(); }
+            catch (Exception err){ MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); Show(); }
         }
     }
 }
