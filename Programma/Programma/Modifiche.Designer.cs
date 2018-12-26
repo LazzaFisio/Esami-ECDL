@@ -89,7 +89,7 @@
             // cmb1
             // 
             this.cmb1.FormattingEnabled = true;
-            this.cmb1.Location = new System.Drawing.Point(187, 220);
+            this.cmb1.Location = new System.Drawing.Point(187, 224);
             this.cmb1.Name = "cmb1";
             this.cmb1.Size = new System.Drawing.Size(136, 21);
             this.cmb1.TabIndex = 9;
@@ -100,7 +100,7 @@
             this.lbl5.Depth = 0;
             this.lbl5.Font = new System.Drawing.Font("Roboto", 11F);
             this.lbl5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lbl5.Location = new System.Drawing.Point(33, 223);
+            this.lbl5.Location = new System.Drawing.Point(33, 225);
             this.lbl5.MouseState = MaterialSkin.MouseState.HOVER;
             this.lbl5.Name = "lbl5";
             this.lbl5.Size = new System.Drawing.Size(85, 19);
