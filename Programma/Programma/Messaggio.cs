@@ -33,12 +33,14 @@ namespace Programma
 
         private void modifica_Click(object sender, EventArgs e)
         {
-
+            Program.scelta = "modifica";
+            Close();
         }
 
         private void elimina_Click(object sender, EventArgs e)
         {
-
+            Program.scelta = "elimina";
+            Close();
         }
     }
 }

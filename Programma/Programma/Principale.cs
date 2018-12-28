@@ -139,15 +139,17 @@ namespace Programma
         {
             Panel padre = new Panel(), panel = new Panel();
             trovaPanelli(ref padre, ref panel, sender);
+            cambiaColoreAiCampi(panel, Color.Lime);
             List<string> campi = new List<string>();
-            if (panel.Name == "Principale")
+            if (!Program.tabelle.Contains(panel.Name))
             {
                 panel.BackColor = Color.Lime;
                 Program.query(new MySqlCommand("SELECT DISTINCT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'esami ecdl' AND TABLE_NAME = '" + panel.Tag.ToString() + "'", 
                                                 Program.connection).ExecuteReader());
-                foreach (Control control in panel.Controls)
-                    if (Program.risQuery[0].Contains(control.Text))
-                        campi.Add(control.Text);
+                for (int i = 0; i < panel.Controls.Count - 1; i += 2)
+                    foreach (string[] item in Program.risQuery)
+                        if (item[0] + ":" == panel.Controls[i].Text)
+                            campi.Add(panel.Controls[i + 1].Text);
             }
             new Messaggio(campi).ShowDialog();
             switch (Program.scelta)
@@ -163,15 +165,7 @@ namespace Programma
             int index = mostra.ToList().FindIndex(dato => dato == padre.Name) + 1;
             if(index < mostra.Length)
             {
-                if (panel.BackColor == Color.LightBlue)
-                {
-                    foreach (Control control in padre.Controls)
-                        if (control.Name != "Titolo" && control.BackColor == Color.Lime)
-                            cambiaColoreAiCampi((Panel)control, Color.LightBlue);
-                    cambiaColoreAiCampi(panel, Color.Lime);
-                }
-                else
-                    cambiaColoreAiCampi(panel, Color.LightBlue);
+                cambiaColore(padre, panel);
                 Panel principale = (Panel)Controls.Find("Principale", true)[0];
                 if (panel.BackColor == Color.Lime)
                 {
@@ -190,6 +184,19 @@ namespace Programma
                 if (panel.BackColor == Color.LightBlue)
                     principale.Controls[index].Visible = false;
             }
+        }
+
+        void cambiaColore(Panel padre, Panel panel)
+        {
+            if (panel.BackColor == Color.LightBlue)
+            {
+                foreach (Control control in padre.Controls)
+                    if (control.Name != "Titolo" && control.BackColor == Color.Lime)
+                        cambiaColoreAiCampi((Panel)control, Color.LightBlue);
+                cambiaColoreAiCampi(panel, Color.Lime);
+            }
+            else
+                cambiaColoreAiCampi(panel, Color.LightBlue);
         }
 
         void cambiaColoreAiCampi(Panel panel, Color color)
