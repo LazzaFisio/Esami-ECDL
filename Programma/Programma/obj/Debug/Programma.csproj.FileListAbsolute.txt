@@ -72,3 +72,4 @@ C:\Users\Fisio\Desktop\Esami-ECDL\Programma\Programma\obj\Debug\Programma.exe
 C:\Users\Fisio\Desktop\Esami-ECDL\Programma\Programma\obj\Debug\Programma.pdb
 F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Messaggio.resources
 I:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Messaggio.resources
+C:\Users\User\Desktop\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Messaggio.resources

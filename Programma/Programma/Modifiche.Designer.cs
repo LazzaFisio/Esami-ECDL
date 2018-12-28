@@ -32,7 +32,7 @@
             this.materialTabControl1 = new MaterialSkin.Controls.MaterialTabControl();
             this.tabAdd = new System.Windows.Forms.TabPage();
             this.cmb1 = new System.Windows.Forms.ComboBox();
-            this.lbl5 = new MaterialSkin.Controls.MaterialLabel();
+            this.labelcmb = new MaterialSkin.Controls.MaterialLabel();
             this.rbEsistente = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbNuovo = new MaterialSkin.Controls.MaterialRadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -74,7 +74,7 @@
             // 
             this.tabAdd.BackColor = System.Drawing.Color.White;
             this.tabAdd.Controls.Add(this.cmb1);
-            this.tabAdd.Controls.Add(this.lbl5);
+            this.tabAdd.Controls.Add(this.labelcmb);
             this.tabAdd.Controls.Add(this.rbEsistente);
             this.tabAdd.Controls.Add(this.rbNuovo);
             this.tabAdd.Controls.Add(this.panel1);
@@ -94,18 +94,17 @@
             this.cmb1.Size = new System.Drawing.Size(136, 21);
             this.cmb1.TabIndex = 9;
             // 
-            // lbl5
+            // labelcmb
             // 
-            this.lbl5.AutoSize = true;
-            this.lbl5.Depth = 0;
-            this.lbl5.Font = new System.Drawing.Font("Roboto", 11F);
-            this.lbl5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lbl5.Location = new System.Drawing.Point(33, 225);
-            this.lbl5.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lbl5.Name = "lbl5";
-            this.lbl5.Size = new System.Drawing.Size(85, 19);
-            this.lbl5.TabIndex = 5;
-            this.lbl5.Text = "Aggiunto a:";
+            this.labelcmb.AutoSize = true;
+            this.labelcmb.Depth = 0;
+            this.labelcmb.Font = new System.Drawing.Font("Roboto", 11F);
+            this.labelcmb.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.labelcmb.Location = new System.Drawing.Point(33, 225);
+            this.labelcmb.MouseState = MaterialSkin.MouseState.HOVER;
+            this.labelcmb.Name = "labelcmb";
+            this.labelcmb.Size = new System.Drawing.Size(0, 19);
+            this.labelcmb.TabIndex = 5;
             // 
             // rbEsistente
             // 
@@ -236,7 +235,7 @@
         private MaterialSkin.Controls.MaterialTabControl materialTabControl1;
         private System.Windows.Forms.TabPage tabAdd;
         private System.Windows.Forms.TabPage tabMod;
-        private MaterialSkin.Controls.MaterialLabel lbl5;
+        private MaterialSkin.Controls.MaterialLabel labelcmb;
         private MaterialSkin.Controls.MaterialRadioButton rbEsistente;
         private MaterialSkin.Controls.MaterialRadioButton rbNuovo;
         private MaterialSkin.Controls.MaterialFlatButton materialFlatButton1;
