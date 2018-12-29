@@ -30,13 +30,11 @@ namespace Programma
         //AND ke.REFERENCED_COLUMN_NAME = 'idCittà'
         //Query per ottenere le tabelle dove è inserita la chiave primaria
 
-        string[] mostra;
         Size dimSchermo;
         
         public Principale()
         {
             InitializeComponent();
-            mostra = new string[] { "città", "sede", "sessione", "esami", "esaminandi", "risultati" , "skillcard"};
             dimSchermo = new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
             Program.query(new MySqlCommand("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'esami ecdl'", Program.connection).ExecuteReader());
             string ciao = Program.risQuery[0][0];
@@ -48,7 +46,7 @@ namespace Programma
             Controls.Add(Program.creaLabel(new Point(dimSchermo.Width / 21 * 10, dimSchermo.Height / 20 * 2), "ESAMI ECDL", "Niente", "Niente"));
             Controls[0].BackColor = Color.White;
             Controls.Add(Program.creaPanel(new Size(dimSchermo.Width, dimSchermo.Height / 6 * 5), new Point(MaximumSize.Width / 12, 140), "Principale", "Principale", Color.White, true));
-            creaContenitore(mostra[0], 0, null);
+            creaContenitore(Program.tabelle[0], 0, null);
         }
 
         void creaContenitore(string elemento, int pos, Panel panel)
@@ -139,7 +137,8 @@ namespace Programma
         {
             Panel padre = new Panel(), panel = new Panel();
             trovaPanelli(ref padre, ref panel, sender);
-            cambiaColoreAiCampi(panel, Color.Lime);
+            if (padre.Name != panel.Name)
+                cambiaColore(padre, panel);
             List<string> campi = new List<string>();
             if (!Program.tabelle.Contains(panel.Name))
             {
@@ -156,21 +155,22 @@ namespace Programma
             {
                 case "aggiungi": new Modifiche(panel.Tag.ToString()).ShowDialog(); break;
             }
+            Program.scelta = "";
         }
 
         void azioneClick(object sender, EventArgs e)
         {
             Panel padre = new Panel(), panel = new Panel();
             trovaPanelli(ref padre, ref panel, sender);
-            int index = mostra.ToList().FindIndex(dato => dato == padre.Name) + 1;
-            if(index < mostra.Length)
+            int index = Program.tabelle.ToList().FindIndex(dato => dato == padre.Name) + 1;
+            if(index < Program.tabelle.Length)
             {
                 cambiaColore(padre, panel);
                 Panel principale = (Panel)Controls.Find("Principale", true)[0];
                 if (panel.BackColor == Color.Lime)
                 {
-                    if (Controls.Find(mostra[index], true).Length == 0)
-                        creaContenitore(mostra[index], index, panel);
+                    if (Controls.Find(Program.tabelle[index], true).Length == 0)
+                        creaContenitore(Program.tabelle[index], index, panel);
                     else
                         aggiornaSezione(padre, panel);
                 }
