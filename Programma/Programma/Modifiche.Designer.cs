@@ -38,7 +38,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.cmbEsistente = new System.Windows.Forms.ComboBox();
-            this.Seleziona = new MaterialSkin.Controls.MaterialLabel();
+            this.lblSeleziona = new MaterialSkin.Controls.MaterialLabel();
             this.tabMod = new System.Windows.Forms.TabPage();
             this.materialFlatButton1 = new MaterialSkin.Controls.MaterialFlatButton();
             this.materialTabControl1.SuspendLayout();
@@ -152,7 +152,7 @@
             // panel2
             // 
             this.panel2.Controls.Add(this.cmbEsistente);
-            this.panel2.Controls.Add(this.Seleziona);
+            this.panel2.Controls.Add(this.lblSeleziona);
             this.panel2.Location = new System.Drawing.Point(29, 40);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(311, 140);
@@ -166,18 +166,18 @@
             this.cmbEsistente.Size = new System.Drawing.Size(130, 21);
             this.cmbEsistente.TabIndex = 1;
             // 
-            // Seleziona
+            // lblSeleziona
             // 
-            this.Seleziona.AutoSize = true;
-            this.Seleziona.Depth = 0;
-            this.Seleziona.Font = new System.Drawing.Font("Roboto", 11F);
-            this.Seleziona.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.Seleziona.Location = new System.Drawing.Point(3, 59);
-            this.Seleziona.MouseState = MaterialSkin.MouseState.HOVER;
-            this.Seleziona.Name = "Seleziona";
-            this.Seleziona.Size = new System.Drawing.Size(144, 19);
-            this.Seleziona.TabIndex = 0;
-            this.Seleziona.Text = "Seleziona esistente:";
+            this.lblSeleziona.AutoSize = true;
+            this.lblSeleziona.Depth = 0;
+            this.lblSeleziona.Font = new System.Drawing.Font("Roboto", 11F);
+            this.lblSeleziona.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblSeleziona.Location = new System.Drawing.Point(3, 59);
+            this.lblSeleziona.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblSeleziona.Name = "lblSeleziona";
+            this.lblSeleziona.Size = new System.Drawing.Size(144, 19);
+            this.lblSeleziona.TabIndex = 0;
+            this.lblSeleziona.Text = "Seleziona esistente:";
             // 
             // tabMod
             // 
@@ -242,7 +242,7 @@
         private System.Windows.Forms.ComboBox cmb1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ComboBox cmbEsistente;
-        private MaterialSkin.Controls.MaterialLabel Seleziona;
+        private MaterialSkin.Controls.MaterialLabel lblSeleziona;
         private System.Windows.Forms.Panel panel1;
     }
 }
