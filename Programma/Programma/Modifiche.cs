@@ -20,7 +20,7 @@ namespace Programma
         int[] ind = new int[2];
         string tabella;
         string query = "";
-        List<string> gerarchie = new List<string>{ "città", "sede", "sessione", "esami" };
+        List<string> gerarchie = new List<string> { "città", "sede", "sessione", "esami", "esaminandi", "skillcard", "risultato" };
         List<string> primary = new List<string>();
         List<string> key = new List<string>();
         List<string[]> campi = new List<string[]>();        
@@ -49,18 +49,67 @@ namespace Programma
             this.ind = ind;
         }
 
-        private void rb_CheckedChanged(object sender, EventArgs e)
+        void btnConferma_Click(object sender, EventArgs e)
         {
-            panel1.Hide();
-            panel2.Hide();
+            DialogResult result = MessageBox.Show("Vuoi aggiungere questo campo", "Attenzione", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+                if (insert)
+                {
+                    if (rbNuovo.Checked)
+                    {
+                        int index = trovaId(tabella);
+                        query = "INSERT INTO " + tabella + "( ";
+                        for (int i = 0; i < key.Count; i++)
+                            query += key[i] + ", ";
+                        for (int i = 0; i < label.Count; i++)
+                            query += label[i].Text + ", ";
+                        query = query.Remove(query.Length - 2, 1);
+                        query += ") VALUES ( ' ";
+                        query += index + " ', '";
+                        if (cmb1.Visible)
+                            query += cmb1.Text + "', '";
+                        for (int i = 0; i < text.Count; i++)
+                            query += text[i].Text + "', '";
+                        query = query.Remove(query.Length - 4, 3);
+                        query += ")";
 
-            if (rbNuovo.Checked)
-                panel1.Show();
-            else
-                panel2.Show();
+                        Aggiunta aggiunta = new Aggiunta(index.ToString(), cmb1.Text);
+                        aggiunta.ShowDialog();
+                        if (Aggiunta.durata != "")
+                        {
+                            richiamaQuery(query);
+
+                            if (tabella == "esami")
+                                richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione,DurataEsame) VALUES ('" + index + "', '" + cmb1.Text + "', '" + Aggiunta.durata + "')");
+                        }
+                    }
+                    else
+                    {
+                        Aggiunta aggiunta = new Aggiunta(cmbEsistente.Text, cmb1.Text);
+                        aggiunta.ShowDialog();
+                        if (Aggiunta.durata != "")
+                            if (tabella == "esami")
+                                richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione,DurataEsame) VALUES ('" + cmbEsistente.Text + "', '" + cmb1.Text + "', '" + Aggiunta.durata + "')");
+                    }
+                }
+                else
+                {
+                    query = "UPDATE " + tabella + " SET ";
+                    for (int i = 0; i < text.Count; i++)
+                        query += label[i].Text + " = '" + text[i].Text + "', ";
+                    query += labelcmb.Text + " = '" + cmb1.Text;
+                    query += " WHERE ";
+                    for (int i = 0; i < primary.Count; i++)
+                        query += primary[i] + " = '" + ind[i];
+                    query += ";";
+
+                    richiamaQuery(query);
+                }
+            }
         }
 
-        private void creaOggetti()
+        void creaOggetti()
         {
             Program.query(new MySqlCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'esami ecdl' AND TABLE_NAME = '" + tabella + "'", Program.connection).ExecuteReader());
             campi.Clear();
@@ -108,58 +157,30 @@ namespace Programma
             }
         }
 
-        private void materialFlatButton1_Click(object sender, EventArgs e)
+        void rb_CheckedChanged(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Vuoi aggiungere questo campo", "Attenzione", MessageBoxButtons.YesNoCancel,MessageBoxIcon.Warning);
-            if (result == DialogResult.Yes)
-            {
-                if (insert)
-                {
-                    if (rbNuovo.Checked)
-                    {
-                        int index = trovaId(tabella);
-                        query = "INSERT INTO " + tabella + "( ";
-                        for (int i = 0; i < key.Count; i++)
-                            query += key[i] + ", ";
-                        for (int i = 0; i < label.Count; i++)
-                            query += label[i].Text + ", ";
-                        query = query.Remove(query.Length - 2, 1);
-                        query += ") VALUES ( ' ";
-                        query += index + " ', '";
-                        if (cmb1.Visible)
-                            query += cmb1.Text + "', '";
-                        for (int i = 0; i < text.Count; i++)
-                            query += text[i].Text + "', '";
-                        query = query.Remove(query.Length - 4, 3);
-                        query += ")";
-                        richiamaQuery(query);
+            panel1.Hide();
+            panel2.Hide();
 
-                        if (tabella == "esami")
-                            richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione) VALUES ('" + index + "', '" + cmb1.Text + "')");
-                    }
-                    else
-                    {
-                        if (tabella == "esami")
-                            richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione) VALUES ('" + cmbEsistente.Text + "', '" + cmb1.Text + "')");
-                    }
-                }
-                else
-                {
-                    query = "UPDATE " + tabella + " SET ";
-                    for (int i = 0; i < text.Count; i++)
-                        query += label[i].Text + " = '" + text[i].Text + "', ";
-                    query += labelcmb.Text + " = '" + cmb1.Text;
-                    query += " WHERE ";
-                    for (int i = 0; i < primary.Count; i++)
-                        query += primary[i] + " = '" + ind[i];
-                    query += ";";
-
-                    richiamaQuery(query);
-                }   
-            }
+            if (rbNuovo.Checked)
+                panel1.Show();
+            else
+                panel2.Show();
         }
 
-        private void riempiCmb(ComboBox cmb, Label lbl ,int index)
+        void richiamaQuery(string query)
+        {
+            try { new MySqlCommand(query, Program.connection).ExecuteNonQuery(); this.Close(); }
+            catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+        }
+
+        void riempi(List<string> valori)
+        {
+            for (int i = 0; i < text.Count; i++)
+                text[i].Text = valori[i];
+        }
+
+        void riempiCmb(ComboBox cmb, Label lbl, int index)
         {
             string id = "id" + gerarchie[index];
             lbl.Text = id;
@@ -171,19 +192,7 @@ namespace Programma
                 cmb.Items.Add(campi[i][0]);
         }
 
-        void richiamaQuery(string query)
-        {
-            try { new MySqlCommand(query, Program.connection).ExecuteNonQuery(); this.Close(); }
-            catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
-        }
-
-        private void riempi(List<string> valori)
-        {
-            for (int i = 0; i < text.Count; i++)
-                text[i].Text = valori[i];
-        }
-
-        private int trovaId(string tabella)
+        int trovaId(string tabella)
         {
             int num = 0;
 
