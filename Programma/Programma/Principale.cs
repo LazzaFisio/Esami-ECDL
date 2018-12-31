@@ -23,22 +23,29 @@ namespace Programma
         //Query per ottenere il nome delle colonne di un database
 
         //SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = 'tabella' AND TABLE_SCHEMA = 'database'
-        //Query per ottenere il nome delle chiavi primarie di una tabella
+        //Query per ottenere il nome di tutte chiavi di una tabella
+
+        //SHOW KEYS FROM tabella WHERE KEY_NAME = 'Primary'
+        //Query per ottenere tutte le chiavi primarie
 
         //SELECT ke.REFERENCED_TABLE_SCHEMA parentSchema, ke.referenced_table_name parentTable, ke.REFERENCED_COLUMN_NAME parentColumnName, ke.TABLE_SCHEMA ChildSchema,
         //ke.table_name childTable, ke.COLUMN_NAME ChildColumnName FROM information_schema.KEY_COLUMN_USAGE ke WHERE ke.referenced_table_name IS NOT NULL
         //AND ke.REFERENCED_COLUMN_NAME = 'idCittà'
         //Query per ottenere le tabelle dove è inserita la chiave primaria
 
+        string[] mostra;
         Size dimSchermo;
+        Grafo grafo;
         
         public Principale()
         {
             InitializeComponent();
             dimSchermo = new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+            mostra = new string[] { "città", "sede", "sessione", "esami", "esaminandi", "skillcard", "risultato" };
             Program.query(new MySqlCommand("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'esami ecdl'", Program.connection).ExecuteReader());
             string ciao = Program.risQuery[0][0];
             creaTutto();
+            grafo = new Grafo();
         }
 
         void creaTutto()
@@ -102,27 +109,33 @@ namespace Programma
             List<string> chiavi = Program.chiaviPrimarie(Program.tabelle[appoggio]);
             condizione = " WHERE ";
             if(panel != null)
-            {
-                string colonna = "";
-                foreach (string item in chiavi)
-                    colonna += "REFERENCED_COLUMN_NAME = '" + item + "' AND ";
-                colonna = colonna.Remove(colonna.Length - 4, 3);
-                Program.query(new MySqlCommand("SELECT COLUMN_NAME FROM information_schema.KEY_COLUMN_USAGE ke WHERE ke.referenced_table_name IS NOT NULL AND TABLE_NAME = '" + tabella + "' AND " + colonna, Program.connection).ExecuteReader());
-                colonna = Program.risQuery[0][0];
-                for (int i = 0; i < panel.Controls.Count - 1; i += 2)
-                    if (chiavi.Contains(panel.Controls[i].Text.Remove(panel.Controls[i].Text.Length - 1, 1)))
-                        condizione += colonna + " = '" + panel.Controls[i + 1].Text + "' ";
-                if (condizione.Length == 7)
-                    condizione = "";
-                Program.query(new MySqlCommand("SELECT COUNT(*) FROM " + tabella + condizione, Program.connection).ExecuteReader());
-                index = Convert.ToInt32(Program.risQuery[0][0]);
-            }
+                switch (tabella)
+                {
+                    default: condizioneGenerale(chiavi, tabella, ref condizione, ref index, panel); break;
+                }
             else
             {
                 Program.query(new MySqlCommand("SELECT COUNT(*) FROM " + tabella, Program.connection).ExecuteReader());
                 condizione = "";
                 index = Convert.ToInt32(Program.risQuery[0][0]);
             }
+        }
+
+        void condizioneGenerale(List<string> chiavi, string tabella, ref string condizione, ref int index, Panel panel)
+        {
+            string colonna = "";
+            foreach (string item in chiavi)
+                colonna += "REFERENCED_COLUMN_NAME = '" + item + "' AND ";
+            colonna = colonna.Remove(colonna.Length - 4, 3);
+            Program.query(new MySqlCommand("SELECT COLUMN_NAME FROM information_schema.KEY_COLUMN_USAGE ke WHERE ke.referenced_table_name IS NOT NULL AND TABLE_NAME = '" + tabella + "' AND " + colonna, Program.connection).ExecuteReader());
+            colonna = Program.risQuery[0][0];
+            for (int i = 0; i < panel.Controls.Count - 1; i += 2)
+                if (chiavi.Contains(panel.Controls[i].Text.Remove(panel.Controls[i].Text.Length - 1, 1)))
+                    condizione += colonna + " = '" + panel.Controls[i + 1].Text + "' ";
+            if (condizione.Length == 7)
+                condizione = "";
+            Program.query(new MySqlCommand("SELECT COUNT(*) FROM " + tabella + condizione, Program.connection).ExecuteReader());
+            index = Convert.ToInt32(Program.risQuery[0][0]);
         }
 
         void aggiornaSezione(Panel padre, Panel selezionato)
