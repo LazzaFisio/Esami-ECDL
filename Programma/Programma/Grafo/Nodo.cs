@@ -13,7 +13,16 @@ namespace Programma
         List<Campo> chiaviPrimarie;
         List<Campo> attributi;
         List<Campo> chiaviEsterne;
-        Nodo figlio;
+        List<Nodo> figli;
+
+        public Nodo()
+        {
+            tabella = "";
+            chiaviPrimarie = new List<Campo>();
+            attributi = new List<Campo>();
+            chiaviEsterne = new List<Campo>();
+            figli = new List<Nodo>();
+        }
 
         public Nodo(string tabella, int riga)
         {
@@ -21,6 +30,7 @@ namespace Programma
             chiaviPrimarie = new List<Campo>();
             attributi = new List<Campo>();
             chiaviEsterne = new List<Campo>();
+            figli = new List<Nodo>();
             //aggiunta nomi dei campi
             List<string> app = Program.chiaviPrimarie(tabella);
             foreach (string item in app)
@@ -48,7 +58,7 @@ namespace Programma
             }
         }
 
-        public void aggiungiFiglio(Nodo figlio) => this.figlio = figlio;
+        public void aggiungiFiglio(Nodo figlio) => figli.Add(figlio);
 
         public string Tabella { get { return tabella; } }
 
@@ -58,6 +68,6 @@ namespace Programma
 
         public List<Campo> ChiaviEsterne { get { return chiaviEsterne; } }
 
-        public Nodo Figlio { get { return figlio; } }
+        public List<Nodo> Figli { get { return figli; } }
     }
 }
