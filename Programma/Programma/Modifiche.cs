@@ -34,6 +34,8 @@ namespace Programma
             panel1.Show();
             creaOggetti();
             insert = true;
+            if (tabella != "esami")
+                rbEsistente.Hide();
         }
 
         public Modifiche(string tabella, List<string> valori, int[] ind)
@@ -42,7 +44,7 @@ namespace Programma
             this.tabella = tabella;
             panel1.Show();
             creaOggetti();
-            Riempi(valori);
+            riempi(valori);
             insert = false;
             this.ind = ind;
         }
@@ -101,16 +103,8 @@ namespace Programma
             else
             {
                 int index = gerarchie.FindIndex(dato => dato == tabella);
-                index--;
-                string id = "id" + gerarchie[index];
-                labelcmb.Text = id;
-                Program.query(new MySqlCommand("SELECT " + id  + " FROM " + gerarchie[index], Program.connection).ExecuteReader());
-                campi.Clear();
-                foreach (var item in Program.risQuery)
-                    campi.Add(item);
-
-                for (int i = 0; i < campi.Count; i++)
-                    cmb1.Items.Add(campi[i][0]);
+                riempiCmb(cmb1, labelcmb, index - 1);
+                riempiCmb(cmbEsistente, lblSeleziona, index);
             }
         }
 
@@ -121,20 +115,33 @@ namespace Programma
             {
                 if (insert)
                 {
-                    int index = TrovaId(tabella);
-                    query = "INSERT INTO " + tabella + "( ";
-                    for (int i = 0; i < key.Count; i++)
-                        query += key[i] + ", ";
-                    for (int i = 0; i < label.Count; i++)
-                        query += label[i].Text + ", ";
-                    query = query.Remove(query.Length - 2, 1);
-                    query += ") VALUES ( ' ";
-                    query += index + " ', '";
-                    query += cmb1.Text + "', '";
-                    for (int i = 0; i < text.Count; i++)
-                        query += text[i].Text + "', '";
-                    query = query.Remove(query.Length - 4, 3);
-                    query += ")";
+                    if (rbNuovo.Checked)
+                    {
+                        int index = trovaId(tabella);
+                        query = "INSERT INTO " + tabella + "( ";
+                        for (int i = 0; i < key.Count; i++)
+                            query += key[i] + ", ";
+                        for (int i = 0; i < label.Count; i++)
+                            query += label[i].Text + ", ";
+                        query = query.Remove(query.Length - 2, 1);
+                        query += ") VALUES ( ' ";
+                        query += index + " ', '";
+                        if (cmb1.Visible)
+                            query += cmb1.Text + "', '";
+                        for (int i = 0; i < text.Count; i++)
+                            query += text[i].Text + "', '";
+                        query = query.Remove(query.Length - 4, 3);
+                        query += ")";
+                        richiamaQuery(query);
+
+                        if (tabella == "esami")
+                            richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione) VALUES ('" + index + "', '" + cmb1.Text + "')");
+                    }
+                    else
+                    {
+                        if (tabella == "esami")
+                            richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione) VALUES ('" + cmbEsistente.Text + "', '" + cmb1.Text + "')");
+                    }
                 }
                 else
                 {
@@ -145,22 +152,38 @@ namespace Programma
                     query += " WHERE ";
                     for (int i = 0; i < primary.Count; i++)
                         query += primary[i] + " = '" + ind[i];
-                    //query = query.Remove(query.Length - 2, 1);
                     query += ";";
-                }
 
-                try { new MySqlCommand(query, Program.connection).ExecuteNonQuery(); this.Close(); }
-                catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+                    richiamaQuery(query);
+                }   
             }
         }
 
-        private void Riempi(List<string> valori)
+        private void riempiCmb(ComboBox cmb, Label lbl ,int index)
+        {
+            string id = "id" + gerarchie[index];
+            lbl.Text = id;
+            Program.query(new MySqlCommand("SELECT " + id + " FROM " + gerarchie[index], Program.connection).ExecuteReader());
+            campi.Clear();
+            foreach (var item in Program.risQuery)
+                campi.Add(item);
+            for (int i = 0; i < campi.Count; i++)
+                cmb.Items.Add(campi[i][0]);
+        }
+
+        void richiamaQuery(string query)
+        {
+            try { new MySqlCommand(query, Program.connection).ExecuteNonQuery(); this.Close(); }
+            catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+        }
+
+        private void riempi(List<string> valori)
         {
             for (int i = 0; i < text.Count; i++)
                 text[i].Text = valori[i];
         }
 
-        private int TrovaId(string tabella)
+        private int trovaId(string tabella)
         {
             int num = 0;
 
