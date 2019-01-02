@@ -62,12 +62,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attesa.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Attesa.Designer.cs">
-      <DependentUpon>Attesa.cs</DependentUpon>
-    </Compile>
     <Compile Include="Grafo\Campo.cs" />
     <Compile Include="Grafo\Grafo.cs" />
     <Compile Include="Grafo\Nodo.cs" />
@@ -97,9 +91,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Attesa.resx">
-      <DependentUpon>Attesa.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>

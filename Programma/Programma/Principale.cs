@@ -36,7 +36,6 @@ namespace Programma
 
         string[] mostra;
         Size dimSchermo;
-        Grafo grafo;
         
         public Principale()
         {
@@ -46,7 +45,6 @@ namespace Programma
             Program.query(new MySqlCommand("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'esami ecdl'", Program.connection).ExecuteReader());
             string ciao = Program.risQuery[0][0];
             creaTutto();
-            grafo = new Grafo();
         }
 
         void creaTutto()
