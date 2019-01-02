@@ -28,61 +28,91 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
-            this.materialTabControl1 = new MaterialSkin.Controls.MaterialTabControl();
-            this.tabAdd = new System.Windows.Forms.TabPage();
-            this.cmb1 = new System.Windows.Forms.ComboBox();
-            this.labelcmb = new MaterialSkin.Controls.MaterialLabel();
+            this.btnConferma = new MaterialSkin.Controls.MaterialFlatButton();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.rbEsistente = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbNuovo = new MaterialSkin.Controls.MaterialRadioButton();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.cmb1 = new System.Windows.Forms.ComboBox();
+            this.labelcmb = new MaterialSkin.Controls.MaterialLabel();
             this.cmbEsistente = new System.Windows.Forms.ComboBox();
             this.lblSeleziona = new MaterialSkin.Controls.MaterialLabel();
-            this.tabMod = new System.Windows.Forms.TabPage();
-            this.btnConferma = new MaterialSkin.Controls.MaterialFlatButton();
-            this.materialTabControl1.SuspendLayout();
-            this.tabAdd.SuspendLayout();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // materialTabSelector1
+            // btnConferma
             // 
-            this.materialTabSelector1.BaseTabControl = this.materialTabControl1;
-            this.materialTabSelector1.Depth = 0;
-            this.materialTabSelector1.Enabled = false;
-            this.materialTabSelector1.Location = new System.Drawing.Point(0, 64);
-            this.materialTabSelector1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialTabSelector1.Name = "materialTabSelector1";
-            this.materialTabSelector1.Size = new System.Drawing.Size(388, 23);
-            this.materialTabSelector1.TabIndex = 0;
-            this.materialTabSelector1.Text = "materialTabSelector1";
+            this.btnConferma.AutoSize = true;
+            this.btnConferma.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnConferma.Depth = 0;
+            this.btnConferma.Location = new System.Drawing.Point(145, 335);
+            this.btnConferma.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnConferma.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnConferma.Name = "btnConferma";
+            this.btnConferma.Primary = false;
+            this.btnConferma.Size = new System.Drawing.Size(85, 36);
+            this.btnConferma.TabIndex = 2;
+            this.btnConferma.Text = "conferma";
+            this.btnConferma.UseVisualStyleBackColor = true;
+            this.btnConferma.Click += new System.EventHandler(this.btnConferma_Click);
             // 
-            // materialTabControl1
+            // panel1
             // 
-            this.materialTabControl1.Controls.Add(this.tabAdd);
-            this.materialTabControl1.Controls.Add(this.tabMod);
-            this.materialTabControl1.Depth = 0;
-            this.materialTabControl1.Location = new System.Drawing.Point(3, 90);
-            this.materialTabControl1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialTabControl1.Name = "materialTabControl1";
-            this.materialTabControl1.SelectedIndex = 0;
-            this.materialTabControl1.Size = new System.Drawing.Size(378, 284);
-            this.materialTabControl1.TabIndex = 1;
+            this.panel1.Controls.Add(this.rbEsistente);
+            this.panel1.Controls.Add(this.rbNuovo);
+            this.panel1.Controls.Add(this.panel2);
+            this.panel1.Controls.Add(this.panel3);
+            this.panel1.Location = new System.Drawing.Point(13, 79);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(362, 247);
+            this.panel1.TabIndex = 3;
             // 
-            // tabAdd
+            // rbEsistente
             // 
-            this.tabAdd.BackColor = System.Drawing.Color.White;
-            this.tabAdd.Controls.Add(this.rbEsistente);
-            this.tabAdd.Controls.Add(this.rbNuovo);
-            this.tabAdd.Controls.Add(this.panel2);
-            this.tabAdd.Controls.Add(this.panel1);
-            this.tabAdd.Location = new System.Drawing.Point(4, 22);
-            this.tabAdd.Name = "tabAdd";
-            this.tabAdd.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAdd.Size = new System.Drawing.Size(370, 258);
-            this.tabAdd.TabIndex = 0;
-            this.tabAdd.Text = "Aggiungi";
+            this.rbEsistente.AutoSize = true;
+            this.rbEsistente.Depth = 0;
+            this.rbEsistente.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbEsistente.Location = new System.Drawing.Point(180, 15);
+            this.rbEsistente.Margin = new System.Windows.Forms.Padding(0);
+            this.rbEsistente.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.rbEsistente.MouseState = MaterialSkin.MouseState.HOVER;
+            this.rbEsistente.Name = "rbEsistente";
+            this.rbEsistente.Ripple = true;
+            this.rbEsistente.Size = new System.Drawing.Size(144, 30);
+            this.rbEsistente.TabIndex = 13;
+            this.rbEsistente.Text = "Aggiungi esistente";
+            this.rbEsistente.UseVisualStyleBackColor = true;
+            // 
+            // rbNuovo
+            // 
+            this.rbNuovo.AutoSize = true;
+            this.rbNuovo.Checked = true;
+            this.rbNuovo.Depth = 0;
+            this.rbNuovo.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbNuovo.Location = new System.Drawing.Point(30, 15);
+            this.rbNuovo.Margin = new System.Windows.Forms.Padding(0);
+            this.rbNuovo.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.rbNuovo.MouseState = MaterialSkin.MouseState.HOVER;
+            this.rbNuovo.Name = "rbNuovo";
+            this.rbNuovo.Ripple = true;
+            this.rbNuovo.Size = new System.Drawing.Size(125, 30);
+            this.rbNuovo.TabIndex = 12;
+            this.rbNuovo.TabStop = true;
+            this.rbNuovo.Text = "Aggiungi nuovo";
+            this.rbNuovo.UseVisualStyleBackColor = true;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.cmb1);
+            this.panel2.Controls.Add(this.labelcmb);
+            this.panel2.Controls.Add(this.cmbEsistente);
+            this.panel2.Controls.Add(this.lblSeleziona);
+            this.panel2.Location = new System.Drawing.Point(22, 47);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(311, 140);
+            this.panel2.TabIndex = 15;
             // 
             // cmb1
             // 
@@ -103,60 +133,6 @@
             this.labelcmb.Name = "labelcmb";
             this.labelcmb.Size = new System.Drawing.Size(0, 19);
             this.labelcmb.TabIndex = 5;
-            // 
-            // rbEsistente
-            // 
-            this.rbEsistente.AutoSize = true;
-            this.rbEsistente.Depth = 0;
-            this.rbEsistente.Font = new System.Drawing.Font("Roboto", 10F);
-            this.rbEsistente.Location = new System.Drawing.Point(187, 8);
-            this.rbEsistente.Margin = new System.Windows.Forms.Padding(0);
-            this.rbEsistente.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.rbEsistente.MouseState = MaterialSkin.MouseState.HOVER;
-            this.rbEsistente.Name = "rbEsistente";
-            this.rbEsistente.Ripple = true;
-            this.rbEsistente.Size = new System.Drawing.Size(144, 30);
-            this.rbEsistente.TabIndex = 1;
-            this.rbEsistente.Text = "Aggiungi esistente";
-            this.rbEsistente.UseVisualStyleBackColor = true;
-            this.rbEsistente.CheckedChanged += new System.EventHandler(this.rb_CheckedChanged);
-            // 
-            // rbNuovo
-            // 
-            this.rbNuovo.AutoSize = true;
-            this.rbNuovo.Checked = true;
-            this.rbNuovo.Depth = 0;
-            this.rbNuovo.Font = new System.Drawing.Font("Roboto", 10F);
-            this.rbNuovo.Location = new System.Drawing.Point(37, 8);
-            this.rbNuovo.Margin = new System.Windows.Forms.Padding(0);
-            this.rbNuovo.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.rbNuovo.MouseState = MaterialSkin.MouseState.HOVER;
-            this.rbNuovo.Name = "rbNuovo";
-            this.rbNuovo.Ripple = true;
-            this.rbNuovo.Size = new System.Drawing.Size(125, 30);
-            this.rbNuovo.TabIndex = 0;
-            this.rbNuovo.TabStop = true;
-            this.rbNuovo.Text = "Aggiungi nuovo";
-            this.rbNuovo.UseVisualStyleBackColor = true;
-            this.rbNuovo.CheckedChanged += new System.EventHandler(this.rb_CheckedChanged);
-            // 
-            // panel1
-            // 
-            this.panel1.Location = new System.Drawing.Point(29, 40);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(311, 180);
-            this.panel1.TabIndex = 10;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.cmb1);
-            this.panel2.Controls.Add(this.labelcmb);
-            this.panel2.Controls.Add(this.cmbEsistente);
-            this.panel2.Controls.Add(this.lblSeleziona);
-            this.panel2.Location = new System.Drawing.Point(29, 40);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(311, 140);
-            this.panel2.TabIndex = 11;
             // 
             // cmbEsistente
             // 
@@ -179,49 +155,28 @@
             this.lblSeleziona.TabIndex = 0;
             this.lblSeleziona.Text = "Seleziona esistente:";
             // 
-            // tabMod
+            // panel3
             // 
-            this.tabMod.Location = new System.Drawing.Point(4, 22);
-            this.tabMod.Name = "tabMod";
-            this.tabMod.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMod.Size = new System.Drawing.Size(370, 258);
-            this.tabMod.TabIndex = 1;
-            this.tabMod.Text = "Modifica";
-            this.tabMod.UseVisualStyleBackColor = true;
-            // 
-            // btnConferma
-            // 
-            this.btnConferma.AutoSize = true;
-            this.btnConferma.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnConferma.Depth = 0;
-            this.btnConferma.Location = new System.Drawing.Point(145, 383);
-            this.btnConferma.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnConferma.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnConferma.Name = "btnConferma";
-            this.btnConferma.Primary = false;
-            this.btnConferma.Size = new System.Drawing.Size(85, 36);
-            this.btnConferma.TabIndex = 2;
-            this.btnConferma.Text = "conferma";
-            this.btnConferma.UseVisualStyleBackColor = true;
-            this.btnConferma.Click += new System.EventHandler(this.btnConferma_Click);
+            this.panel3.Location = new System.Drawing.Point(22, 47);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(311, 180);
+            this.panel3.TabIndex = 14;
             // 
             // Modifiche
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(387, 427);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(387, 382);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnConferma);
-            this.Controls.Add(this.materialTabControl1);
-            this.Controls.Add(this.materialTabSelector1);
             this.MaximizeBox = false;
             this.Name = "Modifiche";
             this.Sizable = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Modifiche";
-            this.materialTabControl1.ResumeLayout(false);
-            this.tabAdd.ResumeLayout(false);
-            this.tabAdd.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
@@ -230,19 +185,15 @@
         }
 
         #endregion
-
-        private MaterialSkin.Controls.MaterialTabSelector materialTabSelector1;
-        private MaterialSkin.Controls.MaterialTabControl materialTabControl1;
-        private System.Windows.Forms.TabPage tabAdd;
-        private System.Windows.Forms.TabPage tabMod;
-        private MaterialSkin.Controls.MaterialLabel labelcmb;
+        private MaterialSkin.Controls.MaterialFlatButton btnConferma;
+        private System.Windows.Forms.Panel panel1;
         private MaterialSkin.Controls.MaterialRadioButton rbEsistente;
         private MaterialSkin.Controls.MaterialRadioButton rbNuovo;
-        private MaterialSkin.Controls.MaterialFlatButton btnConferma;
-        private System.Windows.Forms.ComboBox cmb1;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.ComboBox cmb1;
+        private MaterialSkin.Controls.MaterialLabel labelcmb;
         private System.Windows.Forms.ComboBox cmbEsistente;
         private MaterialSkin.Controls.MaterialLabel lblSeleziona;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel3;
     }
 }
