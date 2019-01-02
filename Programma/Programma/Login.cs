@@ -77,7 +77,7 @@ namespace Programma
                 oscuraMostra(true);
                 Show();
             }
-            catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); Show(); }
+            catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); oscuraMostra(true); Show(); }
         }
     }
 }

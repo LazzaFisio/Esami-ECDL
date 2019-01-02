@@ -10,7 +10,7 @@ namespace Programma
 {
     class Grafo
     {
-        public List<Nodo> nodos;
+        List<Nodo> nodos;
 
         public Grafo()
         {
@@ -19,6 +19,8 @@ namespace Programma
             caricaGrafo();
             salvaSuFile();
         }
+
+        public List<Nodo> Nodos { get { return nodos; } }
 
         void caricaGrafo()
         {
@@ -60,7 +62,7 @@ namespace Programma
                 appoggio = "REFERENCED_COLUMN_NAME = '" + nodo.ChiaviPrimarie[0].nome + "'";
             Program.query(new MySqlCommand("SELECT table_name, column_name FROM information_schema.KEY_COLUMN_USAGE WHERE referenced_table_name IS NOT NULL AND " + appoggio, Program.connection).ExecuteReader());
             foreach (string[] item in Program.risQuery)
-                if (item[0] == nodo.Tabella)
+                if (item[0] == nodo.Tabella || app.Tabella == item[0])
                 {
                     appoggio = appoggio.Split('=')[1];
                     appoggio = appoggio.Remove(0, 2);
@@ -84,6 +86,16 @@ namespace Programma
                 if (campo.valore == campo1.valore)
                     return true;
             return false;
+        }
+
+        public void trovaFigli(Nodo appoggio, Nodo nodo, List<Nodo> lista)
+        {
+            if (appoggio.Tabella != nodo.Tabella && lista.Count == 0)
+                for(int i = 0; i < appoggio.Figli.Count && lista.Count == 0; i++)
+                    trovaFigli(appoggio.Figli[i], nodo, lista);
+            else if (appoggio.Equals(nodo))
+                foreach (Nodo item in appoggio.Figli)
+                    lista.Add(item);
         }
 
         public void salvaSuFile()
