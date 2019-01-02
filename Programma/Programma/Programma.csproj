@@ -62,6 +62,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dettagli.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dettagli.Designer.cs">
+      <DependentUpon>Dettagli.cs</DependentUpon>
+    </Compile>
     <Compile Include="Grafo\Campo.cs" />
     <Compile Include="Grafo\Grafo.cs" />
     <Compile Include="Grafo\Nodo.cs" />
