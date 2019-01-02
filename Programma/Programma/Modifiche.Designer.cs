@@ -40,7 +40,7 @@
             this.cmbEsistente = new System.Windows.Forms.ComboBox();
             this.lblSeleziona = new MaterialSkin.Controls.MaterialLabel();
             this.tabMod = new System.Windows.Forms.TabPage();
-            this.materialFlatButton1 = new MaterialSkin.Controls.MaterialFlatButton();
+            this.btnConferma = new MaterialSkin.Controls.MaterialFlatButton();
             this.materialTabControl1.SuspendLayout();
             this.tabAdd.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -189,21 +189,21 @@
             this.tabMod.Text = "Modifica";
             this.tabMod.UseVisualStyleBackColor = true;
             // 
-            // materialFlatButton1
+            // btnConferma
             // 
-            this.materialFlatButton1.AutoSize = true;
-            this.materialFlatButton1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialFlatButton1.Depth = 0;
-            this.materialFlatButton1.Location = new System.Drawing.Point(145, 383);
-            this.materialFlatButton1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.materialFlatButton1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialFlatButton1.Name = "materialFlatButton1";
-            this.materialFlatButton1.Primary = false;
-            this.materialFlatButton1.Size = new System.Drawing.Size(85, 36);
-            this.materialFlatButton1.TabIndex = 2;
-            this.materialFlatButton1.Text = "conferma";
-            this.materialFlatButton1.UseVisualStyleBackColor = true;
-            this.materialFlatButton1.Click += new System.EventHandler(this.materialFlatButton1_Click);
+            this.btnConferma.AutoSize = true;
+            this.btnConferma.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnConferma.Depth = 0;
+            this.btnConferma.Location = new System.Drawing.Point(145, 383);
+            this.btnConferma.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnConferma.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnConferma.Name = "btnConferma";
+            this.btnConferma.Primary = false;
+            this.btnConferma.Size = new System.Drawing.Size(85, 36);
+            this.btnConferma.TabIndex = 2;
+            this.btnConferma.Text = "conferma";
+            this.btnConferma.UseVisualStyleBackColor = true;
+            this.btnConferma.Click += new System.EventHandler(this.btnConferma_Click);
             // 
             // Modifiche
             // 
@@ -211,7 +211,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(387, 427);
-            this.Controls.Add(this.materialFlatButton1);
+            this.Controls.Add(this.btnConferma);
             this.Controls.Add(this.materialTabControl1);
             this.Controls.Add(this.materialTabSelector1);
             this.MaximizeBox = false;
@@ -238,7 +238,7 @@
         private MaterialSkin.Controls.MaterialLabel labelcmb;
         private MaterialSkin.Controls.MaterialRadioButton rbEsistente;
         private MaterialSkin.Controls.MaterialRadioButton rbNuovo;
-        private MaterialSkin.Controls.MaterialFlatButton materialFlatButton1;
+        private MaterialSkin.Controls.MaterialFlatButton btnConferma;
         private System.Windows.Forms.ComboBox cmb1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ComboBox cmbEsistente;
