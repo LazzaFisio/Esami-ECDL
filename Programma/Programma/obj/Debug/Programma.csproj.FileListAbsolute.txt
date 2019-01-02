@@ -54,6 +54,7 @@ C:\Users\Fisio\Desktop\Esami-ECDL\Programma\Programma\obj\Debug\Programma.exe
 C:\Users\Fisio\Desktop\Esami-ECDL\Programma\Programma\obj\Debug\Programma.pdb
 F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Messaggio.resources
 C:\Users\User\Desktop\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Messaggio.resources
+<<<<<<< HEAD
 I:\Informatica\DataBase\Esami-ECDL\Programma\Programma\bin\Debug\Programma.exe.config
 I:\Informatica\DataBase\Esami-ECDL\Programma\Programma\bin\Debug\Programma.exe
 I:\Informatica\DataBase\Esami-ECDL\Programma\Programma\bin\Debug\Programma.pdb
@@ -74,3 +75,6 @@ I:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.cspro
 I:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.csproj.CopyComplete
 I:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.exe
 I:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.pdb
+=======
+C:\Users\User\Desktop\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Dettagli.resources
+>>>>>>> Baricchio
