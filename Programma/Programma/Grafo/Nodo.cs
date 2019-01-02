@@ -7,7 +7,7 @@ using MySql.Data.MySqlClient;
 
 namespace Programma
 {
-    class Nodo
+    class Nodo 
     {
         string tabella;
         List<Campo> chiaviPrimarie;
@@ -56,6 +56,8 @@ namespace Programma
                 else
                     chiaviEsterne[i - chiaviPrimarie.Count - attributi.Count].valore = app[i];
             }
+            if (tabella == "esami")
+                tabella = "esami";
             if (!controlloChiaviEsterne())
                 chiaviEsterne.Clear();
         }
@@ -78,6 +80,27 @@ namespace Programma
                     campo = chiaviEsterne.Find(dato => dato.nome == nome);
             }
             return campo.valore;
+        }
+
+        public bool Equals(Nodo nodo)
+        {
+            if (tabella != nodo.tabella)
+                return false;
+            if (!controllo(chiaviPrimarie, nodo.chiaviPrimarie))
+                return false;
+            if (!controllo(attributi, nodo.attributi))
+                return false;
+            if (!controllo(chiaviEsterne, nodo.chiaviEsterne))
+                return false;
+            return true;
+        }
+
+        bool controllo(List<Campo> campo, List<Campo> daConfrontare)
+        {
+            foreach (Campo item in campo)
+                if (!daConfrontare.Exists(dato => dato.nome == item.nome && dato.valore == item.valore))
+                    return false;
+            return true;
         }
 
         public void aggiungiFiglio(Nodo figlio) => figli.Add(figlio);
