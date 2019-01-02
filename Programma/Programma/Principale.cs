@@ -75,34 +75,77 @@ namespace Programma
             else
             {
                 Nodo nodo = creaNodo(tabPrec, panel);
-                for (int i = 0; i < Program.grafo.Nodos.Count && daInserire.Count == 0; i++)
-                    Program.grafo.trovaFigli(Program.grafo.Nodos[i], nodo, daInserire);
+                int inizio = Program.tabelle.ToList().FindIndex(dato => dato == tabPrec);
+                int fine = Program.tabelle.ToList().ToList().FindIndex(dato => dato == tag);
+                if (inizio < fine)
+                    daInserire = tuttiFigli(tag, tabPrec, nodo);
+                else
+                {
+                    Nodo padre = new Nodo();
+                    while (tag != tabPrec)
+                    {
+                        padre = Program.grafo.trovaPadre(nodo, inizio);
+                        tabPrec = Program.tabelle[Program.tabelle.ToList().FindIndex(dato => dato == tabPrec) - 1];
+                        inizio = Program.tabelle.ToList().FindIndex(dato => dato == tabPrec);
+                    }
+                    daInserire.Add(padre);
+                }
             }
             Program.query(new MySqlCommand("SELECT DISTINCT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'esami ecdl' AND TABLE_NAME = '" + tag + "'", Program.connection).ExecuteReader());
             string[] colonne = new string[Program.risQuery.Count];
             for (int i = 0; i < colonne.Length; i++)
                 colonne[i] = Program.risQuery[i][0];
             for(int i = 0; i < daInserire.Count; i++)
+                if (daInserire[i].Tabella == tag)
+                {
+                    int altezza = principale.Controls[0].Location.Y + principale.Controls[0].Size.Height;
+                    if (principale.Controls.Count > 1)
+                        altezza = principale.Controls[principale.Controls.Count - 1].Location.Y + principale.Controls[principale.Controls.Count - 1].Size.Height + 1;
+                    Panel appoggio = Program.creaPanel(new Size(principale.Width - 3, principale.Height / 12 * 2), new Point(0, altezza), tag + (i + 1).ToString(), tag, Color.LightBlue, false);
+                    for (int y = 0; y < colonne.Length; y++)
+                    {
+                        appoggio.Controls.Add(Program.creaLabel(new Point(appoggio.Size.Width / 7, appoggio.Size.Height / colonne.Length * y + 1), colonne[y] + ":", tag, tag + (i + 1).ToString()));
+                        appoggio.Controls.Add(Program.creaLabel(new Point(appoggio.Size.Width / 7 * 4, appoggio.Size.Height / colonne.Length * y + 1), daInserire[i].valore(colonne[y]), tag, tag + (i + 1).ToString()));
+                    }
+                    appoggio.BorderStyle = BorderStyle.FixedSingle;
+                    appoggio.DoubleClick += azioneDoubleClick;
+                    appoggio.Click += azioneClick;
+                    foreach (Control control in appoggio.Controls)
+                    {
+                        control.DoubleClick += azioneDoubleClick;
+                        control.Click += azioneClick;
+                    }
+                    principale.Controls.Add(appoggio);
+                }
+        }
+
+        List<Nodo> tuttiFigli(string tag, string tabPrec, Nodo nodo)
+        {
+            List<Nodo> daInserire = filgi(nodo);
+            tabPrec = Program.tabelle[Program.tabelle.ToList().FindIndex(dato => dato == tabPrec) + 1];
+            while (tag != tabPrec)
             {
-                int altezza = principale.Controls[0].Location.Y + principale.Controls[0].Size.Height;
-                if (principale.Controls.Count > 1)
-                    altezza = principale.Controls[principale.Controls.Count - 1].Location.Y + principale.Controls[principale.Controls.Count - 1].Size.Height + 1;
-                Panel appoggio = Program.creaPanel(new Size(principale.Width - 3, principale.Height / 12 * 2), new Point(0, altezza), tag + (i + 1).ToString(), tag, Color.LightBlue, false);
-                for (int y = 0; y < colonne.Length; y++)
+                List<Nodo> app = new List<Nodo>();
+                foreach (Nodo item in daInserire)
                 {
-                    appoggio.Controls.Add(Program.creaLabel(new Point(appoggio.Size.Width / 7, appoggio.Size.Height / colonne.Length * y + 1), colonne[y] + ":", tag, tag + (i + 1).ToString()));
-                    appoggio.Controls.Add(Program.creaLabel(new Point(appoggio.Size.Width / 7 * 4, appoggio.Size.Height / colonne.Length * y + 1), daInserire[i].valore(colonne[y]), tag, tag + (i + 1).ToString()));
+                    List<Nodo> nodos = filgi(item);
+                    foreach (Nodo item1 in nodos)
+                        app.Add(item1);
                 }
-                appoggio.BorderStyle = BorderStyle.FixedSingle;
-                appoggio.DoubleClick += azioneDoubleClick;
-                appoggio.Click += azioneClick;
-                foreach (Control control in appoggio.Controls)
-                {
-                    control.DoubleClick += azioneDoubleClick;
-                    control.Click += azioneClick;
-                }
-                principale.Controls.Add(appoggio);
+                daInserire.Clear();
+                foreach (Nodo item in app)
+                    daInserire.Add(item);
+                tabPrec = Program.tabelle[Program.tabelle.ToList().FindIndex(dato => dato == tabPrec) + 1];
             }
+            return daInserire;
+        }
+
+        List<Nodo> filgi(Nodo nodo)
+        {
+            List<Nodo> appoggio = new List<Nodo>();
+            for (int i = 0; i < Program.grafo.Nodos.Count && appoggio.Count == 0; i++)
+                Program.grafo.trovaFigli(Program.grafo.Nodos[i], nodo, appoggio);
+            return appoggio;
         }
 
         Nodo creaNodo(string tabella, Panel panel)

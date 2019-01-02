@@ -17,7 +17,6 @@ namespace Programma
             nodos = new List<Nodo>();
             Program.progressBar.Value = 0;
             caricaGrafo();
-            salvaSuFile();
         }
 
         public List<Nodo> Nodos { get { return nodos; } }
@@ -37,29 +36,40 @@ namespace Programma
                 else
                     foreach(Nodo item in campi)
                     {
-                        Nodo padre = new Nodo();
-                        for (int y = 0; y < nodos.Count && padre.Tabella == ""; y++)
-                            trovaPadre(nodos[y], item, ref padre, i);
-                        padre.aggiungiFiglio(item);
+                        Nodo nodo = trovaPadre(item, i);
+                        nodo.aggiungiFiglio(item);
                     }
                 Program.progressBar.Increment(1);
             }
         }
 
-        void trovaPadre(Nodo app, Nodo nodo, ref Nodo padre, int index)
+        public Nodo trovaPadre(Nodo nodo, int index)
+        {
+            Nodo app = new Nodo();
+            for (int y = 0; y < nodos.Count && app.Tabella == ""; y++)
+                padre(nodos[y], nodo, ref app, index);
+            return app;
+        }
+
+        void padre(Nodo app, Nodo nodo, ref Nodo nodoPadre, int index)
         {
             if (app.Tabella != Program.tabelle[index - 1])
-                for(int i = 0; i < app.Figli.Count && padre.Tabella == ""; i++)
-                    trovaPadre(app.Figli[i], nodo, ref padre, index);
-            if (controllo(app, nodo))
-                padre = app;
+                for (int i = 0; i < app.Figli.Count && nodoPadre.Tabella == ""; i++)
+                    padre(app.Figli[i], nodo, ref nodoPadre, index);
+            else if (controllo(app, nodo) && nodoPadre.Tabella == "")
+                nodoPadre = app;
         }
 
         bool controllo(Nodo app, Nodo nodo)
         {
+            bool secondo = false;
             string appoggio = "REFERENCED_COLUMN_NAME = '" + app.ChiaviPrimarie[0].nome + "'";
-            if (app.ChiaviPrimarie.Count > 1)
+            Program.query(new MySqlCommand("SELECT table_name, column_name FROM information_schema.KEY_COLUMN_USAGE WHERE referenced_table_name IS NOT NULL AND " + appoggio, Program.connection).ExecuteReader());
+            if (app.ChiaviPrimarie.Count > 1 || !controlloChiave(nodo.Tabella, app.Tabella))
+            {
                 appoggio = "REFERENCED_COLUMN_NAME = '" + nodo.ChiaviPrimarie[0].nome + "'";
+                secondo = true;
+            }
             Program.query(new MySqlCommand("SELECT table_name, column_name FROM information_schema.KEY_COLUMN_USAGE WHERE referenced_table_name IS NOT NULL AND " + appoggio, Program.connection).ExecuteReader());
             foreach (string[] item in Program.risQuery)
                 if (item[0] == nodo.Tabella || app.Tabella == item[0])
@@ -69,7 +79,11 @@ namespace Programma
                     appoggio = appoggio.Remove(appoggio.Length - 1, 1);
                     if (nodo.ChiaviEsterne.Count > 0)
                     {
-                        if (funzioneDiControllo(app.ChiaviPrimarie, nodo.ChiaviEsterne, item[1], appoggio))
+                        if (!secondo && funzioneDiControllo(app.ChiaviPrimarie, nodo.ChiaviEsterne, item[1], appoggio))
+                            return true;
+                        else if (secondo && funzioneDiControllo(app.ChiaviPrimarie, nodo.ChiaviPrimarie, item[1], appoggio))
+                            return true;
+                        else if (secondo && funzioneDiControllo(app.ChiaviEsterne, nodo.ChiaviPrimarie, appoggio, item[1]))
                             return true;
                     }
                     else if (funzioneDiControllo(app.ChiaviPrimarie, nodo.ChiaviPrimarie, item[1], appoggio))
@@ -78,6 +92,14 @@ namespace Programma
             return false;
         }
 
+        bool controlloChiave(string tab1, string tab2)
+        {
+            foreach (string[] item in Program.risQuery)
+                if (item[0] == tab1 || item[0] == tab2)
+                    return true;
+            return false;
+        }
+             
         bool funzioneDiControllo(List<Campo> app, List<Campo> nodo, string chiaveCampo, string chiaveApp)
         {
             Campo campo = nodo.Find(dato => dato.nome == chiaveCampo);
