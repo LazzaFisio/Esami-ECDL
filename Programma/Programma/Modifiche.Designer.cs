@@ -73,12 +73,10 @@
             // tabAdd
             // 
             this.tabAdd.BackColor = System.Drawing.Color.White;
-            this.tabAdd.Controls.Add(this.cmb1);
-            this.tabAdd.Controls.Add(this.labelcmb);
             this.tabAdd.Controls.Add(this.rbEsistente);
             this.tabAdd.Controls.Add(this.rbNuovo);
-            this.tabAdd.Controls.Add(this.panel1);
             this.tabAdd.Controls.Add(this.panel2);
+            this.tabAdd.Controls.Add(this.panel1);
             this.tabAdd.Location = new System.Drawing.Point(4, 22);
             this.tabAdd.Name = "tabAdd";
             this.tabAdd.Padding = new System.Windows.Forms.Padding(3);
@@ -89,7 +87,7 @@
             // cmb1
             // 
             this.cmb1.FormattingEnabled = true;
-            this.cmb1.Location = new System.Drawing.Point(187, 224);
+            this.cmb1.Location = new System.Drawing.Point(155, 96);
             this.cmb1.Name = "cmb1";
             this.cmb1.Size = new System.Drawing.Size(136, 21);
             this.cmb1.TabIndex = 9;
@@ -100,7 +98,7 @@
             this.labelcmb.Depth = 0;
             this.labelcmb.Font = new System.Drawing.Font("Roboto", 11F);
             this.labelcmb.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.labelcmb.Location = new System.Drawing.Point(33, 225);
+            this.labelcmb.Location = new System.Drawing.Point(12, 97);
             this.labelcmb.MouseState = MaterialSkin.MouseState.HOVER;
             this.labelcmb.Name = "labelcmb";
             this.labelcmb.Size = new System.Drawing.Size(0, 19);
@@ -151,6 +149,8 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.cmb1);
+            this.panel2.Controls.Add(this.labelcmb);
             this.panel2.Controls.Add(this.cmbEsistente);
             this.panel2.Controls.Add(this.lblSeleziona);
             this.panel2.Location = new System.Drawing.Point(29, 40);
