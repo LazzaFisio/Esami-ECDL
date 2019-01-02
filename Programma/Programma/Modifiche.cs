@@ -74,23 +74,23 @@ namespace Programma
                         query = query.Remove(query.Length - 4, 3);
                         query += ")";
 
-                        Aggiunta aggiunta = new Aggiunta(index.ToString(), cmb1.Text);
-                        aggiunta.ShowDialog();
-                        if (Aggiunta.durata != "")
+                        Dettagli Dettagli = new Dettagli(index.ToString(), cmb1.Text);
+                        Dettagli.ShowDialog();
+                        if (Dettagli.durata != "")
                         {
                             richiamaQuery(query);
 
                             if (tabella == "esami")
-                                richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione,DurataEsame) VALUES ('" + index + "', '" + cmb1.Text + "', '" + Aggiunta.durata + "')");
+                                richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione,DurataEsame) VALUES ('" + index + "', '" + cmb1.Text + "', '" + Dettagli.durata + "')");
                         }
                     }
                     else
                     {
-                        Aggiunta aggiunta = new Aggiunta(cmbEsistente.Text, cmb1.Text);
-                        aggiunta.ShowDialog();
-                        if (Aggiunta.durata != "")
+                        Dettagli Dettagli = new Dettagli(cmbEsistente.Text, cmb1.Text);
+                        Dettagli.ShowDialog();
+                        if (Dettagli.durata != "")
                             if (tabella == "esami")
-                                richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione,DurataEsame) VALUES ('" + cmbEsistente.Text + "', '" + cmb1.Text + "', '" + Aggiunta.durata + "')");
+                                richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione,DurataEsame) VALUES ('" + cmbEsistente.Text + "', '" + cmb1.Text + "', '" + Dettagli.durata + "')");
                     }
                 }
                 else
