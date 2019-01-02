@@ -68,18 +68,6 @@ namespace Programma
             return false;
         }
 
-        public string valore(string nome)
-        {
-            Campo campo = ChiaviPrimarie.Find(dato => dato.nome == nome);
-            if(campo == null)
-            {
-                campo = attributi.Find(dato => dato.nome == nome);
-                if(campo == null)
-                    campo = chiaviEsterne.Find(dato => dato.nome == nome);
-            }
-            return campo.valore;
-        }
-
         public void aggiungiFiglio(Nodo figlio) => figli.Add(figlio);
 
         public string Tabella { get { return tabella; } }

@@ -70,13 +70,8 @@ namespace Programma
             principale.Controls.Add(Program.creaPanel(new Size(principale.Width - 4, principale.Height / 40 * 2), new Point(0, 0), "Titolo", "Titolo", Color.White, false));
             principale.Controls[0].Controls.Add(Program.creaLabel(new Point(principale.Controls[0].Size.Width / 23 * 10, principale.Controls[0].Size.Height / 7), tag , tag, tag));
             int index = 0;
-            List<Nodo> daInserire = new List<Nodo>();
-            if (tag == "città")
-            {
-                index = Program.grafo.nodos.Count;
-                foreach (Nodo nodo in Program.grafo.nodos)
-                    daInserire.Add(nodo);
-            }
+            string cond = "";
+            condizione(tag, ref index, ref cond, panel);
             Program.query(new MySqlCommand("SELECT DISTINCT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'esami ecdl' AND TABLE_NAME = '" + tag + "'", Program.connection).ExecuteReader());
             string[] colonne = new string[Program.risQuery.Count];
             for (int i = 0; i < colonne.Length; i++)
@@ -89,8 +84,9 @@ namespace Programma
                 Panel appoggio = Program.creaPanel(new Size(principale.Width - 3, principale.Height / 12 * 2), new Point(0, altezza), tag + (i + 1).ToString(), tag, Color.LightBlue, false);
                 for (int y = 0; y < colonne.Length; y++)
                 {
+                    Program.query(new MySqlCommand("SELECT " + colonne[y] + " FROM " + tag + cond, Program.connection).ExecuteReader());
                     appoggio.Controls.Add(Program.creaLabel(new Point(appoggio.Size.Width / 7, appoggio.Size.Height / colonne.Length * y + 1), colonne[y] + ":", tag, tag + (i + 1).ToString()));
-                    appoggio.Controls.Add(Program.creaLabel(new Point(appoggio.Size.Width / 7 * 4, appoggio.Size.Height / colonne.Length * y + 1), daInserire[i].valore(colonne[y]), tag, tag + (i + 1).ToString()));
+                    appoggio.Controls.Add(Program.creaLabel(new Point(appoggio.Size.Width / 7 * 4, appoggio.Size.Height / colonne.Length * y + 1), Program.risQuery[i][0], tag, tag + (i + 1).ToString()));
                 }
                 appoggio.BorderStyle = BorderStyle.FixedSingle;
                 appoggio.DoubleClick += azioneDoubleClick;
@@ -102,6 +98,43 @@ namespace Programma
                 }
                 principale.Controls.Add(appoggio);
             }
+        }
+
+        void condizione(string tabella, ref int index, ref string condizione, Panel panel)
+        {
+            int appoggio = Program.tabelle.ToList().FindIndex(dato => dato == tabella) - 1;
+            if (appoggio < 0)
+                appoggio = 0;
+            List<string> chiavi = Program.chiaviPrimarie(Program.tabelle[appoggio]);
+            condizione = " WHERE ";
+            if(panel != null)
+                switch (tabella)
+                {
+                    default: condizioneGenerale(chiavi, tabella, ref condizione, ref index, panel); break;
+                }
+            else
+            {
+                Program.query(new MySqlCommand("SELECT COUNT(*) FROM " + tabella, Program.connection).ExecuteReader());
+                condizione = "";
+                index = Convert.ToInt32(Program.risQuery[0][0]);
+            }
+        }
+
+        void condizioneGenerale(List<string> chiavi, string tabella, ref string condizione, ref int index, Panel panel)
+        {
+            string colonna = "";
+            foreach (string item in chiavi)
+                colonna += "REFERENCED_COLUMN_NAME = '" + item + "' AND ";
+            colonna = colonna.Remove(colonna.Length - 4, 3);
+            Program.query(new MySqlCommand("SELECT COLUMN_NAME FROM information_schema.KEY_COLUMN_USAGE ke WHERE ke.referenced_table_name IS NOT NULL AND TABLE_NAME = '" + tabella + "' AND " + colonna, Program.connection).ExecuteReader());
+            colonna = Program.risQuery[0][0];
+            for (int i = 0; i < panel.Controls.Count - 1; i += 2)
+                if (chiavi.Contains(panel.Controls[i].Text.Remove(panel.Controls[i].Text.Length - 1, 1)))
+                    condizione += colonna + " = '" + panel.Controls[i + 1].Text + "' ";
+            if (condizione.Length == 7)
+                condizione = "";
+            Program.query(new MySqlCommand("SELECT COUNT(*) FROM " + tabella + condizione, Program.connection).ExecuteReader());
+            index = Convert.ToInt32(Program.risQuery[0][0]);
         }
 
         void aggiornaSezione(Panel padre, Panel selezionato)
