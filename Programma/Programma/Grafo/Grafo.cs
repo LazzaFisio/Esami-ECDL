@@ -15,6 +15,7 @@ namespace Programma
         public Grafo()
         {
             nodos = new List<Nodo>();
+            Program.progressBar.Value = 0;
             caricaGrafo();
             salvaSuFile();
         }
@@ -39,6 +40,7 @@ namespace Programma
                             trovaPadre(nodos[y], item, ref padre, i);
                         padre.aggiungiFiglio(item);
                     }
+                Program.progressBar.Increment(1);
             }
         }
 
@@ -47,29 +49,40 @@ namespace Programma
             if (app.Tabella != Program.tabelle[index - 1])
                 for(int i = 0; i < app.Figli.Count && padre.Tabella == ""; i++)
                     trovaPadre(app.Figli[i], nodo, ref padre, index);
-            if (nodo.ChiaviEsterne.Count > 0 && controllo(app, nodo))
-                padre = app;
-            else if (controlloNoFK(app, nodo))
+            if (controllo(app, nodo))
                 padre = app;
         }
 
         bool controllo(Nodo app, Nodo nodo)
         {
-            string appoggio = "";
-            foreach (Campo campo in app.ChiaviPrimarie)
-                appoggio += "REFERENCED_COLUMN_NAME = '" + campo.nome + "' AND";
-            appoggio = appoggio.Remove(appoggio.Length - 4, 4);
+            string appoggio = "REFERENCED_COLUMN_NAME = '" + app.ChiaviPrimarie[0].nome + "'";
+            if (app.ChiaviPrimarie.Count > 1)
+                appoggio = "REFERENCED_COLUMN_NAME = '" + nodo.ChiaviPrimarie[0].nome + "'";
             Program.query(new MySqlCommand("SELECT table_name, column_name FROM information_schema.KEY_COLUMN_USAGE WHERE referenced_table_name IS NOT NULL AND " + appoggio, Program.connection).ExecuteReader());
             foreach (string[] item in Program.risQuery)
-                if (item[0] == nodo.Tabella && nodo.ChiaviEsterne.Exists(dato => dato.nome == item[1]))
-                    for (int i = 0; i < nodo.ChiaviEsterne.Count; i++)
-                        if (nodo.ChiaviEsterne[i].valore == app.ChiaviPrimarie[i].valore)
+                if (item[0] == nodo.Tabella)
+                {
+                    appoggio = appoggio.Split('=')[1];
+                    appoggio = appoggio.Remove(0, 2);
+                    appoggio = appoggio.Remove(appoggio.Length - 1, 1);
+                    if (nodo.ChiaviEsterne.Count > 0)
+                    {
+                        if (funzioneDiControllo(app.ChiaviPrimarie, nodo.ChiaviEsterne, item[1], appoggio))
                             return true;
+                    }
+                    else if (funzioneDiControllo(app.ChiaviPrimarie, nodo.ChiaviPrimarie, item[1], appoggio))
+                        return true;
+                }
             return false;
         }
 
-        bool controlloNoFK(Nodo app, Nodo nodo)
+        bool funzioneDiControllo(List<Campo> app, List<Campo> nodo, string chiaveCampo, string chiaveApp)
         {
+            Campo campo = nodo.Find(dato => dato.nome == chiaveCampo);
+            Campo campo1 = app.Find(dato => dato.nome == chiaveApp);
+            if (campo != null && campo1 != null)
+                if (campo.valore == campo1.valore)
+                    return true;
             return false;
         }
 

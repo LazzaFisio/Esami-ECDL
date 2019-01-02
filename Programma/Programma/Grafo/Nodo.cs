@@ -56,6 +56,16 @@ namespace Programma
                 else
                     chiaviEsterne[i - chiaviPrimarie.Count - attributi.Count].valore = app[i];
             }
+            if (!controlloChiaviEsterne())
+                chiaviEsterne.Clear();
+        }
+
+        bool controlloChiaviEsterne()
+        {
+            foreach (Campo campo in chiaviEsterne)
+                if (campo.valore != null)
+                    return true;
+            return false;
         }
 
         public void aggiungiFiglio(Nodo figlio) => figli.Add(figlio);

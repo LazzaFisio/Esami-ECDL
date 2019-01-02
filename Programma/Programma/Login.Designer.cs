@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.connetti = new System.Windows.Forms.Button();
             this.server = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.database = new MaterialSkin.Controls.MaterialSingleLineTextField();
@@ -37,6 +38,7 @@
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // connetti
@@ -165,6 +167,11 @@
             this.materialLabel4.TabIndex = 14;
             this.materialLabel4.Text = "PASSWORD:";
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 1;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -200,5 +207,6 @@
         private MaterialSkin.Controls.MaterialLabel materialLabel2;
         private MaterialSkin.Controls.MaterialLabel materialLabel3;
         private MaterialSkin.Controls.MaterialLabel materialLabel4;
+        private System.Windows.Forms.Timer timer1;
     }
 }
