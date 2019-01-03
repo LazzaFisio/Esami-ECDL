@@ -55,8 +55,9 @@ namespace Programma
             else
                 foreach (Nodo item in campi)
                 {
-                    Nodo nodo = trovaPadre(item, valore);
-                    nodo.aggiungiFiglio(item);
+                    List<Nodo> nodo = trovaPadre(item, valore);
+                    foreach (Nodo item1 in nodo)
+                        item1.aggiungiFiglio(item);
                 }
             indexTabella++;
         }
@@ -77,21 +78,22 @@ namespace Programma
             return new Nodo(tabella, chiaviP, chiaviE, att, allData);
         }
 
-        public Nodo trovaPadre(Nodo nodo, int index)
+        public List<Nodo> trovaPadre(Nodo nodo, int index)
         {
-            Nodo app = new Nodo();
-            for (int y = 0; y < nodos.Count && app.Tabella == ""; y++)
-                padre(nodos[y], nodo, ref app, index);
+            List<Nodo> app = new List<Nodo>();
+            for (int y = 0; y < nodos.Count; y++)
+                padre(nodos[y], nodo, app, index);
             return app;
         }
 
-        void padre(Nodo app, Nodo nodo, ref Nodo nodoPadre, int index)
+        void padre(Nodo app, Nodo nodo, List<Nodo> nodoPadre, int index)
         {
             if (app.Tabella != tabelle[index - 1])
-                for (int i = 0; i < app.Figli.Count && nodoPadre.Tabella == ""; i++)
-                    padre(app.Figli[i], nodo, ref nodoPadre, index);
-            else if (controllo(app, nodo) && nodoPadre.Tabella == "")
-                nodoPadre = app;
+                for (int i = 0; i < app.Figli.Count; i++)
+                    padre(app.Figli[i], nodo,  nodoPadre, index);
+            else if (controllo(app, nodo))
+                if(!nodoPadre.Contains(app))
+                    nodoPadre.Add(app);
         }
 
         bool controllo(Nodo app, Nodo nodo)
@@ -146,12 +148,33 @@ namespace Programma
 
         public void trovaFigli(Nodo appoggio, Nodo nodo, List<Nodo> lista)
         {
-            if (appoggio.Tabella != nodo.Tabella && lista.Count == 0)
-                for(int i = 0; i < appoggio.Figli.Count && lista.Count == 0; i++)
+            if (appoggio.Tabella != nodo.Tabella)
+                for(int i = 0; i < appoggio.Figli.Count; i++)
                     trovaFigli(appoggio.Figli[i], nodo, lista);
             else if (appoggio.Equals(nodo))
                 foreach (Nodo item in appoggio.Figli)
-                    lista.Add(item);
+                    if(!lista.Contains(item))
+                        lista.Add(item);
+        }
+
+        public void aggiungiNodo(string tabella, int index)
+        {
+            Nodo daAggiungere = creaNodo(tabella, index, connection);
+        }
+
+        public void allNodos(List<Nodo> lista)
+        {
+            foreach(Nodo item in nodos)
+                funzione(item ,lista);
+        }
+
+        void funzione(Nodo app, List<Nodo> nodos)
+        {
+            foreach(Nodo item in app.Figli)
+            {
+                funzione(item, nodos);
+                nodos.Add(item);
+            }
         }
 
         public void salvaSuFile()

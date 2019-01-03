@@ -57,7 +57,7 @@ namespace Programma
         void creaContenitore(string elemento, string tabPrec, int pos, Panel panel)
         {
             Panel principale = (Panel)Controls.Find("Principale", true)[0];
-            principale.Controls.Add(Program.creaPanel(new Size(dimSchermo.Width / 5, principale.Height), new Point(dimSchermo.Width / 5 * pos), elemento, elemento, Color.LightGray, true));
+            principale.Controls.Add(Program.creaPanel(new Size(dimSchermo.Width / 6, principale.Height), new Point(dimSchermo.Width / 6 * pos), elemento, elemento, Color.LightGray, true));
             ((Panel)principale.Controls[principale.Controls.Count - 1]).BorderStyle = BorderStyle.FixedSingle;
             ((Panel)principale.Controls[principale.Controls.Count - 1]).DoubleClick += azioneDoubleClick;
             creaSezione(elemento, tabPrec, panel);
@@ -67,29 +67,21 @@ namespace Programma
         {
             Panel principale = (Panel)Controls.Find(tag, true)[0];
             principale.Controls.Add(Program.creaPanel(new Size(principale.Width - 4, principale.Height / 40 * 2), new Point(0, 0), "Titolo", "Titolo", Color.White, false));
-            principale.Controls[0].Controls.Add(Program.creaLabel(new Point(principale.Controls[0].Size.Width / 23 * 10, principale.Controls[0].Size.Height / 7), tag , tag, tag));
+            principale.Controls[0].Controls.Add(Program.creaLabel(new Point(principale.Controls[0].Size.Width / 23 * 10, principale.Controls[0].Size.Height / 7), "Caricamento" , tag, tag));
             List<Nodo> daInserire = new List<Nodo>();
             if (tag == "città")
-                foreach (Nodo nodo in Program.grafo.Nodos)
-                    daInserire.Add(nodo);
+            {
+                Program.query(new MySqlCommand("SELECT COUNT(*) FROM " + tag, Program.connection).ExecuteReader());
+                int dim = Convert.ToInt32(Program.risQuery[0][0]);
+                for (int i = 0; i < dim; i++)
+                    daInserire.Add(creaNodo(tag, i, ""));
+            }
             else
             {
                 int inizio = Program.tabelle.ToList().FindIndex(dato => dato == tabPrec);
                 int fine = Program.tabelle.ToList().ToList().FindIndex(dato => dato == tag);
-                Nodo nodo = creaNodo(tabPrec, panel);
                 if (inizio < fine)
-                    daInserire = tuttiFigli(tag, tabPrec, nodo);
-                else
-                {
-                    Nodo padre = new Nodo();
-                    while (tag != tabPrec)
-                    {
-                        padre = Program.grafo.trovaPadre(nodo, inizio);
-                        tabPrec = Program.tabelle[Program.tabelle.ToList().FindIndex(dato => dato == tabPrec) - 1];
-                        inizio = Program.tabelle.ToList().FindIndex(dato => dato == tabPrec);
-                    }
-                    daInserire.Add(padre);
-                }
+                    daInserire = figliSucc(tag, tabPrec, creaNodoPadre(tabPrec, panel));
             }
             Program.query(new MySqlCommand("SELECT DISTINCT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'esami ecdl' AND TABLE_NAME = '" + tag + "'", Program.connection).ExecuteReader());
             string[] colonne = new string[Program.risQuery.Count];
@@ -117,55 +109,104 @@ namespace Programma
                     }
                     principale.Controls.Add(appoggio);
                 }
+            principale.Controls[0].Controls[0].Text = tag;
         }
 
-        List<Nodo> tuttiFigli(string tag, string tabPrec, Nodo nodo)
+        Nodo creaNodo(string tabella, int index, string cond)
         {
-            List<Nodo> daInserire = filgi(nodo);
-            int inizio = Program.tabelle.ToList().FindIndex(dato => dato == tabPrec) + 1;
-            tabPrec = Program.tabelle[inizio];
+            List<string> chiaviP = Program.chiaviPrimarie(tabella);
+            Program.query(new MySqlCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = '" + tabella + "' AND TABLE_SCHEMA = 'esami ecdl'", Program.connection).ExecuteReader());
+            List<string[]> chiaviE = new List<string[]>();
+            foreach (string[] item in Program.risQuery)
+                chiaviE.Add(item);
+            Program.query(new MySqlCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'esami ecdl' AND TABLE_NAME = '" + tabella + "'", Program.connection).ExecuteReader());
+            List<string[]> att = new List<string[]>();
+            foreach (string[] item in Program.risQuery)
+                att.Add(item);
+            Program.query(new MySqlCommand("SELECT * FROM " + tabella + cond, Program.connection).ExecuteReader());
+            List<string> allData = Program.risQuery[index].ToList();
+            return new Nodo(tabella, chiaviP, chiaviE, att, allData);
+        }
+
+        List<Nodo> figliSucc(string tag, string tabPrec, Nodo nodo)
+        {
+            List<Nodo> daInserire = new List<Nodo>();
+            string appoggio = "";
             while (tag != tabPrec)
             {
-                List<Nodo> app = new List<Nodo>();
-                foreach (Nodo item in daInserire)
-                {
-                    List<Nodo> nodos = filgi(item);
-                    foreach (Nodo item1 in nodos)
-                        app.Add(item1);
-                }
                 daInserire.Clear();
-                foreach (Nodo item in app)
-                    daInserire.Add(item);
-                inizio++;
-                tabPrec = Program.tabelle[inizio];
+                tabPrec = Program.tabelle[Program.tabelle.ToList().FindIndex(dato => dato == tabPrec) + 1];
+                string cond = "REFERENCED_COLUMN_NAME = '" + nodo.ChiaviPrimarie[0].nome + "'";
+                List<string[]> app = new List<string[]>();
+                if (nodo.ChiaviPrimarie.Count > 1 && appoggio == nodo.ChiaviPrimarie[1].nome)
+                    app.Add(new string[] { Program.tabelle[Program.tabelle.ToList().FindIndex(dato => dato == nodo.Tabella) + 1], nodo.ChiaviPrimarie[0].nome });
+                else
+                {
+                    Program.query(new MySqlCommand("SELECT table_name, column_name FROM information_schema.KEY_COLUMN_USAGE WHERE referenced_table_name IS NOT NULL AND " + cond, Program.connection).ExecuteReader());
+                    foreach (string[] item in Program.risQuery)
+                        app.Add(item);
+                }
+                for(int i = 0; i < app.Count; i++)
+                {
+                    string[] item = app[i];
+                    if(item[0] == tabPrec )
+                    {
+                        appoggio = cond.Split('=')[1];
+                        appoggio = appoggio.Remove(0, 2);
+                        appoggio = appoggio.Remove(appoggio.Length - 1, 1);
+                        cond = " WHERE " + item[1] + " = '" + nodo.ChiaviPrimarie[0].valore + "'";
+                        Program.query(new MySqlCommand("SELECT COUNT(*) FROM " + tabPrec + cond, Program.connection).ExecuteReader());
+                        int dim = Convert.ToInt32(Program.risQuery[0][0]);
+                        for (int y = 0; y < dim; y++)
+                            daInserire.Add(creaNodo(tabPrec, y, cond));
+                        nodo = daInserire.Find(new Predicate<Nodo>(delegate (Nodo ciao)
+                        {
+                            if(ciao.ChiaviEsterne.Count > 0 && ciao.ChiaviEsterne[0].valore == nodo.ChiaviPrimarie[0].valore)
+                                return true;
+                            else
+                            {
+                                if(nodo.ChiaviEsterne.Count > 0)
+                                {
+                                    Campo campo = ciao.ChiaviPrimarie.Find(dato => dato.nome == nodo.ChiaviPrimarie[0].nome);
+                                    if (campo.valore == nodo.ChiaviPrimarie[0].valore)
+                                        return true;
+                                }
+                                else
+                                {
+
+                                }
+                            }
+                            return false;
+                        }));
+                    }
+                }
+                
             }
             return daInserire;
         }
 
-        List<Nodo> filgi(Nodo nodo)
-        {
-            List<Nodo> appoggio = new List<Nodo>();
-            for (int i = 0; i < Program.grafo.Nodos.Count && appoggio.Count == 0; i++)
-                Program.grafo.trovaFigli(Program.grafo.Nodos[i], nodo, appoggio);
-            return appoggio;
-        }
-
-        Nodo creaNodo(string tabella, Panel panel)
+        Nodo creaNodoPadre(string tabella, Panel panel)
         {
             int index = -1;
-            string appoggio = "";
-            List<string> chiavi = Program.chiaviPrimarie(tabella);
-            foreach (string item in chiavi)
-                appoggio += item + ", ";
-            appoggio = appoggio.Remove(appoggio.Length - 2, 2);
+            string appoggio = listaChiavi(tabella, ", ");
             Program.query(new MySqlCommand("SELECT " + appoggio + " FROM " + tabella, Program.connection).ExecuteReader());
             for(int i = 0; i < Program.risQuery.Count; i++)
-                if(controlloNodo(Program.risQuery[i], chiavi.ToArray(), panel))
+                if(controlloNodo(Program.risQuery[i], Program.chiaviPrimarie(tabella).ToArray(), panel))
                 {
                     index = i;
                     i = Program.risQuery.Count;
                 }
-            return Program.grafo.creaNodo(tabella, index, Program.connection);
+            return creaNodo(tabella, index, "");
+        }
+
+        string listaChiavi(string tabella, string aggiunta)
+        {
+            string appoggio = "";
+            List<string> chiavi = Program.chiaviPrimarie(tabella);
+            foreach (string item in chiavi)
+                appoggio += item + aggiunta;
+            appoggio = appoggio.Remove(appoggio.Length - 2, 2);
+            return appoggio;
         }
 
         bool controlloNodo(string[] valori, string[] chiavi, Panel panel)
@@ -184,7 +225,7 @@ namespace Programma
 
         void aggiornaSezione(Panel padre, Panel selezionato)
         {
-            string tabella = Program.tabelle[Program.tabelle.ToList().FindIndex(dato => dato == padre.Controls[0].Controls[0].Text) + 1];
+            string tabella = mostra[mostra.ToList().FindIndex(dato => dato == padre.Controls[0].Controls[0].Text) + 1];
             Panel panel = (Panel)Controls.Find(tabella, true)[0];
             panel.Controls.Clear();
             creaSezione(tabella,padre.Name, selezionato);
@@ -192,6 +233,7 @@ namespace Programma
 
         void azioneDoubleClick(object sender, EventArgs e)
         {
+            azioneClick(sender, null);
             Panel padre = new Panel(), panel = new Panel();
             trovaPanelli(ref padre, ref panel, sender);
             if (padre.Name != panel.Name)
@@ -220,11 +262,8 @@ namespace Programma
             Panel padre = new Panel(), panel = new Panel();
             trovaPanelli(ref padre, ref panel, sender);
             int index = mostra.ToList().FindIndex(dato => dato == padre.Name) + 1;
-            int indexTabella = Program.tabelle.ToList().FindIndex(dato => dato == mostra[index]);
             if(index < mostra.Length)
             {
-                if (indexTabella >= Program.grafo.IndexTabella)
-                    new Attesa(indexTabella).ShowDialog();
                 cambiaColore(padre, panel);
                 Panel principale = (Panel)Controls.Find("Principale", true)[0];
                 if (panel.BackColor == Color.Lime)

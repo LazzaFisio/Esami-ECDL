@@ -19,7 +19,7 @@ namespace Programma
         {
             InitializeComponent();
             this.index = index;
-            timer1.Interval = Convert.ToInt32(elementi) * 15;
+            timer1.Interval = Convert.ToInt32(elementi) * 20;
             timer1.Start();
         }
 
@@ -33,7 +33,7 @@ namespace Programma
         private void timer1_Tick(object sender, EventArgs e)
         {
             timer1.Stop();
-            while (index >= Program.grafo.IndexTabella) ;
+            //while (index >= Program.grafo.IndexTabella) ;
             Close();
         }
     }

@@ -16,10 +16,8 @@ namespace Programma
         public static string scelta;
         public static string[] tabelle = new string[] { "città", "sede", "sessione", "esamesessione", "esami", "risultato", "skillcard", "esaminandi" };
         public static List<string[]> risQuery = new List<string[]>();
-        public static Grafo grafo;
         public static ProgressBar progressBar;
         public static MySqlConnection connection;
-        public static Thread thread;
 
         /// <summary>
         /// Punto di ingresso principale dell'applicazione.

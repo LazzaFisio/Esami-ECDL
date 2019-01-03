@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Programma
 {
-    class Nodo
+    [Serializable()]
+    class Nodo : IEquatable<Nodo>
     {
         string tabella;
         List<Campo> chiaviPrimarie;
@@ -23,6 +26,16 @@ namespace Programma
             chiaviEsterne = new List<Campo>();
             figli = new List<Nodo>();
         }
+
+        /* public Nodo(SerializationInfo info, StreamingContext context)
+        {
+            int dim = 0;
+            try { dim = Convert.ToInt32((string)info.GetValue("Dimensione", typeof(string))); } catch { }
+            for (int i = 0; i < dim; i++)
+            {
+                Nodo nodo = (Nodo)info.GetValue("1", typeof(Nodo));
+            }
+        }*/
 
         public Nodo(string tabella, List<string> chiaviP, List<string[]> chiaviE, List<string[]> att, List<string> allData)
         {
@@ -95,6 +108,15 @@ namespace Programma
                     return false;
             return true;
         }
+
+        /*public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            List<Nodo> lista = new List<Nodo>();
+            Program.grafo.allNodos(lista);
+            info.AddValue("Dimensione", lista.Count);
+            for (int i = 0; i < lista.Count; i++)
+                info.AddValue(i.ToString(), lista[i]);
+        }*/
 
         public void aggiungiFiglio(Nodo figlio) => figli.Add(figlio);
 
