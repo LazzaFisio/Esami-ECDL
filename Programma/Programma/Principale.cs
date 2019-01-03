@@ -81,7 +81,7 @@ namespace Programma
                 int inizio = Program.tabelle.ToList().FindIndex(dato => dato == tabPrec);
                 int fine = Program.tabelle.ToList().ToList().FindIndex(dato => dato == tag);
                 if (inizio < fine)
-                    daInserire = figliSucc(tag, tabPrec, creaNodoPadre(tabPrec, panel));
+                    daInserire = figliSucc(tag, tabPrec, creaNodoPadre(tabPrec, panel), false);
             }
             Program.query(new MySqlCommand("SELECT DISTINCT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'esami ecdl' AND TABLE_NAME = '" + tag + "'", Program.connection).ExecuteReader());
             string[] colonne = new string[Program.risQuery.Count];
@@ -128,67 +128,103 @@ namespace Programma
             return new Nodo(tabella, chiaviP, chiaviE, att, allData);
         }
 
-        List<Nodo> figliSucc(string tag, string tabPrec, Nodo nodo)
+        List<Nodo> figliSucc(string tag, string tabPrec, Nodo nodo, bool eccezione)
         {
             List<Nodo> daInserire = new List<Nodo>();
-            List<Nodo> lista = new List<Nodo>();
+            List<Nodo> nodi = new List<Nodo>();
             string appoggio = "";
             while (tag != tabPrec)
             {
                 daInserire.Clear();
-                tabPrec = Program.tabelle[Program.tabelle.ToList().FindIndex(dato => dato == tabPrec) + 1];
+                List<string> chivi = Program.chiaviPrimarie(tabPrec);
                 List<string[]> app = new List<string[]>();
                 string cond = "";
-                if (lista.Count == 1)
-                    nodo = lista[0];
-                if (lista.Count > 1)
+                tabPrec = Program.tabelle[Program.tabelle.ToList().FindIndex(dato => dato == tabPrec) + 1];
+                if (tabPrec == "esaminandi")
+                    chivi = Program.chiaviPrimarie("città");
+                int index = 0;
+                if (appoggio != "" && chivi.Count > 1)
                 {
-                    
+                    chivi.Remove(appoggio);
+                    foreach (Nodo item in nodi)
+                        if (item.ChiaviPrimarie.Exists(dato => dato.nome == chivi[0]))
+                            index = item.ChiaviPrimarie.FindIndex(dato => dato.nome == chivi[0]);
+                    for(int i = 0; i < nodi.Count; i++)
+                    {
+                        cond = " WHERE " + chivi[0] + " = '" + nodi[i].ChiaviPrimarie[index].valore + "'";
+                        funzione(tabPrec, cond, daInserire);
+                    }
                 }
                 else
                 {
-                     cond = "REFERENCED_COLUMN_NAME = '" + nodo.ChiaviPrimarie[0].nome + "'";
+                    cond = "REFERENCED_COLUMN_NAME = '" + chivi[0] + "'";
                     Program.query(new MySqlCommand("SELECT table_name, column_name FROM information_schema.KEY_COLUMN_USAGE WHERE referenced_table_name IS NOT NULL AND " + cond, Program.connection).ExecuteReader());
                     foreach (string[] item in Program.risQuery)
                         app.Add(item);
-                }
-                for(int i = 0; i < app.Count; i++)
-                {
-                    string[] item = app[i];
-                    if(item[0] == tabPrec )
+                    for (int i = 0; i < app.Count; i++)
                     {
-                        appoggio = cond.Split('=')[1];
-                        appoggio = appoggio.Remove(0, 2);
-                        appoggio = appoggio.Remove(appoggio.Length - 1, 1);
-                        cond = " WHERE " + item[1] + " = '" + nodo.ChiaviPrimarie[0].valore + "'";
-                        Program.query(new MySqlCommand("SELECT COUNT(*) FROM " + tabPrec + cond, Program.connection).ExecuteReader());
-                        int dim = Convert.ToInt32(Program.risQuery[0][0]);
-                        for (int y = 0; y < dim; y++)
-                            daInserire.Add(creaNodo(tabPrec, y, cond));
-                        lista = daInserire.FindAll(new Predicate<Nodo>(delegate (Nodo ciao)
+                        string[] item = app[i];
+                        if (item[0] == tabPrec)
                         {
-                            if(ciao.ChiaviEsterne.Count > 0 && ciao.ChiaviEsterne[0].valore == nodo.ChiaviPrimarie[0].valore)
-                                return true;
-                            else
-                            {
-                                if(nodo.ChiaviEsterne.Count > 0)
-                                {
-                                    Campo campo = ciao.ChiaviPrimarie.Find(dato => dato.nome == nodo.ChiaviPrimarie[0].nome);
-                                    if (campo.valore == nodo.ChiaviPrimarie[0].valore)
-                                        return true;
-                                }
-                                else
-                                {
-
-                                }
-                            }
-                            return false;
-                        }));
+                            appoggio = cond.Split('=')[1];
+                            appoggio = appoggio.Remove(0, 2);
+                            appoggio = appoggio.Remove(appoggio.Length - 1, 1);
+                            cond = " WHERE " + item[1] + " = '" + nodo.ChiaviPrimarie[0].valore + "'";
+                            funzione(tabPrec, cond, daInserire);
+                        }
                     }
                 }
-                
+                if(nodi.Count > 1)
+                {
+                    List<Nodo> variabile = new List<Nodo>();
+                    foreach(Nodo item in nodi)
+                        for (int i = 0; i < daInserire.Count; i++)
+                            if (condizione(daInserire[i], item, index))
+                                variabile.Add(daInserire[i]);
+                    nodi.Clear();
+                    foreach (Nodo item in variabile)
+                        nodi.Add(item);
+
+                }
+                else
+                {
+                    for (int i = 0; i < daInserire.Count; i++)
+                        if (condizione(daInserire[i], nodo, 0))
+                            nodi.Add(daInserire[i]);
+                }
+                if (nodi.Count == 1)
+                    nodo = nodi[0];
             }
             return daInserire;
+        }
+
+        bool condizione(Nodo ciao, Nodo nodo, int index)
+        {
+            if (ciao.ChiaviEsterne.Count > 0)
+            {
+                if (nodo.ChiaviPrimarie.Count == 1)
+                {
+                    if (ciao.ChiaviEsterne[0].valore == nodo.ChiaviPrimarie[index].valore)
+                        return true;
+                }
+                else if (ciao.ChiaviPrimarie[0].valore == nodo.ChiaviPrimarie[index].valore)
+                    return true;
+            }
+            else
+            {
+                Campo campo = ciao.ChiaviPrimarie.Find(dato => dato.nome == nodo.ChiaviPrimarie[index].nome);
+                if (campo != null && campo.valore == nodo.ChiaviPrimarie[index].valore)
+                    return true;
+            }
+            return false;
+        }
+
+        void funzione(string tabPrec, string cond, List<Nodo> daInserire)
+        {
+            Program.query(new MySqlCommand("SELECT COUNT(*) FROM " + tabPrec + cond, Program.connection).ExecuteReader());
+            int dim = Convert.ToInt32(Program.risQuery[0][0]);
+            for (int y = 0; y < dim; y++)
+                daInserire.Add(creaNodo(tabPrec, y, cond));
         }
 
         Nodo creaNodoPadre(string tabella, Panel panel)
@@ -196,11 +232,14 @@ namespace Programma
             int index = -1;
             string appoggio = listaChiavi(tabella, ", ");
             Program.query(new MySqlCommand("SELECT " + appoggio + " FROM " + tabella, Program.connection).ExecuteReader());
-            for(int i = 0; i < Program.risQuery.Count; i++)
-                if(controlloNodo(Program.risQuery[i], Program.chiaviPrimarie(tabella).ToArray(), panel))
+            List<string[]> app = new List<string[]>();
+            foreach (string[] item in Program.risQuery)
+                app.Add(item);
+            for(int i = 0; i < app.Count; i++)
+                if(controlloNodo(app[i], Program.chiaviPrimarie(tabella).ToArray(), panel))
                 {
                     index = i;
-                    i = Program.risQuery.Count;
+                    i = app.Count;
                 }
             return creaNodo(tabella, index, "");
         }
