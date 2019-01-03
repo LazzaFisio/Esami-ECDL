@@ -131,17 +131,23 @@ namespace Programma
         List<Nodo> figliSucc(string tag, string tabPrec, Nodo nodo)
         {
             List<Nodo> daInserire = new List<Nodo>();
+            List<Nodo> lista = new List<Nodo>();
             string appoggio = "";
             while (tag != tabPrec)
             {
                 daInserire.Clear();
                 tabPrec = Program.tabelle[Program.tabelle.ToList().FindIndex(dato => dato == tabPrec) + 1];
-                string cond = "REFERENCED_COLUMN_NAME = '" + nodo.ChiaviPrimarie[0].nome + "'";
                 List<string[]> app = new List<string[]>();
-                if (nodo.ChiaviPrimarie.Count > 1 && appoggio == nodo.ChiaviPrimarie[1].nome)
-                    app.Add(new string[] { Program.tabelle[Program.tabelle.ToList().FindIndex(dato => dato == nodo.Tabella) + 1], nodo.ChiaviPrimarie[0].nome });
+                string cond = "";
+                if (lista.Count == 1)
+                    nodo = lista[0];
+                if (lista.Count > 1)
+                {
+                    
+                }
                 else
                 {
+                     cond = "REFERENCED_COLUMN_NAME = '" + nodo.ChiaviPrimarie[0].nome + "'";
                     Program.query(new MySqlCommand("SELECT table_name, column_name FROM information_schema.KEY_COLUMN_USAGE WHERE referenced_table_name IS NOT NULL AND " + cond, Program.connection).ExecuteReader());
                     foreach (string[] item in Program.risQuery)
                         app.Add(item);
@@ -159,7 +165,7 @@ namespace Programma
                         int dim = Convert.ToInt32(Program.risQuery[0][0]);
                         for (int y = 0; y < dim; y++)
                             daInserire.Add(creaNodo(tabPrec, y, cond));
-                        nodo = daInserire.Find(new Predicate<Nodo>(delegate (Nodo ciao)
+                        lista = daInserire.FindAll(new Predicate<Nodo>(delegate (Nodo ciao)
                         {
                             if(ciao.ChiaviEsterne.Count > 0 && ciao.ChiaviEsterne[0].valore == nodo.ChiaviPrimarie[0].valore)
                                 return true;
