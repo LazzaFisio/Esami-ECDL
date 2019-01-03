@@ -74,9 +74,9 @@ namespace Programma
                     daInserire.Add(nodo);
             else
             {
-                Nodo nodo = creaNodo(tabPrec, panel);
                 int inizio = Program.tabelle.ToList().FindIndex(dato => dato == tabPrec);
                 int fine = Program.tabelle.ToList().ToList().FindIndex(dato => dato == tag);
+                Nodo nodo = creaNodo(tabPrec, panel);
                 if (inizio < fine)
                     daInserire = tuttiFigli(tag, tabPrec, nodo);
                 else
@@ -122,7 +122,8 @@ namespace Programma
         List<Nodo> tuttiFigli(string tag, string tabPrec, Nodo nodo)
         {
             List<Nodo> daInserire = filgi(nodo);
-            tabPrec = Program.tabelle[Program.tabelle.ToList().FindIndex(dato => dato == tabPrec) + 1];
+            int inizio = Program.tabelle.ToList().FindIndex(dato => dato == tabPrec) + 1;
+            tabPrec = Program.tabelle[inizio];
             while (tag != tabPrec)
             {
                 List<Nodo> app = new List<Nodo>();
@@ -135,7 +136,8 @@ namespace Programma
                 daInserire.Clear();
                 foreach (Nodo item in app)
                     daInserire.Add(item);
-                tabPrec = Program.tabelle[Program.tabelle.ToList().FindIndex(dato => dato == tabPrec) + 1];
+                inizio++;
+                tabPrec = Program.tabelle[inizio];
             }
             return daInserire;
         }
@@ -163,7 +165,7 @@ namespace Programma
                     index = i;
                     i = Program.risQuery.Count;
                 }
-            return new Nodo(tabella, index);
+            return Program.grafo.creaNodo(tabella, index, Program.connection);
         }
 
         bool controlloNodo(string[] valori, string[] chiavi, Panel panel)
@@ -208,7 +210,7 @@ namespace Programma
             new Messaggio(campi).ShowDialog();
             switch (Program.scelta)
             {
-                case "aggiungi": new Modifiche(panel.Tag.ToString()).ShowDialog(); break;
+                case "aggiungi": new Modifiche(panel.Tag.ToString(), 1).ShowDialog(); break;
             }
             Program.scelta = "";
         }
@@ -218,8 +220,11 @@ namespace Programma
             Panel padre = new Panel(), panel = new Panel();
             trovaPanelli(ref padre, ref panel, sender);
             int index = mostra.ToList().FindIndex(dato => dato == padre.Name) + 1;
+            int indexTabella = Program.tabelle.ToList().FindIndex(dato => dato == mostra[index]);
             if(index < mostra.Length)
             {
+                if (indexTabella >= Program.grafo.IndexTabella)
+                    new Attesa(indexTabella).ShowDialog();
                 cambiaColore(padre, panel);
                 Panel principale = (Panel)Controls.Find("Principale", true)[0];
                 if (panel.BackColor == Color.Lime)

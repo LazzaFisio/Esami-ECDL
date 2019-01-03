@@ -16,6 +16,7 @@ namespace Programma
 {
     public partial class Login : MaterialForm
     {
+        string data;
 
         public Login()
         {
@@ -27,10 +28,17 @@ namespace Programma
         {
             try
             {
-                string data = "Server=" + server.Text + ";Database=" + database.Text + ";Uid=" + user.Text + ";Psw=" + password.Text + ";";
+                data = "Server=" + server.Text + ";Database=" + database.Text + ";Uid=" + user.Text + ";Psw=" + password.Text + ";";
                 Program.connection = new MySqlConnection(data);
                 Program.connection.Open();
-                oscuraMostra(false);
+                Program.thread = new Thread(new ThreadStart(delegate
+                {
+                    Program.grafo = new Grafo(data, Program.tabelle.ToList());
+                    for (int i = Program.grafo.IndexTabella; i < Program.tabelle.Length; i++)
+                        Program.grafo.caricaGrafo(i);
+                }));
+                Program.thread.IsBackground = true;
+                Program.thread.Start();
                 timer1.Start();
             }
             catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); Show(); }
@@ -71,8 +79,9 @@ namespace Programma
             try
             {
                 timer1.Stop();
-                Program.grafo = new Grafo();
                 Hide();
+                Program.query(new MySqlCommand("SELECT COUNT(*) FROM città", Program.connection).ExecuteReader());
+                new Attesa(2, Program.risQuery[0][0]).ShowDialog();
                 new Principale().ShowDialog();
                 oscuraMostra(true);
                 Show();

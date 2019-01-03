@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using MaterialSkin.Controls;
 using System.Drawing;
+using System.Threading;
 
 namespace Programma
 {
@@ -18,6 +19,7 @@ namespace Programma
         public static Grafo grafo;
         public static ProgressBar progressBar;
         public static MySqlConnection connection;
+        public static Thread thread;
 
         /// <summary>
         /// Punto di ingresso principale dell'applicazione.

@@ -7,7 +7,7 @@ using MySql.Data.MySqlClient;
 
 namespace Programma
 {
-    class Nodo 
+    class Nodo
     {
         string tabella;
         List<Campo> chiaviPrimarie;
@@ -24,7 +24,7 @@ namespace Programma
             figli = new List<Nodo>();
         }
 
-        public Nodo(string tabella, int riga)
+        public Nodo(string tabella, List<string> chiaviP, List<string[]> chiaviE, List<string[]> att, List<string> allData)
         {
             this.tabella = tabella;
             chiaviPrimarie = new List<Campo>();
@@ -32,32 +32,25 @@ namespace Programma
             chiaviEsterne = new List<Campo>();
             figli = new List<Nodo>();
             //aggiunta nomi dei campi
-            List<string> app = Program.chiaviPrimarie(tabella);
-            foreach (string item in app)
+            foreach (string item in chiaviP)
                 chiaviPrimarie.Add(new Campo(item));
-            Program.query(new MySqlCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = '" + tabella + "' AND TABLE_SCHEMA = 'esami ecdl'", Program.connection).ExecuteReader());
-            foreach (string[] item in Program.risQuery)
+            foreach (string[] item in chiaviE)
                 foreach(Campo campo in chiaviPrimarie)
                     if(campo.nome != item[0])
                     chiaviEsterne.Add(new Campo(item[0]));
-            Program.query(new MySqlCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'esami ecdl' AND TABLE_NAME = '" + tabella + "'", Program.connection).ExecuteReader());
-            foreach (string[] item in Program.risQuery)
+            foreach (string[] item in att)
                 if (!chiaviPrimarie.Exists(dato => dato.nome == item[0]) && !chiaviEsterne.Exists(dato => dato.nome == item[0]))
                     attributi.Add(new Campo(item[0]));
             //aggiunta valori dei campi
-            Program.query(new MySqlCommand("SELECT * FROM " + tabella, Program.connection).ExecuteReader());
-            app = Program.risQuery[riga].ToList();
-            for(int i = 0; i < app.Count; i++)
+            for(int i = 0; i < allData.Count; i++)
             {
                 if (i < chiaviPrimarie.Count)
-                    chiaviPrimarie[i].valore = app[i];
+                    chiaviPrimarie[i].valore = allData[i];
                 else if (i - chiaviPrimarie.Count - attributi.Count < 0)
-                    attributi[i - chiaviPrimarie.Count].valore = app[i];
+                    attributi[i - chiaviPrimarie.Count].valore = allData[i];
                 else
-                    chiaviEsterne[i - chiaviPrimarie.Count - attributi.Count].valore = app[i];
+                    chiaviEsterne[i - chiaviPrimarie.Count - attributi.Count].valore = allData[i];
             }
-            if (tabella == "esami")
-                tabella = "esami";
             if (!controlloChiaviEsterne())
                 chiaviEsterne.Clear();
         }
