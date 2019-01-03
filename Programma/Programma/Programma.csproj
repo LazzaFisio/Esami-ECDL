@@ -62,6 +62,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attesa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Attesa.Designer.cs">
+      <DependentUpon>Attesa.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dettagli.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,6 +103,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Attesa.resx">
+      <DependentUpon>Attesa.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dettagli.resx">
       <DependentUpon>Dettagli.cs</DependentUpon>
     </EmbeddedResource>

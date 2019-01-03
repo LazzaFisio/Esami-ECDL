@@ -11,6 +11,8 @@ using MySql.Data.MySqlClient;
 using MaterialSkin.Animations;
 using MaterialSkin.Controls;
 using System.Threading;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Programma
 {
@@ -25,14 +27,16 @@ namespace Programma
 
         private void connetti_Click(object sender, EventArgs e)
         {
+            string appoggio = "Server=" + server.Text + ";Database=" + database.Text + ";Uid=" + user.Text + ";Psw=" + password.Text + ";";
+            Program.connection = new MySqlConnection(appoggio);
+            Program.connection.Open();
+            Hide();
+            new Principale().ShowDialog();
+            Show();
             try
             {
-                string data = "Server=" + server.Text + ";Database=" + database.Text + ";Uid=" + user.Text + ";Psw=" + password.Text + ";";
-                Program.connection = new MySqlConnection(data);
-                Program.connection.Open();
-                oscuraMostra(false);
-                timer1.Start();
-            }
+                
+        }
             catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); Show(); }
         }
 
@@ -68,14 +72,16 @@ namespace Programma
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            timer1.Stop();
+            Hide();
+            Program.query(new MySqlCommand("SELECT COUNT(*) FROM città", Program.connection).ExecuteReader());
+            new Attesa(2, Program.risQuery[0][0]).ShowDialog();
+            new Principale().ShowDialog();
+            oscuraMostra(true);
+            Show();
             try
             {
-                timer1.Stop();
-                Program.grafo = new Grafo();
-                Hide();
-                new Principale().ShowDialog();
-                oscuraMostra(true);
-                Show();
+                
             }
             catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); oscuraMostra(true); Show(); }
         }

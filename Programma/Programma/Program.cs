@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using MaterialSkin.Controls;
 using System.Drawing;
+using System.Threading;
 
 namespace Programma
 {
@@ -15,7 +16,6 @@ namespace Programma
         public static string scelta;
         public static string[] tabelle = new string[] { "città", "sede", "sessione", "esamesessione", "esami", "risultato", "skillcard", "esaminandi" };
         public static List<string[]> risQuery = new List<string[]>();
-        public static Grafo grafo;
         public static ProgressBar progressBar;
         public static MySqlConnection connection;
 

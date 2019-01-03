@@ -11,67 +11,103 @@ namespace Programma
     class Grafo
     {
         List<Nodo> nodos;
+        int indexTabella;
+        protected MySqlConnection connection;
+        List<string> tabelle;
+        protected List<string[]> risQuery;
 
         public Grafo()
         {
+
+        }
+
+        public Grafo(string tabella, int riga, MySqlConnection connection)
+        {
+            this.connection = connection;
+        }
+
+        public Grafo(string connessione, List<string> tabelle)
+        {
             nodos = new List<Nodo>();
-            Program.progressBar.Value = 0;
-            caricaGrafo();
+            indexTabella = 0;
+            connection = new MySqlConnection(connessione);
+            connection.Open();
+            this.tabelle = tabelle;
+            caricaGrafo(0);
         }
 
         public List<Nodo> Nodos { get { return nodos; } }
 
-        void caricaGrafo()
+        public int IndexTabella { get { return indexTabella; } }
+
+        public MySqlConnection SqlConnection { get { return connection; } }
+
+        public void caricaGrafo(int valore)
         {
-            for(int i = 0; i < Program.tabelle.Length; i++)
-            {
-                List<Nodo> campi = new List<Nodo>();
-                Program.query(new MySqlCommand("SELECT COUNT(*) FROM " + Program.tabelle[i], Program.connection).ExecuteReader());
-                int lenght = Convert.ToInt32(Program.risQuery[0][0]);
-                for (int y = 0; y < lenght; y++)
-                    campi.Add(new Nodo(Program.tabelle[i], y));
-                if (i == 0)
-                    foreach (Nodo nodo in campi)
-                        nodos.Add(nodo);
-                else
-                    foreach(Nodo item in campi)
-                    {
-                        Nodo nodo = trovaPadre(item, i);
-                        nodo.aggiungiFiglio(item);
-                    }
-                Program.progressBar.Increment(1);
-            }
+            List<Nodo> campi = new List<Nodo>();
+            query("SELECT COUNT(*) FROM " + tabelle[valore], connection);
+            int lenght = Convert.ToInt32(risQuery[0][0]);
+            for (int y = 0; y < lenght; y++)
+                campi.Add(creaNodo(tabelle[valore], y, connection));
+            if (valore == 0)
+                foreach (Nodo nodo in campi)
+                    nodos.Add(nodo);
+            else
+                foreach (Nodo item in campi)
+                {
+                    List<Nodo> nodo = trovaPadre(item, valore);
+                    foreach (Nodo item1 in nodo)
+                        item1.aggiungiFiglio(item);
+                }
+            indexTabella++;
         }
 
-        public Nodo trovaPadre(Nodo nodo, int index)
+        public Nodo creaNodo(string tabella, int index, MySqlConnection connection)
         {
-            Nodo app = new Nodo();
-            for (int y = 0; y < nodos.Count && app.Tabella == ""; y++)
-                padre(nodos[y], nodo, ref app, index);
+            List<string> chiaviP = trovaChiaviPrimarie(tabella, connection);
+            query("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = '" + tabella + "' AND TABLE_SCHEMA = 'esami ecdl'", connection);
+            List<string[]> chiaviE = new List<string[]>();
+            foreach (string[] item in risQuery)
+                chiaviE.Add(item);
+            query("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'esami ecdl' AND TABLE_NAME = '" + tabella + "'", connection);
+            List<string[]> att = new List<string[]>();
+            foreach (string[] item in risQuery)
+                att.Add(item);
+            query("SELECT * FROM " + tabella, connection);
+            List<string> allData = risQuery[index].ToList();
+            return new Nodo(tabella, chiaviP, chiaviE, att, allData);
+        }
+
+        public List<Nodo> trovaPadre(Nodo nodo, int index)
+        {
+            List<Nodo> app = new List<Nodo>();
+            for (int y = 0; y < nodos.Count; y++)
+                padre(nodos[y], nodo, app, index);
             return app;
         }
 
-        void padre(Nodo app, Nodo nodo, ref Nodo nodoPadre, int index)
+        void padre(Nodo app, Nodo nodo, List<Nodo> nodoPadre, int index)
         {
-            if (app.Tabella != Program.tabelle[index - 1])
-                for (int i = 0; i < app.Figli.Count && nodoPadre.Tabella == ""; i++)
-                    padre(app.Figli[i], nodo, ref nodoPadre, index);
-            else if (controllo(app, nodo) && nodoPadre.Tabella == "")
-                nodoPadre = app;
+            if (app.Tabella != tabelle[index - 1])
+                for (int i = 0; i < app.Figli.Count; i++)
+                    padre(app.Figli[i], nodo,  nodoPadre, index);
+            else if (controllo(app, nodo))
+                if(!nodoPadre.Contains(app))
+                    nodoPadre.Add(app);
         }
 
         bool controllo(Nodo app, Nodo nodo)
         {
             bool secondo = false;
             string appoggio = "REFERENCED_COLUMN_NAME = '" + app.ChiaviPrimarie[0].nome + "'";
-            Program.query(new MySqlCommand("SELECT table_name, column_name FROM information_schema.KEY_COLUMN_USAGE WHERE referenced_table_name IS NOT NULL AND " + appoggio, Program.connection).ExecuteReader());
+            query("SELECT table_name, column_name FROM information_schema.KEY_COLUMN_USAGE WHERE referenced_table_name IS NOT NULL AND " + appoggio, connection);
             if (app.ChiaviPrimarie.Count > 1 || !controlloChiave(nodo.Tabella, app.Tabella))
             {
                 appoggio = "REFERENCED_COLUMN_NAME = '" + nodo.ChiaviPrimarie[0].nome + "'";
                 secondo = true;
             }
-            Program.query(new MySqlCommand("SELECT table_name, column_name FROM information_schema.KEY_COLUMN_USAGE WHERE referenced_table_name IS NOT NULL AND " + appoggio, Program.connection).ExecuteReader());
-            foreach (string[] item in Program.risQuery)
+            query("SELECT table_name, column_name FROM information_schema.KEY_COLUMN_USAGE WHERE referenced_table_name IS NOT NULL AND " + appoggio, connection);
+            foreach (string[] item in risQuery)
                 if (item[0] == nodo.Tabella || app.Tabella == item[0])
                 {
                     appoggio = appoggio.Split('=')[1];
@@ -94,7 +130,7 @@ namespace Programma
 
         bool controlloChiave(string tab1, string tab2)
         {
-            foreach (string[] item in Program.risQuery)
+            foreach (string[] item in risQuery)
                 if (item[0] == tab1 || item[0] == tab2)
                     return true;
             return false;
@@ -112,12 +148,33 @@ namespace Programma
 
         public void trovaFigli(Nodo appoggio, Nodo nodo, List<Nodo> lista)
         {
-            if (appoggio.Tabella != nodo.Tabella && lista.Count == 0)
-                for(int i = 0; i < appoggio.Figli.Count && lista.Count == 0; i++)
+            if (appoggio.Tabella != nodo.Tabella)
+                for(int i = 0; i < appoggio.Figli.Count; i++)
                     trovaFigli(appoggio.Figli[i], nodo, lista);
             else if (appoggio.Equals(nodo))
                 foreach (Nodo item in appoggio.Figli)
-                    lista.Add(item);
+                    if(!lista.Contains(item))
+                        lista.Add(item);
+        }
+
+        public void aggiungiNodo(string tabella, int index)
+        {
+            Nodo daAggiungere = creaNodo(tabella, index, connection);
+        }
+
+        public void allNodos(List<Nodo> lista)
+        {
+            foreach(Nodo item in nodos)
+                funzione(item ,lista);
+        }
+
+        void funzione(Nodo app, List<Nodo> nodos)
+        {
+            foreach(Nodo item in app.Figli)
+            {
+                funzione(item, nodos);
+                nodos.Add(item);
+            }
         }
 
         public void salvaSuFile()
@@ -145,6 +202,29 @@ namespace Programma
             foreach (Campo campo in campos)
                 writer.WriteLine(campo.inStringa());
             writer.WriteLine();
+        }
+
+        void query(string daFare, MySqlConnection connection)
+        {
+            MySqlDataReader reader = new MySqlCommand(daFare, connection).ExecuteReader();
+            risQuery = new List<string[]>();
+            while (reader.Read())
+            {
+                string[] dati = new string[reader.FieldCount];
+                for (int i = 0; i < dati.Length; i++)
+                    dati[i] = reader.GetValue(i).ToString();
+                risQuery.Add(dati);
+            }
+            reader.Close();
+        }
+
+        List<string> trovaChiaviPrimarie(string tabella, MySqlConnection connection)
+        {
+            List<string> chiavi = new List<string>();
+            query("SHOW KEYS FROM " + tabella + " WHERE KEY_NAME = 'Primary'", connection);
+            foreach (string[] item in risQuery)
+                chiavi.Add(item[4]);
+            return chiavi;
         }
     }
 }
