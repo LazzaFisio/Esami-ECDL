@@ -80,8 +80,12 @@ namespace Programma
             {
                 int inizio = Program.tabelle.ToList().FindIndex(dato => dato == tabPrec);
                 int fine = Program.tabelle.ToList().ToList().FindIndex(dato => dato == tag);
+                bool eccezzione = true;
                 if (inizio < fine)
-                    daInserire = figliSucc(tag, tabPrec, creaNodoPadre(tabPrec, panel), false);
+                    eccezzione = false;
+                daInserire = figliSucc(tag, tabPrec, creaNodoPadre(tabPrec, panel), eccezzione);
+                if (tag == "risultato")
+                    controlloPerRisultato(daInserire);
             }
             Program.query(new MySqlCommand("SELECT DISTINCT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'esami ecdl' AND TABLE_NAME = '" + tag + "'", Program.connection).ExecuteReader());
             string[] colonne = new string[Program.risQuery.Count];
@@ -128,6 +132,22 @@ namespace Programma
             return new Nodo(tabella, chiaviP, chiaviE, att, allData);
         }
 
+        void controlloPerRisultato(List<Nodo> daInserire)
+        {
+            Panel panel = (Panel)Controls.Find("esami", true)[0];
+            Panel selezionato = new Panel();
+            for (int i = 0; i < panel.Controls.Count; i++)
+                if (panel.Controls[i].BackColor == Color.Lime)
+                    selezionato = (Panel)panel.Controls[i];
+            string valore = selezionato.Controls[1].Text;
+            for(int i = 0; i < daInserire.Count; i++)
+                if(daInserire[i].ChiaviPrimarie[0].valore.CompareTo(valore) != 0)
+                {
+                    daInserire.RemoveAt(i);
+                    i--;
+                }
+        }
+
         List<Nodo> figliSucc(string tag, string tabPrec, Nodo nodo, bool eccezione)
         {
             List<Nodo> daInserire = new List<Nodo>();
@@ -139,11 +159,22 @@ namespace Programma
                 List<string> chivi = Program.chiaviPrimarie(tabPrec);
                 List<string[]> app = new List<string[]>();
                 string cond = "";
-                tabPrec = Program.tabelle[Program.tabelle.ToList().FindIndex(dato => dato == tabPrec) + 1];
-                if (tabPrec == "esaminandi")
-                    chivi = Program.chiaviPrimarie("città");
+                if (!eccezione)
+                {
+                    tabPrec = Program.tabelle[Program.tabelle.ToList().FindIndex(dato => dato == tabPrec) + 1];
+                    if (tabPrec == "esaminandi")
+                        chivi = Program.chiaviPrimarie(tabPrec);
+                }
+                else
+                {
+                    tabPrec = Program.tabelle[Program.tabelle.ToList().FindIndex(dato => dato == tabPrec) - 1];
+                    chivi = Program.chiaviPrimarie(tabPrec);
+                    nodi.Add(nodo);
+                    if (chivi.Count > 1)
+                        chivi.RemoveAt(0);
+                }
                 int index = 0;
-                if (appoggio != "" && chivi.Count > 1)
+                if (nodi.Count > 0)
                 {
                     chivi.Remove(appoggio);
                     foreach (Nodo item in nodi)
@@ -192,8 +223,6 @@ namespace Programma
                         if (condizione(daInserire[i], nodo, 0))
                             nodi.Add(daInserire[i]);
                 }
-                if (nodi.Count == 1)
-                    nodo = nodi[0];
             }
             return daInserire;
         }
