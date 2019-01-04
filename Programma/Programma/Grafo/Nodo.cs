@@ -10,7 +10,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 namespace Programma
 {
     [Serializable()]
-    class Nodo : IEquatable<Nodo>
+    public class Nodo : IEquatable<Nodo>
     {
         string tabella;
         List<Campo> chiaviPrimarie;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Programma
 {
-    class Campo
+    public class Campo
     {
         public string nome;
         public string valore;

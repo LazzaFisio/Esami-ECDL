@@ -17,7 +17,7 @@ namespace Programma
     public partial class Modifiche : MaterialForm
     {
         bool insert = false;
-        int[] ind = new int[2];
+        //string[] ind = new string[2];
         int idPadre = 0;
         string tabella;
         string query = "";
@@ -28,28 +28,25 @@ namespace Programma
         List<MaterialLabel> label = new List<MaterialLabel>();
         List<MaterialSingleLineTextField> text = new List<MaterialSingleLineTextField>();
 
-        public Modifiche(string tabella, int idPadre)
+        public Modifiche(Nodo padre)
         {
             InitializeComponent();
-            this.tabella = tabella;
-            panel1.Show();
+            tabella = gerarchie[trovaId(padre.Tabella) + 1];
             creaOggetti();
             insert = true;
-            if (tabella != "esami")
-                rbEsistente.Hide();
-            this.idPadre = idPadre;
+            if (tabella != "esami" || tabella != "skillcard")
+                rbEsistente.Enabled = false;
+            idPadre = Convert.ToInt32(padre.ChiaviPrimarie[0].valore);
         }
 
-        public Modifiche(string tabella, List<string> valori, int[] ind)
+        /*public Modifiche(Nodo padre, Nodo figlio)
         {
             InitializeComponent();
-            this.tabella = tabella;
-            panel1.Show();
+            tabella = figlio.Tabella;
             creaOggetti();
-            riempi(valori);
+            //riempi(figlio.Attributi);
             insert = false;
-            this.ind = ind;
-        }
+        }*/
 
         void btnConferma_Click(object sender, EventArgs e)
         {
@@ -99,17 +96,17 @@ namespace Programma
                     }
                     else
                     {
-                        query = "UPDATE " + tabella + " SET ";
+                        /*query = "UPDATE " + tabella + " SET ";
                         for (int i = 0; i < text.Count; i++)
                             query += label[i].Text + " = '" + text[i].Text + "', ";
                         if (idPadre != int.MaxValue)
                             query += labelcmb.Text + " = '" + idPadre;
                         query += " WHERE ";
                         for (int i = 0; i < primary.Count; i++)
-                            query += primary[i] + " = '" + ind[i];
+                            query += primary[i] + " = '" + ind[i]
                         query += ";";
 
-                        richiamaQuery(query);
+                        richiamaQuery(query);*/
                     }
                 }
             }
