@@ -41,7 +41,7 @@ namespace Programma
         {
             InitializeComponent();
             dimSchermo = new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
-            mostra = new string[] { "città", "sede", "sessione", "esami", "esaminandi", "skillcard", "risultato" };
+            mostra = new string[] { "città", "sede", "sessione", "esami", "esaminandi", "risultato" };
             Program.query(new MySqlCommand("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'esami ecdl'", Program.connection).ExecuteReader());
             creaTutto();
         }
@@ -51,6 +51,13 @@ namespace Programma
             Controls.Add(Program.creaLabel(new Point(dimSchermo.Width / 21 * 10, dimSchermo.Height / 20 * 2), "ESAMI ECDL", "Niente", "Niente"));
             Controls[0].BackColor = Color.White;
             Controls.Add(Program.creaPanel(new Size(dimSchermo.Width, dimSchermo.Height / 6 * 5), new Point(MaximumSize.Width / 12, 140), "Principale", "Principale", Color.White, true));
+            MaterialFlatButton button = new MaterialFlatButton();
+            button.Location = new Point(dimSchermo.Width / 21 * 18, dimSchermo.Height / 20 * 2);
+            button.Text = "visualizza skillcard";
+            button.Name = "visualizza";
+            button.Click += azioneBottone;
+            button.Visible = false;
+            Controls.Add(button);
             creaContenitore(Program.tabelle[0], "", 0, null);
         }
 
@@ -153,6 +160,7 @@ namespace Programma
             List<Nodo> daInserire = new List<Nodo>();
             List<Nodo> nodi = new List<Nodo>();
             string appoggio = "";
+            int volte = 0;
             while (tag != tabPrec)
             {
                 daInserire.Clear();
@@ -169,7 +177,8 @@ namespace Programma
                 {
                     tabPrec = Program.tabelle[Program.tabelle.ToList().FindIndex(dato => dato == tabPrec) - 1];
                     chivi = Program.chiaviPrimarie(tabPrec);
-                    nodi.Add(nodo);
+                    if(nodi.Count == 0)
+                        nodi.Add(nodo);
                     if (chivi.Count > 1)
                         chivi.RemoveAt(0);
                 }
@@ -205,7 +214,7 @@ namespace Programma
                         }
                     }
                 }
-                if(nodi.Count > 1)
+                if(volte > 0)
                 {
                     List<Nodo> variabile = new List<Nodo>();
                     foreach(Nodo item in nodi)
@@ -219,10 +228,12 @@ namespace Programma
                 }
                 else
                 {
+                    nodi.Clear();
                     for (int i = 0; i < daInserire.Count; i++)
                         if (condizione(daInserire[i], nodo, 0))
                             nodi.Add(daInserire[i]);
                 }
+                volte++;
             }
             return daInserire;
         }
@@ -307,11 +318,8 @@ namespace Programma
 
         void azioneDoubleClick(object sender, EventArgs e)
         {
-            azioneClick(sender, null);
             Panel padre = new Panel(), panel = new Panel();
             trovaPanelli(ref padre, ref panel, sender);
-            if (padre.Name != panel.Name)
-                cambiaColore(padre, panel);
             List<string> campi = new List<string>();
             if (!Program.tabelle.Contains(panel.Name))
             {
@@ -322,6 +330,21 @@ namespace Programma
                     foreach (string[] item in Program.risQuery)
                         if (item[0] + ":" == panel.Controls[i].Text)
                             campi.Add(panel.Controls[i + 1].Text);
+            }
+            if (padre.Name != panel.Name)
+            {
+                int index = mostra.ToList().FindIndex(dato => dato == padre.Name) + 1;
+                Panel principale = (Panel)Controls.Find("Principale", true)[0];
+                if (index < mostra.Length - 1 && principale.Controls.Count > index)
+                {
+                    if (principale.Controls[index].Visible)
+                        cambiaColoreAiCampi(panel, Color.Lime);
+                    else
+                        cambiaColoreAiCampi(panel, Color.LightBlue);
+
+                }
+                else
+                    cambiaColoreAiCampi(panel, Color.LightBlue);
             }
             new Messaggio(campi).ShowDialog();
             switch (Program.scelta)
@@ -354,9 +377,24 @@ namespace Programma
                     else
                         principale.Controls[i].Visible = false;
                 }
-                if (panel.BackColor == Color.LightBlue)
+                if (panel.BackColor == Color.LightBlue && index < principale.Controls.Count)
                     principale.Controls[index].Visible = false;
             }
+            Control[] controls = Controls.Find("esaminandi", true);
+            if (controls.Length > 0)
+            {
+                Panel appoggio = (Panel)controls[0];
+                bool vis = false;
+                foreach (Control control in appoggio.Controls)
+                    if (control.BackColor == Color.Lime)
+                        vis = true;
+                ((MaterialFlatButton)Controls.Find("visualizza", true)[0]).Visible = vis;
+            }
+        }
+
+        void azioneBottone(object sender, EventArgs e)
+        {
+
         }
 
         void cambiaColore(Panel padre, Panel panel)
