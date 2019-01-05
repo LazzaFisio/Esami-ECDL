@@ -60,6 +60,7 @@ namespace Programma
                         if (rbNuovo.Checked)
                         {
                             int index = trovaId(tabella);
+
                             query = "INSERT INTO " + tabella + "( ";
                             for (int i = 0; i < key.Count; i++)
                                 query += key[i] + ", ";
@@ -83,6 +84,11 @@ namespace Programma
                                 Dettagli.ShowDialog();
                                 if (Dettagli.durata != "")
                                     richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione,DurataEsame) VALUES ('" + index + "', '" + idPadre + "', '" + Dettagli.durata + "')");
+                            }
+
+                            if (tabella == "esaminandi")
+                            {
+                                
                             }
                         }
                         else
