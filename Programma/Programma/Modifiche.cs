@@ -50,87 +50,88 @@ namespace Programma
 
         void btnConferma_Click(object sender, EventArgs e)
         {
-            if (controlla())
+            DialogResult result = MessageBox.Show("Vuoi aggiungere questo campo", "Attenzione", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
             {
-                DialogResult result = MessageBox.Show("Vuoi aggiungere questo campo", "Attenzione", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-                if (result == DialogResult.Yes)
+                if (insert)
                 {
-                    if (insert)
+                    if (rbNuovo.Checked)
                     {
-                        if (rbNuovo.Checked)
+                        int index = trovaId(tabella);
+
+                        query = "INSERT INTO " + tabella + "( ";
+                        for (int i = 0; i < key.Count; i++)
+                            query += key[i] + ", ";
+                        for (int i = 0; i < label.Count; i++)
+                            query += label[i].Text + ", ";
+                        query = query.Remove(query.Length - 2, 1);
+                        query += ") VALUES ( ' ";
+                        query += index + " ', '";
+                        if (idPadre != int.MaxValue)
+                            query += idPadre + "', '";
+                        for (int i = 0; i < text.Count; i++)
+                            query += text[i].Text + "', '";
+                        query = query.Remove(query.Length - 4, 3);
+                        query += ")";
+
+                        richiamaQuery(query);
+
+                        if (tabella == "esami")
+                            aggiungiDurata(index.ToString(), idPadre.ToString());
+
+                        if (tabella == "esaminandi")
                         {
-                            int index = trovaId(tabella);
+                            richiamaQuery("SELECT * FROM `skillcard` WHERE DataScadenza > CURRENT_DATE AND Esaminandi_codice = '" + index + "'");
 
-                            query = "INSERT INTO " + tabella + "( ";
-                            for (int i = 0; i < key.Count; i++)
-                                query += key[i] + ", ";
-                            for (int i = 0; i < label.Count; i++)
-                                query += label[i].Text + ", ";
-                            query = query.Remove(query.Length - 2, 1);
-                            query += ") VALUES ( ' ";
-                            query += index + " ', '";
-                            if (idPadre != int.MaxValue)
-                                query += idPadre + "', '";
-                            for (int i = 0; i < text.Count; i++)
-                                query += text[i].Text + "', '";
-                            query = query.Remove(query.Length - 4, 3);
-                            query += ")";
-
-                            richiamaQuery(query);
-
-                            if (tabella == "esami")
-                            {
-                                Dettagli Dettagli = new Dettagli(index.ToString(), idPadre.ToString());
-                                Dettagli.ShowDialog();
-                                if (Dettagli.durata != "")
-                                    richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione,DurataEsame) VALUES ('" + index + "', '" + idPadre + "', '" + Dettagli.durata + "')");
-                            }
-
-                            if (tabella == "esaminandi")
+                            if (Program.risQuery.Count == 0)
                             {
                                 int idSkillCard = trovaId("skillcard");
 
-                                richiamaQuery("SELECT * FROM `skillcard` WHERE DataScadenza > CURRENT_DATE");
-                                if (Program.risQuery.Count > 0)
-                                {
+                                SkillCard skillCard = new SkillCard();
+                                skillCard.ShowDialog();
+                                if (SkillCard.dataEmissione != "" && SkillCard.dataScadenza != "")
+                                    richiamaQuery("INSERT INTO skillcard (idSkillCard,DataEmissione,DataScadenza,Esaminandi_codice) VALUES ('" + idSkillCard + "', '" + SkillCard.dataEmissione + "', '" + SkillCard.dataScadenza + "', '" + index + "') ");
 
-                                }
-                                else
-                                {
-                                    SkillCard skillCard = new SkillCard();
-                                    skillCard.ShowDialog();
-                                    if (SkillCard.dataEmissione != "" && SkillCard.dataScadenza != "")
-                                        richiamaQuery("INSERT INTO skillcard (idSkillCard,DataEmissione,DataScadenza,Esaminandi_codice) VALUES ('" + idSkillCard + "', '" + SkillCard.dataEmissione + "', '" + SkillCard.dataScadenza + "', '" + index + "')");
-                                }
-                            }
-                        }
-                        else
-                        {
-                            Dettagli Dettagli = new Dettagli(cmbEsistente.Text, idPadre.ToString());
-                            Dettagli.ShowDialog();
-                            if (Dettagli.durata != "")
-                                if (tabella == "esami")
-                                    richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione,DurataEsame) VALUES ('" + cmbEsistente.Text + "', '" + idPadre + "', '" + Dettagli.durata + "')");
+                                richiamaQuery("INSERT INTO risultato (idEsami,idSkillCard,esito) VALUES ('" + idPadre + "',' " + idSkillCard + "', 'Non valutato')");
+                            } 
+                            else
+                                richiamaQuery("INSERT INTO risultato (idEsami,idSkillCard,esito) VALUES ('" + idPadre + "',' " + Program.risQuery[0][0] + "', 'Non valutato')");
                         }
                     }
                     else
                     {
-                        /*query = "UPDATE " + tabella + " SET ";
-                        for (int i = 0; i < text.Count; i++)
-                            query += label[i].Text + " = '" + text[i].Text + "', ";
-                        if (idPadre != int.MaxValue)
-                            query += labelcmb.Text + " = '" + idPadre;
-                        query += " WHERE ";
-                        for (int i = 0; i < primary.Count; i++)
-                            query += primary[i] + " = '" + ind[i]
-                        query += ";";
+                        if (tabella == "esami")
+                            aggiungiDurata(cmbEsistente.Text, idPadre.ToString());
+                        if (tabella == "esaminandi")
+                        {
 
-                        richiamaQuery(query);*/
+                        }
                     }
                 }
+                else
+                {
+                    /*query = "UPDATE " + tabella + " SET ";
+                    for (int i = 0; i < text.Count; i++)
+                        query += label[i].Text + " = '" + text[i].Text + "', ";
+                    if (idPadre != int.MaxValue)
+                        query += labelcmb.Text + " = '" + idPadre;
+                    query += " WHERE ";
+                    for (int i = 0; i < primary.Count; i++)
+                        query += primary[i] + " = '" + ind[i]
+                    query += ";";
+
+                    richiamaQuery(query);*/
+                }
             }
-            else
-                MessageBox.Show("Riempi tutti i campi per continuare", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        void aggiungiDurata(string esame, string sessione)
+        {
+            Dettagli Dettagli = new Dettagli(cmbEsistente.Text, idPadre.ToString());
+            Dettagli.ShowDialog();
+            if (Dettagli.durata != "")
+                if (tabella == "esami")
+                    richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione,DurataEsame) VALUES ('" + esame + "', '" + sessione + "', '" + Dettagli.durata + "')");
         }
 
         void creaOggetti()
@@ -179,15 +180,6 @@ namespace Programma
                 riempiCmb(cmb1, labelcmb, index - 1);
                 riempiCmb(cmbEsistente, lblSeleziona, index);
             }
-        }
-
-        bool controlla()
-        {
-            for (int i = 0; i < text.Count; i++)
-                if (text[i].Text == "")
-                    return false;
-
-            return true;
         }
 
         void rb_CheckedChanged(object sender, EventArgs e)

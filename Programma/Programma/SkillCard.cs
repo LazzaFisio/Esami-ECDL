@@ -25,8 +25,8 @@ namespace Programma
 
         private void btnAuto_Click(object sender, EventArgs e)
         {
-            dataEmissione = DateTime.Today.ToString();
-            dataScadenza = DateTime.Today.Day.ToString() + "/" + DateTime.Today.Month.ToString() + "/" + (DateTime.Today.Year + 1).ToString();
+            dataEmissione = DateTime.Today.ToString("yyyy/MM/dd");
+            dataScadenza = (DateTime.Today.Year + 1).ToString() + "/" + DateTime.Today.Month.ToString() + "/" + DateTime.Today.Day.ToString();
 
             this.Close();
         }
@@ -38,19 +38,18 @@ namespace Programma
 
         private void btnConfermaCreazione_Click(object sender, EventArgs e)
         {
-            if (txtEmissione.Text.CompareTo(txtScadenza.Text) == -1)
+            dataEmissione = dateTimePicker1.Value.ToString("yyyy/MM/dd");
+            dataScadenza = dateTimePicker2.Value.ToString("yyyy/MM/dd");
+            if (dataEmissione.CompareTo(dataScadenza) == -1)
             {
                 DialogResult result = MessageBox.Show("Continuare con questi dati?", "Attenzione", MessageBoxButtons.YesNoCancel);
                 if (result == DialogResult.Yes)
-                {
-                    dataEmissione = txtEmissione.Text;
-                    dataScadenza = txtScadenza.Text;
-
                     this.Close();
-                }
             }
             else
                 MessageBox.Show("Dati inseriti non corretti");
+
+            dataEmissione = dataScadenza = "";
         }
     }
 }
