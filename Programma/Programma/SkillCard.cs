@@ -26,11 +26,7 @@ namespace Programma
         private void btnAuto_Click(object sender, EventArgs e)
         {
             dataEmissione = DateTime.Today.ToString();
-
-            if(DateTime.Today.Month != 12)
-                dataScadenza = DateTime.Today.Day.ToString() + "/" + (DateTime.Today.Month + 1).ToString() + "/" + DateTime.Today.Year.ToString();
-            else
-                dataScadenza = DateTime.Today.Day.ToString() + "/" + 1 + "/" + (DateTime.Today.Year + 1).ToString();
+            dataScadenza = DateTime.Today.Day.ToString() + "/" + DateTime.Today.Month.ToString() + "/" + (DateTime.Today.Year + 1).ToString();
 
             this.Close();
         }

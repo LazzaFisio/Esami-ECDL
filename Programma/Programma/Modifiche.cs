@@ -88,7 +88,20 @@ namespace Programma
 
                             if (tabella == "esaminandi")
                             {
-                                
+                                int idSkillCard = trovaId("skillcard");
+
+                                richiamaQuery("SELECT * FROM `skillcard` WHERE DataScadenza > CURRENT_DATE");
+                                if (Program.risQuery.Count > 0)
+                                {
+
+                                }
+                                else
+                                {
+                                    SkillCard skillCard = new SkillCard();
+                                    skillCard.ShowDialog();
+                                    if (SkillCard.dataEmissione != "" && SkillCard.dataScadenza != "")
+                                        richiamaQuery("INSERT INTO skillcard (idSkillCard,DataEmissione,DataScadenza,Esaminandi_codice) VALUES ('" + idSkillCard + "', '" + SkillCard.dataEmissione + "', '" + SkillCard.dataScadenza + "', '" + index + "')");
+                                }
                             }
                         }
                         else
