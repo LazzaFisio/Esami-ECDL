@@ -34,23 +34,23 @@ namespace Programma
             tabella = gerarchie[trovaId(padre.Tabella) + 1];
             creaOggetti();
             insert = true;
-            if (tabella != "esami" || tabella != "skillcard")
+            if (tabella != "esami" || tabella != "esaminandi")
                 rbEsistente.Enabled = false;
             idPadre = Convert.ToInt32(padre.ChiaviPrimarie[0].valore);
         }
 
-        /*public Modifiche(Nodo padre, Nodo figlio)
+        public Modifiche(Nodo padre, Nodo figlio)
         {
             InitializeComponent();
             tabella = figlio.Tabella;
             creaOggetti();
-            //riempi(figlio.Attributi);
+            riempi(figlio.Attributi);
             insert = false;
-        }*/
+        }
 
         void btnConferma_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Vuoi aggiungere questo campo", "Attenzione", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+            DialogResult result = MessageBox.Show("Sei sicuro di voler confermare questi dati?", "Attenzione", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
                 if (insert)
@@ -81,21 +81,7 @@ namespace Programma
 
                         if (tabella == "esaminandi")
                         {
-                            richiamaQuery("SELECT * FROM `skillcard` WHERE DataScadenza > CURRENT_DATE AND Esaminandi_codice = '" + index + "'");
-
-                            if (Program.risQuery.Count == 0)
-                            {
-                                int idSkillCard = trovaId("skillcard");
-
-                                SkillCard skillCard = new SkillCard();
-                                skillCard.ShowDialog();
-                                if (SkillCard.dataEmissione != "" && SkillCard.dataScadenza != "")
-                                    richiamaQuery("INSERT INTO skillcard (idSkillCard,DataEmissione,DataScadenza,Esaminandi_codice) VALUES ('" + idSkillCard + "', '" + SkillCard.dataEmissione + "', '" + SkillCard.dataScadenza + "', '" + index + "') ");
-
-                                richiamaQuery("INSERT INTO risultato (idEsami,idSkillCard,esito) VALUES ('" + idPadre + "',' " + idSkillCard + "', 'Non valutato')");
-                            } 
-                            else
-                                richiamaQuery("INSERT INTO risultato (idEsami,idSkillCard,esito) VALUES ('" + idPadre + "',' " + Program.risQuery[0][0] + "', 'Non valutato')");
+                            aggiungiSkill_Risultato(index);
                         }
                     }
                     else
@@ -103,24 +89,21 @@ namespace Programma
                         if (tabella == "esami")
                             aggiungiDurata(cmbEsistente.Text, idPadre.ToString());
                         if (tabella == "esaminandi")
-                        {
-
-                        }
+                            aggiungiSkill_Risultato(Convert.ToInt32(cmbEsistente.Text));
                     }
                 }
                 else
                 {
-                    /*query = "UPDATE " + tabella + " SET ";
+                    query = "UPDATE " + tabella + " SET ";
                     for (int i = 0; i < text.Count; i++)
                         query += label[i].Text + " = '" + text[i].Text + "', ";
                     if (idPadre != int.MaxValue)
                         query += labelcmb.Text + " = '" + idPadre;
                     query += " WHERE ";
-                    for (int i = 0; i < primary.Count; i++)
-                        query += primary[i] + " = '" + ind[i]
+
                     query += ";";
 
-                    richiamaQuery(query);*/
+                    richiamaQuery(query);
                 }
             }
         }
@@ -132,6 +115,25 @@ namespace Programma
             if (Dettagli.durata != "")
                 if (tabella == "esami")
                     richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione,DurataEsame) VALUES ('" + esame + "', '" + sessione + "', '" + Dettagli.durata + "')");
+        }
+
+        void aggiungiSkill_Risultato(int index)
+        {
+            richiamaQuery("SELECT * FROM `skillcard` WHERE DataScadenza > CURRENT_DATE AND Esaminandi_codice = '" + index + "'");
+
+            if (Program.risQuery.Count == 0)
+            {
+                int idSkillCard = trovaId("skillcard");
+
+                SkillCard skillCard = new SkillCard();
+                skillCard.ShowDialog();
+                if (SkillCard.dataEmissione != "" && SkillCard.dataScadenza != "")
+                    richiamaQuery("INSERT INTO skillcard (idSkillCard,DataEmissione,DataScadenza,Esaminandi_codice) VALUES ('" + idSkillCard + "', '" + SkillCard.dataEmissione + "', '" + SkillCard.dataScadenza + "', '" + index + "') ");
+
+                richiamaQuery("INSERT INTO risultato (idEsami,idSkillCard,esito) VALUES ('" + idPadre + "',' " + idSkillCard + "', 'Non valutato')");
+            }
+            else
+                richiamaQuery("INSERT INTO risultato (idEsami,idSkillCard,esito) VALUES ('" + idPadre + "',' " + Program.risQuery[0][0] + "', 'Non valutato')");
         }
 
         void creaOggetti()
@@ -172,12 +174,13 @@ namespace Programma
                 }
             }
 
-            if (tabella == "città")
-                cmb1.Visible = false;
-            else
+            if (tabella == "esami" || tabella == "esaminandi")
             {
                 int index = gerarchie.FindIndex(dato => dato == tabella);
-                riempiCmb(cmb1, labelcmb, index - 1);
+                if (tabella == "esami")
+                    labelcmb.Text = "Aggiungi esame alla sessione: " + idPadre;
+                if (tabella == "esaminandi")
+                    labelcmb.Text = "Aggiungi esaminado all'esame: " + idPadre;
                 riempiCmb(cmbEsistente, lblSeleziona, index);
             }
         }
@@ -199,10 +202,10 @@ namespace Programma
             catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
         }
 
-        void riempi(List<string> valori)
+        void riempi(List<Programma.Campo> valori)
         {
             for (int i = 0; i < text.Count; i++)
-                text[i].Text = valori[i];
+                text[i].Text = valori[i].valore;
         }
 
         void riempiCmb(ComboBox cmb, Label lbl, int index)

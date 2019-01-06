@@ -38,13 +38,17 @@ namespace Programma
 
         private void btnConfermaCreazione_Click(object sender, EventArgs e)
         {
-            dataEmissione = dateTimePicker1.Value.ToString("yyyy/MM/dd");
-            dataScadenza = dateTimePicker2.Value.ToString("yyyy/MM/dd");
-            if (dataEmissione.CompareTo(dataScadenza) == -1)
+            string emissione = dateTimePicker1.Value.ToString("yyyy/MM/dd");
+            string scadenza = dateTimePicker2.Value.ToString("yyyy/MM/dd");
+            if (emissione.CompareTo(scadenza) == -1)
             {
                 DialogResult result = MessageBox.Show("Continuare con questi dati?", "Attenzione", MessageBoxButtons.YesNoCancel);
                 if (result == DialogResult.Yes)
+                {
+                    dataEmissione = emissione;
+                    dataScadenza = scadenza;
                     this.Close();
+                }
             }
             else
                 MessageBox.Show("Dati inseriti non corretti");
