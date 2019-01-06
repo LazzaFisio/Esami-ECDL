@@ -17,7 +17,7 @@ namespace Programma
     public partial class Modifiche : MaterialForm
     {
         bool insert = false;
-        int[] ind = new int[2];
+        //string[] ind = new string[2];
         int idPadre = 0;
         string tabella;
         string query = "";
@@ -28,93 +28,112 @@ namespace Programma
         List<MaterialLabel> label = new List<MaterialLabel>();
         List<MaterialSingleLineTextField> text = new List<MaterialSingleLineTextField>();
 
-        public Modifiche(string tabella, int idPadre)
+        public Modifiche(Nodo padre)
         {
             InitializeComponent();
-            this.tabella = tabella;
-            panel1.Show();
+            tabella = gerarchie[trovaId(padre.Tabella) + 1];
             creaOggetti();
             insert = true;
-            if (tabella != "esami")
-                rbEsistente.Hide();
-            this.idPadre = idPadre;
+            if (tabella != "esami" || tabella != "esaminandi")
+                rbEsistente.Enabled = false;
+            idPadre = Convert.ToInt32(padre.ChiaviPrimarie[0].valore);
         }
 
-        public Modifiche(string tabella, List<string> valori, int[] ind)
+        public Modifiche(Nodo padre, Nodo figlio)
         {
             InitializeComponent();
-            this.tabella = tabella;
-            panel1.Show();
+            tabella = figlio.Tabella;
             creaOggetti();
-            riempi(valori);
+            riempi(figlio.Attributi);
             insert = false;
-            this.ind = ind;
         }
 
         void btnConferma_Click(object sender, EventArgs e)
         {
-            if (controlla())
+            DialogResult result = MessageBox.Show("Sei sicuro di voler confermare questi dati?", "Attenzione", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
             {
-                DialogResult result = MessageBox.Show("Vuoi aggiungere questo campo", "Attenzione", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-                if (result == DialogResult.Yes)
+                if (insert)
                 {
-                    if (insert)
+                    if (rbNuovo.Checked)
                     {
-                        if (rbNuovo.Checked)
-                        {
-                            int index = trovaId(tabella);
-                            query = "INSERT INTO " + tabella + "( ";
-                            for (int i = 0; i < key.Count; i++)
-                                query += key[i] + ", ";
-                            for (int i = 0; i < label.Count; i++)
-                                query += label[i].Text + ", ";
-                            query = query.Remove(query.Length - 2, 1);
-                            query += ") VALUES ( ' ";
-                            query += index + " ', '";
-                            if (idPadre != int.MaxValue)
-                                query += idPadre + "', '";
-                            for (int i = 0; i < text.Count; i++)
-                                query += text[i].Text + "', '";
-                            query = query.Remove(query.Length - 4, 3);
-                            query += ")";
+                        int index = trovaId(tabella);
 
-                            richiamaQuery(query);
+                        query = "INSERT INTO " + tabella + "( ";
+                        for (int i = 0; i < key.Count; i++)
+                            query += key[i] + ", ";
+                        for (int i = 0; i < label.Count; i++)
+                            query += label[i].Text + ", ";
+                        query = query.Remove(query.Length - 2, 1);
+                        query += ") VALUES ( ' ";
+                        query += index + " ', '";
+                        if (idPadre != int.MaxValue)
+                            query += idPadre + "', '";
+                        for (int i = 0; i < text.Count; i++)
+                            query += text[i].Text + "', '";
+                        query = query.Remove(query.Length - 4, 3);
+                        query += ")";
 
-                            if (tabella == "esami")
-                            {
-                                Dettagli Dettagli = new Dettagli(index.ToString(), idPadre.ToString());
-                                Dettagli.ShowDialog();
-                                if (Dettagli.durata != "")
-                                    richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione,DurataEsame) VALUES ('" + index + "', '" + idPadre + "', '" + Dettagli.durata + "')");
-                            }
-                        }
-                        else
+                        richiamaQuery(query);
+
+                        if (tabella == "esami")
+                            aggiungiDurata(index.ToString(), idPadre.ToString());
+
+                        if (tabella == "esaminandi")
                         {
-                            Dettagli Dettagli = new Dettagli(cmbEsistente.Text, idPadre.ToString());
-                            Dettagli.ShowDialog();
-                            if (Dettagli.durata != "")
-                                if (tabella == "esami")
-                                    richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione,DurataEsame) VALUES ('" + cmbEsistente.Text + "', '" + idPadre + "', '" + Dettagli.durata + "')");
+                            aggiungiSkill_Risultato(index);
                         }
                     }
                     else
                     {
-                        query = "UPDATE " + tabella + " SET ";
-                        for (int i = 0; i < text.Count; i++)
-                            query += label[i].Text + " = '" + text[i].Text + "', ";
-                        if (idPadre != int.MaxValue)
-                            query += labelcmb.Text + " = '" + idPadre;
-                        query += " WHERE ";
-                        for (int i = 0; i < primary.Count; i++)
-                            query += primary[i] + " = '" + ind[i];
-                        query += ";";
-
-                        richiamaQuery(query);
+                        if (tabella == "esami")
+                            aggiungiDurata(cmbEsistente.Text, idPadre.ToString());
+                        if (tabella == "esaminandi")
+                            aggiungiSkill_Risultato(Convert.ToInt32(cmbEsistente.Text));
                     }
                 }
+                else
+                {
+                    query = "UPDATE " + tabella + " SET ";
+                    for (int i = 0; i < text.Count; i++)
+                        query += label[i].Text + " = '" + text[i].Text + "', ";
+                    if (idPadre != int.MaxValue)
+                        query += labelcmb.Text + " = '" + idPadre;
+                    query += " WHERE ";
+
+                    query += ";";
+
+                    richiamaQuery(query);
+                }
+            }
+        }
+
+        void aggiungiDurata(string esame, string sessione)
+        {
+            Dettagli Dettagli = new Dettagli(cmbEsistente.Text, idPadre.ToString());
+            Dettagli.ShowDialog();
+            if (Dettagli.durata != "")
+                if (tabella == "esami")
+                    richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione,DurataEsame) VALUES ('" + esame + "', '" + sessione + "', '" + Dettagli.durata + "')");
+        }
+
+        void aggiungiSkill_Risultato(int index)
+        {
+            richiamaQuery("SELECT * FROM `skillcard` WHERE DataScadenza > CURRENT_DATE AND Esaminandi_codice = '" + index + "'");
+
+            if (Program.risQuery.Count == 0)
+            {
+                int idSkillCard = trovaId("skillcard");
+
+                SkillCard skillCard = new SkillCard();
+                skillCard.ShowDialog();
+                if (SkillCard.dataEmissione != "" && SkillCard.dataScadenza != "")
+                    richiamaQuery("INSERT INTO skillcard (idSkillCard,DataEmissione,DataScadenza,Esaminandi_codice) VALUES ('" + idSkillCard + "', '" + SkillCard.dataEmissione + "', '" + SkillCard.dataScadenza + "', '" + index + "') ");
+
+                richiamaQuery("INSERT INTO risultato (idEsami,idSkillCard,esito) VALUES ('" + idPadre + "',' " + idSkillCard + "', 'Non valutato')");
             }
             else
-                MessageBox.Show("Riempi tutti i campi per continuare", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                richiamaQuery("INSERT INTO risultato (idEsami,idSkillCard,esito) VALUES ('" + idPadre + "',' " + Program.risQuery[0][0] + "', 'Non valutato')");
         }
 
         void creaOggetti()
@@ -155,23 +174,15 @@ namespace Programma
                 }
             }
 
-            if (tabella == "città")
-                cmb1.Visible = false;
-            else
+            if (tabella == "esami" || tabella == "esaminandi")
             {
                 int index = gerarchie.FindIndex(dato => dato == tabella);
-                riempiCmb(cmb1, labelcmb, index - 1);
+                if (tabella == "esami")
+                    labelcmb.Text = "Aggiungi esame alla sessione: " + idPadre;
+                if (tabella == "esaminandi")
+                    labelcmb.Text = "Aggiungi esaminado all'esame: " + idPadre;
                 riempiCmb(cmbEsistente, lblSeleziona, index);
             }
-        }
-
-        bool controlla()
-        {
-            for (int i = 0; i < text.Count; i++)
-                if (text[i].Text == "")
-                    return false;
-
-            return true;
         }
 
         void rb_CheckedChanged(object sender, EventArgs e)
@@ -191,10 +202,10 @@ namespace Programma
             catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
         }
 
-        void riempi(List<string> valori)
+        void riempi(List<Programma.Campo> valori)
         {
             for (int i = 0; i < text.Count; i++)
-                text[i].Text = valori[i];
+                text[i].Text = valori[i].valore;
         }
 
         void riempiCmb(ComboBox cmb, Label lbl, int index)

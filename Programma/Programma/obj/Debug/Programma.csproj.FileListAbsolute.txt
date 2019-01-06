@@ -81,3 +81,4 @@ C:\Users\User\Desktop\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Dettagl
 I:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Attesa.resources
 F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Attesa.resources
 F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Dettagli.resources
+C:\Users\User\Desktop\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Attesa.resources

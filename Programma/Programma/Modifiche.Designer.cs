@@ -32,12 +32,11 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.rbEsistente = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbNuovo = new MaterialSkin.Controls.MaterialRadioButton();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.cmb1 = new System.Windows.Forms.ComboBox();
             this.labelcmb = new MaterialSkin.Controls.MaterialLabel();
             this.cmbEsistente = new System.Windows.Forms.ComboBox();
             this.lblSeleziona = new MaterialSkin.Controls.MaterialLabel();
-            this.panel3 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -103,9 +102,15 @@
             this.rbNuovo.Text = "Aggiungi nuovo";
             this.rbNuovo.UseVisualStyleBackColor = true;
             // 
+            // panel3
+            // 
+            this.panel3.Location = new System.Drawing.Point(22, 47);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(311, 180);
+            this.panel3.TabIndex = 14;
+            // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.cmb1);
             this.panel2.Controls.Add(this.labelcmb);
             this.panel2.Controls.Add(this.cmbEsistente);
             this.panel2.Controls.Add(this.lblSeleziona);
@@ -114,21 +119,13 @@
             this.panel2.Size = new System.Drawing.Size(311, 140);
             this.panel2.TabIndex = 15;
             // 
-            // cmb1
-            // 
-            this.cmb1.FormattingEnabled = true;
-            this.cmb1.Location = new System.Drawing.Point(155, 96);
-            this.cmb1.Name = "cmb1";
-            this.cmb1.Size = new System.Drawing.Size(136, 21);
-            this.cmb1.TabIndex = 9;
-            // 
             // labelcmb
             // 
             this.labelcmb.AutoSize = true;
             this.labelcmb.Depth = 0;
             this.labelcmb.Font = new System.Drawing.Font("Roboto", 11F);
             this.labelcmb.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.labelcmb.Location = new System.Drawing.Point(12, 97);
+            this.labelcmb.Location = new System.Drawing.Point(82, 44);
             this.labelcmb.MouseState = MaterialSkin.MouseState.HOVER;
             this.labelcmb.Name = "labelcmb";
             this.labelcmb.Size = new System.Drawing.Size(0, 19);
@@ -137,7 +134,7 @@
             // cmbEsistente
             // 
             this.cmbEsistente.FormattingEnabled = true;
-            this.cmbEsistente.Location = new System.Drawing.Point(161, 57);
+            this.cmbEsistente.Location = new System.Drawing.Point(164, 83);
             this.cmbEsistente.Name = "cmbEsistente";
             this.cmbEsistente.Size = new System.Drawing.Size(130, 21);
             this.cmbEsistente.TabIndex = 1;
@@ -148,19 +145,12 @@
             this.lblSeleziona.Depth = 0;
             this.lblSeleziona.Font = new System.Drawing.Font("Roboto", 11F);
             this.lblSeleziona.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblSeleziona.Location = new System.Drawing.Point(3, 59);
+            this.lblSeleziona.Location = new System.Drawing.Point(7, 83);
             this.lblSeleziona.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblSeleziona.Name = "lblSeleziona";
             this.lblSeleziona.Size = new System.Drawing.Size(144, 19);
             this.lblSeleziona.TabIndex = 0;
             this.lblSeleziona.Text = "Seleziona esistente:";
-            // 
-            // panel3
-            // 
-            this.panel3.Location = new System.Drawing.Point(22, 47);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(311, 180);
-            this.panel3.TabIndex = 14;
             // 
             // Modifiche
             // 
@@ -190,7 +180,6 @@
         private MaterialSkin.Controls.MaterialRadioButton rbEsistente;
         private MaterialSkin.Controls.MaterialRadioButton rbNuovo;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.ComboBox cmb1;
         private MaterialSkin.Controls.MaterialLabel labelcmb;
         private System.Windows.Forms.ComboBox cmbEsistente;
         private MaterialSkin.Controls.MaterialLabel lblSeleziona;
