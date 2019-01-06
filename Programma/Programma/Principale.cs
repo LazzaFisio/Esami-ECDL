@@ -349,7 +349,7 @@ namespace Programma
             new Messaggio(campi).ShowDialog();
             switch (Program.scelta)
             {
-                case "aggiungi": new Modifiche(panel.Tag.ToString(), 1).ShowDialog(); break;
+                case "aggiungi": new Modifiche(creaNodoPadre(panel.Tag.ToString(), panel)).ShowDialog(); break;
             }
             Program.scelta = "";
         }
