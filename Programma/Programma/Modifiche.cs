@@ -153,21 +153,21 @@ namespace Programma
                 if (!key.Contains(campi[j][0]))
                 {
                     MaterialLabel nuova = new MaterialLabel();
-                    nuova.Location = new Point(5, panel1.Height / 5 * i + 5);
+                    nuova.Location = new Point(5, panel3.Height / 5 * i + 5);
                     nuova.Name = "lbl" + i;
                     nuova.BackColor = Color.Green;
-                    nuova.Size = new Size(panel1.Width / 2 - 10, nuova.Height);
+                    nuova.Size = new Size(panel3.Width / 2 - 10, nuova.Height);
                     nuova.Text = campi[j][0];
-                    panel1.Controls.Add(nuova);
+                    panel3.Controls.Add(nuova);
                     label.Add(nuova);
 
                     MaterialSingleLineTextField testo = new MaterialSingleLineTextField();
-                    testo.Location = new Point(panel1.Width / 2, panel1.Height / 5 * i + 5);
-                    testo.Size = new Size(panel1.Width / 2 - 10, panel1.Height / 5 - 10);
+                    testo.Location = new Point(panel3.Width / 2, panel3.Height / 5 * i + 5);
+                    testo.Size = new Size(panel3.Width / 2 - 10, panel3.Height / 5 - 10);
                     testo.Name = "txt" + i;
                     testo.BackColor = Color.Blue;
 
-                    panel1.Controls.Add(testo);
+                    panel3.Controls.Add(testo);
                     text.Add(testo);
                 }
             }
