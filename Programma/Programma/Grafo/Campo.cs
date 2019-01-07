@@ -14,6 +14,7 @@ namespace Programma
         public Campo(string nome)
         {
             this.nome = nome;
+            valore = "";
         }
 
         public string inStringa()
