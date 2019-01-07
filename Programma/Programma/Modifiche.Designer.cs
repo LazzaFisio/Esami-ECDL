@@ -32,11 +32,11 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.rbEsistente = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbNuovo = new MaterialSkin.Controls.MaterialRadioButton();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.labelcmb = new MaterialSkin.Controls.MaterialLabel();
             this.cmbEsistente = new System.Windows.Forms.ComboBox();
             this.lblSeleziona = new MaterialSkin.Controls.MaterialLabel();
-            this.panel3 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -102,6 +102,13 @@
             this.rbNuovo.Text = "Aggiungi nuovo";
             this.rbNuovo.UseVisualStyleBackColor = true;
             // 
+            // panel3
+            // 
+            this.panel3.Location = new System.Drawing.Point(22, 47);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(311, 180);
+            this.panel3.TabIndex = 14;
+            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.labelcmb);
@@ -144,13 +151,6 @@
             this.lblSeleziona.Size = new System.Drawing.Size(144, 19);
             this.lblSeleziona.TabIndex = 0;
             this.lblSeleziona.Text = "Seleziona esistente:";
-            // 
-            // panel3
-            // 
-            this.panel3.Location = new System.Drawing.Point(22, 47);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(311, 180);
-            this.panel3.TabIndex = 14;
             // 
             // Modifiche
             // 
