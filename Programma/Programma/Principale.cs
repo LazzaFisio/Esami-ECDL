@@ -351,6 +351,7 @@ namespace Programma
             int app = mostra.ToList().FindIndex(dato => dato == padre.Name) - 1;
             Nodo nodo = new Nodo();
             Panel selezionato = new Panel();
+            Panel città = panelSelezionato(0);
             switch (Program.scelta)
             {
                 case "aggiungi":
@@ -358,10 +359,10 @@ namespace Programma
                     {
                         selezionato = panelSelezionato(app);
                         nodo = creaNodoPadre(selezionato.Tag.ToString(), selezionato);
-                        new Modifiche(panel.Tag.ToString(), Convert.ToInt32(nodo.ChiaviPrimarie[0].valore)).ShowDialog();
+                        new Modifiche(panel.Tag.ToString(), Convert.ToInt32(nodo.ChiaviPrimarie[0].valore), Convert.ToInt32(città.Controls[1].Text)).ShowDialog();
                     }
                     else
-                        new Modifiche(panel.Tag.ToString(), int.MaxValue).ShowDialog();
+                        new Modifiche(panel.Tag.ToString(), int.MaxValue, Convert.ToInt32(città.Controls[1].Text)).ShowDialog();
                 break;
                 case "modifica":
                     if (app > -1)
