@@ -135,7 +135,9 @@ namespace Programma
             foreach (string[] item in Program.risQuery)
                 att.Add(item);
             Program.query(new MySqlCommand("SELECT * FROM " + tabella + cond, Program.connection).ExecuteReader());
-            List<string> allData = Program.risQuery[index].ToList();
+            List<string> allData = new List<string>();
+            if (index > -1)
+                allData = Program.risQuery[index].ToList();
             return new Nodo(tabella, chiaviP, chiaviE, att, allData);
         }
 
@@ -347,9 +349,20 @@ namespace Programma
                     cambiaColoreAiCampi(panel, Color.LightBlue);
             }
             new Messaggio(campi).ShowDialog();
+            int index = mostra.ToList().FindIndex(dato => dato == padre.Name) - 1;
             switch (Program.scelta)
             {
-                case "aggiungi": new Modifiche(creaNodoPadre(panel.Tag.ToString(), panel)).ShowDialog(); break;
+                case "aggiungi":
+
+                break;
+                case "modifica":
+                    if(index > -1)
+                    {
+
+                    }else
+                        new Modifiche(null, creaNodoPadre())
+                    break;
+                case "elimina": break;
             }
             Program.scelta = "";
         }
