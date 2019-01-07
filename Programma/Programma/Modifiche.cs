@@ -18,7 +18,7 @@ namespace Programma
     {
         bool insert = false;
         //string[] ind = new string[2];
-        int idPadre = 0;
+        int idPadre = 0, idCittà = 0;
         string tabella;
         string query = "";
         List<string> gerarchie = new List<string> { "città", "sede", "sessione", "esami", "esaminandi", "skillcard", "risultato" };
@@ -28,15 +28,18 @@ namespace Programma
         List<MaterialLabel> label = new List<MaterialLabel>();
         List<MaterialSingleLineTextField> text = new List<MaterialSingleLineTextField>();
 
-        public Modifiche(string tabella, int id)
+        public Modifiche(string tabella, int id, int idCittà)
         {
             InitializeComponent();
             this.tabella = tabella;
+            idPadre = id;
+            this.idCittà = idCittà;
             creaOggetti();
             insert = true;
-            if (tabella != "esami" || tabella != "esaminandi")
+            if (tabella != "esami" && tabella != "esaminandi")
                 rbEsistente.Enabled = false;
-            idPadre = id;
+            else
+                rbEsistente.Enabled = true;
         }
 
         public Modifiche(Nodo padre, Nodo figlio)
@@ -67,10 +70,16 @@ namespace Programma
                         query = query.Remove(query.Length - 2, 1);
                         query += ") VALUES ( ' ";
                         query += index + " ', '";
-                        if (idPadre != int.MaxValue)
-                            query += idPadre + "', '";
+                        if (idPadre != int.MaxValue && tabella != "esami")
+                            if (tabella != "esaminandi")
+                                query += idPadre + "', '";
+                            else
+                                query += idCittà + "', '";
                         for (int i = 0; i < text.Count; i++)
-                            query += text[i].Text + "', '";
+                            if (tabella != "sessione")
+                                query += text[i].Text + "', '";
+                            else
+                                query += Convert.ToDateTime(text[i].Text).ToString("yyyy/MM/dd") + "', '";
                         query = query.Remove(query.Length - 4, 3);
                         query += ")";
 
@@ -110,8 +119,8 @@ namespace Programma
 
         void aggiungiDurata(string esame, string sessione)
         {
-            Dettagli Dettagli = new Dettagli(cmbEsistente.Text, idPadre.ToString());
-            Dettagli.ShowDialog();
+            Dettagli dettagli = new Dettagli(sessione,esame);
+            dettagli.ShowDialog();
             if (Dettagli.durata != "")
                 if (tabella == "esami")
                     richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione,DurataEsame) VALUES ('" + esame + "', '" + sessione + "', '" + Dettagli.durata + "')");
@@ -153,21 +162,21 @@ namespace Programma
                 if (!key.Contains(campi[j][0]))
                 {
                     MaterialLabel nuova = new MaterialLabel();
-                    nuova.Location = new Point(5, panel1.Height / 5 * i + 5);
+                    nuova.Location = new Point(5, panel3.Height / 5 * i + 5);
                     nuova.Name = "lbl" + i;
                     nuova.BackColor = Color.Green;
-                    nuova.Size = new Size(panel1.Width / 2 - 10, nuova.Height);
+                    nuova.Size = new Size(panel3.Width / 2 - 10, nuova.Height);
                     nuova.Text = campi[j][0];
-                    panel1.Controls.Add(nuova);
+                    panel3.Controls.Add(nuova);
                     label.Add(nuova);
 
                     MaterialSingleLineTextField testo = new MaterialSingleLineTextField();
-                    testo.Location = new Point(panel1.Width / 2, panel1.Height / 5 * i + 5);
-                    testo.Size = new Size(panel1.Width / 2 - 10, panel1.Height / 5 - 10);
+                    testo.Location = new Point(panel3.Width / 2, panel3.Height / 5 * i + 5);
+                    testo.Size = new Size(panel3.Width / 2 - 10, panel3.Height / 5 - 10);
                     testo.Name = "txt" + i;
                     testo.BackColor = Color.Blue;
 
-                    panel1.Controls.Add(testo);
+                    panel3.Controls.Add(testo);
                     text.Add(testo);
                 }
             }
@@ -179,17 +188,18 @@ namespace Programma
                     labelcmb.Text = "Aggiungi esame alla sessione: " + idPadre;
                 if (tabella == "esaminandi")
                     labelcmb.Text = "Aggiungi esaminado all'esame: " + idPadre;
+
                 riempiCmb(cmbEsistente, lblSeleziona, index);
             }
         }
 
         void rb_CheckedChanged(object sender, EventArgs e)
         {
-            panel1.Hide();
+            panel3.Hide();
             panel2.Hide();
 
             if (rbNuovo.Checked)
-                panel1.Show();
+                panel3.Show();
             else
                 panel2.Show();
         }
@@ -208,7 +218,11 @@ namespace Programma
 
         void riempiCmb(ComboBox cmb, Label lbl, int index)
         {
-            string id = "id" + gerarchie[index];
+            string id = "";
+            if (gerarchie[index] != "esaminandi")
+                id = "id" + gerarchie[index];
+            else
+                id = "codice";
             lbl.Text = id;
             Program.query(new MySqlCommand("SELECT " + id + " FROM " + gerarchie[index], Program.connection).ExecuteReader());
             campi.Clear();

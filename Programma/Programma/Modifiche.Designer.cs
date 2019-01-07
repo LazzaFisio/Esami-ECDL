@@ -83,6 +83,7 @@
             this.rbEsistente.TabIndex = 13;
             this.rbEsistente.Text = "Aggiungi esistente";
             this.rbEsistente.UseVisualStyleBackColor = true;
+            this.rbEsistente.CheckedChanged += new System.EventHandler(this.rb_CheckedChanged);
             // 
             // rbNuovo
             // 
@@ -101,6 +102,7 @@
             this.rbNuovo.TabStop = true;
             this.rbNuovo.Text = "Aggiungi nuovo";
             this.rbNuovo.UseVisualStyleBackColor = true;
+            this.rbNuovo.CheckedChanged += new System.EventHandler(this.rb_CheckedChanged);
             // 
             // panel3
             // 
@@ -125,7 +127,7 @@
             this.labelcmb.Depth = 0;
             this.labelcmb.Font = new System.Drawing.Font("Roboto", 11F);
             this.labelcmb.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.labelcmb.Location = new System.Drawing.Point(82, 44);
+            this.labelcmb.Location = new System.Drawing.Point(13, 43);
             this.labelcmb.MouseState = MaterialSkin.MouseState.HOVER;
             this.labelcmb.Name = "labelcmb";
             this.labelcmb.Size = new System.Drawing.Size(0, 19);
