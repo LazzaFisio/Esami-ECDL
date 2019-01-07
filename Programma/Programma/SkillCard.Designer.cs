@@ -33,11 +33,11 @@
             this.btnAuto = new MaterialSkin.Controls.MaterialFlatButton();
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.btnConfermaCreazione = new MaterialSkin.Controls.MaterialFlatButton();
             this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
@@ -110,6 +110,24 @@
             this.panel3.Size = new System.Drawing.Size(322, 264);
             this.panel3.TabIndex = 2;
             // 
+            // dateTimePicker2
+            // 
+            this.dateTimePicker2.Location = new System.Drawing.Point(60, 149);
+            this.dateTimePicker2.Name = "dateTimePicker2";
+            this.dateTimePicker2.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.dateTimePicker2.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker2.TabIndex = 6;
+            this.dateTimePicker2.TabStop = false;
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(60, 57);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker1.TabIndex = 5;
+            this.dateTimePicker1.TabStop = false;
+            // 
             // btnConfermaCreazione
             // 
             this.btnConfermaCreazione.AutoSize = true;
@@ -152,31 +170,13 @@
             this.materialLabel3.TabIndex = 0;
             this.materialLabel3.Text = "Data emissione";
             // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(60, 57);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 5;
-            this.dateTimePicker1.TabStop = false;
-            // 
-            // dateTimePicker2
-            // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(60, 149);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.dateTimePicker2.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker2.TabIndex = 6;
-            this.dateTimePicker2.TabStop = false;
-            // 
             // SkillCard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(350, 353);
-            this.Controls.Add(this.panel3);
+            this.ClientSize = new System.Drawing.Size(341, 347);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panel3);
             this.Name = "SkillCard";
             this.Text = "SkillCard";
             this.panel1.ResumeLayout(false);
