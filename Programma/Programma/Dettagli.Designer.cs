@@ -90,6 +90,7 @@
             this.btnConf.TabIndex = 3;
             this.btnConf.Text = "Conferma";
             this.btnConf.UseVisualStyleBackColor = true;
+            this.btnConf.Click += new System.EventHandler(this.btnConf_Click);
             // 
             // txtDurata
             // 
@@ -144,8 +145,8 @@
             this.Controls.Add(this.materialLabel2);
             this.Controls.Add(this.materialLabel1);
             this.Name = "Dettagli";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Dettagli";
-            this.Load += new System.EventHandler(this.Dettagli_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

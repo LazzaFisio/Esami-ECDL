@@ -32,11 +32,13 @@ namespace Programma
         {
             InitializeComponent();
             this.tabella = tabella;
+            idPadre = id;
             creaOggetti();
             insert = true;
-            if (tabella != "esami" || tabella != "esaminandi")
+            if (tabella != "esami" && tabella != "esaminandi")
                 rbEsistente.Enabled = false;
-            idPadre = id;
+            else
+                rbEsistente.Enabled = true;
         }
 
         public Modifiche(Nodo padre, Nodo figlio)
@@ -67,7 +69,7 @@ namespace Programma
                         query = query.Remove(query.Length - 2, 1);
                         query += ") VALUES ( ' ";
                         query += index + " ', '";
-                        if (idPadre != int.MaxValue)
+                        if (idPadre != int.MaxValue && tabella != "esami" && tabella != "esaminandi")
                             query += idPadre + "', '";
                         for (int i = 0; i < text.Count; i++)
                             if (tabella != "sessione")
@@ -113,8 +115,8 @@ namespace Programma
 
         void aggiungiDurata(string esame, string sessione)
         {
-            Dettagli Dettagli = new Dettagli(cmbEsistente.Text, idPadre.ToString());
-            Dettagli.ShowDialog();
+            Dettagli dettagli = new Dettagli(sessione,esame);
+            dettagli.ShowDialog();
             if (Dettagli.durata != "")
                 if (tabella == "esami")
                     richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione,DurataEsame) VALUES ('" + esame + "', '" + sessione + "', '" + Dettagli.durata + "')");
@@ -182,17 +184,18 @@ namespace Programma
                     labelcmb.Text = "Aggiungi esame alla sessione: " + idPadre;
                 if (tabella == "esaminandi")
                     labelcmb.Text = "Aggiungi esaminado all'esame: " + idPadre;
+
                 riempiCmb(cmbEsistente, lblSeleziona, index);
             }
         }
 
         void rb_CheckedChanged(object sender, EventArgs e)
         {
-            panel1.Hide();
+            panel3.Hide();
             panel2.Hide();
 
             if (rbNuovo.Checked)
-                panel1.Show();
+                panel3.Show();
             else
                 panel2.Show();
         }
@@ -211,7 +214,11 @@ namespace Programma
 
         void riempiCmb(ComboBox cmb, Label lbl, int index)
         {
-            string id = "id" + gerarchie[index];
+            string id = "";
+            if (gerarchie[index] != "esaminandi")
+                id = "id" + gerarchie[index];
+            else
+                id = "codice";
             lbl.Text = id;
             Program.query(new MySqlCommand("SELECT " + id + " FROM " + gerarchie[index], Program.connection).ExecuteReader());
             campi.Clear();

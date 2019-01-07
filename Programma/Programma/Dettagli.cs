@@ -24,7 +24,7 @@ namespace Programma
             lblEsame.Text = esame;
         }
 
-        private void Dettagli_Load(object sender, EventArgs e)
+        private void btnConf_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Sei sicuro di voler inserire questa durata?", "Attenzione", MessageBoxButtons.YesNoCancel);
             if (result == DialogResult.Yes)
