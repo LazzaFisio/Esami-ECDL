@@ -28,15 +28,15 @@ namespace Programma
         List<MaterialLabel> label = new List<MaterialLabel>();
         List<MaterialSingleLineTextField> text = new List<MaterialSingleLineTextField>();
 
-        public Modifiche(Nodo padre)
+        public Modifiche(string tabella, int id)
         {
             InitializeComponent();
-            tabella = gerarchie[trovaId(padre.Tabella) + 1];
+            this.tabella = tabella;
             creaOggetti();
             insert = true;
             if (tabella != "esami" || tabella != "esaminandi")
                 rbEsistente.Enabled = false;
-            idPadre = Convert.ToInt32(padre.ChiaviPrimarie[0].valore);
+            idPadre = id;
         }
 
         public Modifiche(Nodo padre, Nodo figlio)
@@ -148,8 +148,6 @@ namespace Programma
             for (int i = 0; i < Program.risQuery.Count; i++)
                 key.Add(Program.risQuery[i][0]);
 
-            primary = Program.chiaviPrimarie(tabella);
-
             for (int i = 0, j = 0; i < campi.Count; i++,j++)
             {
                 if (!key.Contains(campi[j][0]))
@@ -223,6 +221,8 @@ namespace Programma
         int trovaId(string tabella)
         {
             int num = 0;
+
+            primary = Program.chiaviPrimarie(tabella);
 
             Program.query(new MySqlCommand("SELECT " + primary[0] + " FROM " + tabella, Program.connection).ExecuteReader());
             List<string[]> campi = new List<string[]>();
