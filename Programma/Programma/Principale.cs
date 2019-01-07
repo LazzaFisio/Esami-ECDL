@@ -350,7 +350,9 @@ namespace Programma
             new Messaggio(campi).ShowDialog();
             int app = mostra.ToList().FindIndex(dato => dato == padre.Name) - 1;
             Nodo nodo = new Nodo();
-            Panel selezionato = selezionato = panelSelezionato(app);
+            Panel selezionato = new Panel();
+            if(app > -1)
+                 selezionato = panelSelezionato(app);
             Panel città = panelSelezionato(0);
             switch (Program.scelta)
             {
@@ -369,7 +371,7 @@ namespace Programma
                     else
                         new Modifiche(null, creaNodoPadre(panel.Tag.ToString(), panel));
                     break;
-                case "elimina": elimina();  break;
+                case "elimina": elimina(creaNodoPadre(selezionato.Tag.ToString(), selezionato));  break;
             }
             Program.scelta = "";
             if(app > -1)
@@ -454,13 +456,22 @@ namespace Programma
             return selezionato;
         }
 
-        void elimina()
+        void elimina(Nodo selezionato)
         {
-            DialogResult result = MessageBox.Show("Vuoi eliminare questo campo (tutti i campi collegati verranno eliminati)", "ATTENZIONE", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            DialogResult result = MessageBox.Show("Vuoi eliminare questo campo? ", "ATTENZIONE", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
             if(result == DialogResult.OK)
-            {
-                
-            }
+                try
+                {
+                    if(selezionato.Tabella == "esaminandi")
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                }
+                catch { MessageBox.Show("Ci sono delle informazioni collegate a questo campo", "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
         }
 
         void cambiaColore(Panel padre, Panel panel)
