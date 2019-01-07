@@ -435,7 +435,9 @@ namespace Programma
 
         void azioneBottone(object sender, EventArgs e)
         {
+            Panel selezionato = panelSelezionato(4);
 
+           // new SkillCard(false, ).ShowDialog();
         }
 
         Panel panelSelezionato(int index)

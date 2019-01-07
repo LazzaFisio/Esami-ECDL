@@ -23,6 +23,20 @@ namespace Programma
             InitializeComponent();
         }
 
+        public SkillCard(bool cond, Nodo nodo)
+        {
+            InitializeComponent();
+            btnConfermaCreazione.Enabled = cond;
+            aggiungiData(dateTimePicker1, nodo, 0);
+            aggiungiData(dateTimePicker2, nodo, 1);
+        }
+
+        void aggiungiData(DateTimePicker date, Nodo nodo , int index)
+        {
+            string[] data = nodo.Attributi[index].valore.Split('/');
+            dateTimePicker1.Value = new DateTime(Convert.ToInt32(data[0]), Convert.ToInt32(data[1]), Convert.ToInt32(data[2]));
+        }
+
         private void btnAuto_Click(object sender, EventArgs e)
         {
             dataEmissione = DateTime.Today.ToString("yyyy/MM/dd");
