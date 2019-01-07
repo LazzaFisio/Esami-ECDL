@@ -167,11 +167,6 @@
             this.materialLabel4.TabIndex = 14;
             this.materialLabel4.Text = "PASSWORD:";
             // 
-            // timer1
-            // 
-            this.timer1.Interval = 1;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);

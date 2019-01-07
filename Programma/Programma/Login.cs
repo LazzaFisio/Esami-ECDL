@@ -22,7 +22,6 @@ namespace Programma
         public Login()
         {
             InitializeComponent();
-            creaElementiAggiuntivi();
         }
 
         private void connetti_Click(object sender, EventArgs e)
@@ -36,7 +35,7 @@ namespace Programma
             try
             {
                 
-        }
+            }
             catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); Show(); }
         }
 
@@ -68,22 +67,6 @@ namespace Programma
                 else
                     control.Visible = !condizione;
             }
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            timer1.Stop();
-            Hide();
-            Program.query(new MySqlCommand("SELECT COUNT(*) FROM città", Program.connection).ExecuteReader());
-            new Attesa(2, Program.risQuery[0][0]).ShowDialog();
-            new Principale().ShowDialog();
-            oscuraMostra(true);
-            Show();
-            try
-            {
-                
-            }
-            catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); oscuraMostra(true); Show(); }
         }
     }
 }

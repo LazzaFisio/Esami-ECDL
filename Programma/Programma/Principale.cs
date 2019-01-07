@@ -310,12 +310,11 @@ namespace Programma
             return true;
         }
 
-        void aggiornaSezione(Panel padre, Panel selezionato)
+        void aggiornaSezione(Panel padre, Panel selezionato, string tabella)
         {
-            string tabella = mostra[mostra.ToList().FindIndex(dato => dato == padre.Controls[0].Controls[0].Text) + 1];
             Panel panel = (Panel)Controls.Find(tabella, true)[0];
             panel.Controls.Clear();
-            creaSezione(tabella,padre.Name, selezionato);
+            creaSezione(tabella, padre.Name, selezionato);
         }
 
         void azioneDoubleClick(object sender, EventArgs e)
@@ -351,14 +350,15 @@ namespace Programma
             new Messaggio(campi).ShowDialog();
             int app = mostra.ToList().FindIndex(dato => dato == padre.Name) - 1;
             Nodo nodo = new Nodo();
+            Panel selezionato = new Panel();
             switch (Program.scelta)
             {
                 case "aggiungi":
                     if (app > -1)
                     {
-                        Panel selezionato = panelSelezionato(app);
+                        selezionato = panelSelezionato(app);
                         nodo = creaNodoPadre(selezionato.Tag.ToString(), selezionato);
-                        new Modifiche(nodo.Tabella, Convert.ToInt32(nodo.ChiaviPrimarie[0].valore));
+                        new Modifiche(nodo.Tabella, Convert.ToInt32(nodo.ChiaviPrimarie[0].valore)).ShowDialog();
                     }
                     else
                         new Modifiche(panel.Tag.ToString(), int.MaxValue).ShowDialog();
@@ -366,7 +366,7 @@ namespace Programma
                 case "modifica":
                     if (app > -1)
                     {
-                        Panel selezionato = panelSelezionato(app);
+                        selezionato = panelSelezionato(app);
                         new Modifiche(creaNodoPadre(selezionato.Tag.ToString(), selezionato), creaNodoPadre(panel.Tag.ToString(), panel)).ShowDialog();
                     }
                     else
@@ -375,6 +375,7 @@ namespace Programma
                 case "elimina": elimina();  break;
             }
             Program.scelta = "";
+            aggiornaSezione((Panel)Controls.Find(mostra[app], true)[0], selezionato, padre.Tag.ToString());
         }
 
         void azioneClick(object sender, EventArgs e)
@@ -391,7 +392,7 @@ namespace Programma
                     if (Controls.Find(mostra[index], true).Length == 0)
                         creaContenitore(mostra[index], padre.Name, index, panel);
                     else
-                        aggiornaSezione(padre, panel);
+                        aggiornaSezione(padre, panel, mostra[index]);
                 }
                 for (int i = 0; i < principale.Controls.Count; i++)
                 {
