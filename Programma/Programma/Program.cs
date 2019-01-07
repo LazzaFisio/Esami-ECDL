@@ -12,6 +12,7 @@ namespace Programma
 {
     static class Program
     {
+
         public static string scelta;
         public static string[] tabelle = new string[] { "città", "sede", "sessione", "esamesessione", "esami", "risultato", "skillcard", "esaminandi" };
         public static List<string[]> risQuery = new List<string[]>();
