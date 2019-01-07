@@ -18,7 +18,7 @@ namespace Programma
     {
         bool insert = false;
         //string[] ind = new string[2];
-        int idPadre = 0;
+        int idPadre = 0, idCittà = 0;
         string tabella;
         string query = "";
         List<string> gerarchie = new List<string> { "città", "sede", "sessione", "esami", "esaminandi", "skillcard", "risultato" };
@@ -28,11 +28,12 @@ namespace Programma
         List<MaterialLabel> label = new List<MaterialLabel>();
         List<MaterialSingleLineTextField> text = new List<MaterialSingleLineTextField>();
 
-        public Modifiche(string tabella, int id)
+        public Modifiche(string tabella, int id, int idCittà)
         {
             InitializeComponent();
             this.tabella = tabella;
             idPadre = id;
+            this.idCittà = idCittà;
             creaOggetti();
             insert = true;
             if (tabella != "esami" && tabella != "esaminandi")
@@ -69,8 +70,11 @@ namespace Programma
                         query = query.Remove(query.Length - 2, 1);
                         query += ") VALUES ( ' ";
                         query += index + " ', '";
-                        if (idPadre != int.MaxValue && tabella != "esami" && tabella != "esaminandi")
-                            query += idPadre + "', '";
+                        if (idPadre != int.MaxValue && tabella != "esami")
+                            if (tabella != "esaminandi")
+                                query += idPadre + "', '";
+                            else
+                                query += idCittà + "', '";
                         for (int i = 0; i < text.Count; i++)
                             if (tabella != "sessione")
                                 query += text[i].Text + "', '";
