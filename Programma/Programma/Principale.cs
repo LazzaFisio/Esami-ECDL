@@ -350,16 +350,15 @@ namespace Programma
             }
             new Messaggio(campi).ShowDialog();
             int app = mostra.ToList().FindIndex(dato => dato == padre.Name) - 1;
+            Nodo nodo = new Nodo();
             switch (Program.scelta)
             {
                 case "aggiungi":
                     if (app > -1)
                     {
-                        Program.query(new MySqlCommand("SELCET * FROM " + panel.Tag.ToString(), Program.connection).ExecuteReader());
-                        if (Program.risQuery.Count > 0)
-                            new Modifiche(panel.Tag.ToString(), Convert.ToInt32(Program.risQuery[Program.risQuery.Count - 1][0])).ShowDialog();
-                        else
-                            new Modifiche(panel.Tag.ToString(), 1).ShowDialog();
+                        Panel selezionato = panelSelezionato(app);
+                        nodo = creaNodoPadre(selezionato.Tag.ToString(), selezionato);
+                        new Modifiche(nodo.Tabella, Convert.ToInt32(nodo.ChiaviPrimarie[0].valore));
                     }
                     else
                         new Modifiche(panel.Tag.ToString(), int.MaxValue).ShowDialog();
@@ -367,7 +366,8 @@ namespace Programma
                 case "modifica":
                     if (app > -1)
                     {
-
+                        Panel selezionato = panelSelezionato(app);
+                        new Modifiche(creaNodoPadre(selezionato.Tag.ToString(), selezionato), creaNodoPadre(panel.Tag.ToString(), panel)).ShowDialog();
                     }
                     else
                         new Modifiche(null, creaNodoPadre(panel.Tag.ToString(), panel));
@@ -418,6 +418,16 @@ namespace Programma
         void azioneBottone(object sender, EventArgs e)
         {
 
+        }
+
+        Panel panelSelezionato(int index)
+        {
+            Panel selezionato = new Panel();
+            Panel panel = (Panel)Controls.Find(mostra[index], true)[0];
+            foreach (Control control in panel.Controls)
+                if (control.Controls[0].BackColor == Color.Lime)
+                    selezionato = (Panel)control;
+            return selezionato;
         }
 
         void elimina()
