@@ -17,7 +17,7 @@ namespace Programma
     public partial class Modifiche : MaterialForm
     {
         bool insert = false;
-        //string[] ind = new string[2];
+
         int idPadre = 0, idCittà = 0;
         string tabella;
         string query = "";
@@ -128,7 +128,7 @@ namespace Programma
 
         void aggiungiSkill_Risultato(int index)
         {
-            richiamaQuery("SELECT * FROM `skillcard` WHERE DataScadenza > CURRENT_DATE AND Esaminandi_codice = '" + index + "'");
+            Queryleggi("SELECT * FROM `skillcard` WHERE DataScadenza > CURRENT_DATE AND Esaminandi_codice = '" + index + "'");
 
             if (Program.risQuery.Count == 0)
             {
@@ -207,6 +207,12 @@ namespace Programma
         void richiamaQuery(string query)
         {
             try { new MySqlCommand(query, Program.connection).ExecuteNonQuery(); this.Close(); }
+            catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+        }
+
+        void Queryleggi(string query)
+        {
+            try { Program.query(new MySqlCommand(query, Program.connection).ExecuteReader()); this.Close(); }
             catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
         }
 
