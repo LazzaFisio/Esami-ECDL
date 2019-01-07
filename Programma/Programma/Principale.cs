@@ -314,7 +314,7 @@ namespace Programma
         {
             Panel panel = (Panel)Controls.Find(tabella, true)[0];
             panel.Controls.Clear();
-            creaSezione(tabella, padre.Name, selezionato);
+            creaSezione(tabella,padre.Name, selezionato);
         }
 
         void azioneDoubleClick(object sender, EventArgs e)
@@ -358,7 +358,7 @@ namespace Programma
                     {
                         selezionato = panelSelezionato(app);
                         nodo = creaNodoPadre(selezionato.Tag.ToString(), selezionato);
-                        new Modifiche(nodo.Tabella, Convert.ToInt32(nodo.ChiaviPrimarie[0].valore)).ShowDialog();
+                        new Modifiche(nodo.Tabella, Convert.ToInt32(nodo.ChiaviPrimarie[0].valore));
                     }
                     else
                         new Modifiche(panel.Tag.ToString(), int.MaxValue).ShowDialog();
@@ -375,7 +375,24 @@ namespace Programma
                 case "elimina": elimina();  break;
             }
             Program.scelta = "";
-            aggiornaSezione((Panel)Controls.Find(mostra[app], true)[0], selezionato, padre.Tag.ToString());
+            if(app > -1)
+            {
+                for(int i = app + 2; i < mostra.Length; i++)
+                {
+                    Control[] appoggio = Controls.Find(mostra[i], true);
+                    if(appoggio.Length > 0)
+                    {
+                        panel = (Panel)appoggio[0];
+                        if (panel.Visible)
+                            panel.Visible = false;
+                    }
+                }
+                aggiornaSezione((Panel)Controls.Find(mostra[app], true)[0], selezionato, padre.Tag.ToString());
+            }
+            else
+                aggiornaSezione(padre, panel, padre.Tag.ToString());
+            if (padre.Tag.ToString() != "risultato")
+                ((MaterialFlatButton)Controls.Find("visualizza", true)[0]).Visible = false;
         }
 
         void azioneClick(object sender, EventArgs e)
@@ -436,7 +453,7 @@ namespace Programma
             DialogResult result = MessageBox.Show("Vuoi eliminare questo campo (tutti i campi collegati verranno eliminati)", "ATTENZIONE", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
             if(result == DialogResult.OK)
             {
-
+                
             }
         }
 
