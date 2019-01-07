@@ -310,9 +310,8 @@ namespace Programma
             return true;
         }
 
-        void aggiornaSezione(Panel padre, Panel selezionato)
+        void aggiornaSezione(Panel padre, Panel selezionato, string tabella)
         {
-            string tabella = mostra[mostra.ToList().FindIndex(dato => dato == padre.Controls[0].Controls[0].Text) + 1];
             Panel panel = (Panel)Controls.Find(tabella, true)[0];
             panel.Controls.Clear();
             creaSezione(tabella,padre.Name, selezionato);
@@ -351,22 +350,24 @@ namespace Programma
             new Messaggio(campi).ShowDialog();
             int app = mostra.ToList().FindIndex(dato => dato == padre.Name) - 1;
             Nodo nodo = new Nodo();
+            Panel selezionato = new Panel();
+            Panel città = panelSelezionato(0);
             switch (Program.scelta)
             {
                 case "aggiungi":
                     if (app > -1)
                     {
-                        Panel selezionato = panelSelezionato(app);
+                        selezionato = panelSelezionato(app);
                         nodo = creaNodoPadre(selezionato.Tag.ToString(), selezionato);
-                        new Modifiche(panel.Tag.ToString(), Convert.ToInt32(nodo.ChiaviPrimarie[0].valore)).ShowDialog();
+                        new Modifiche(panel.Tag.ToString(), Convert.ToInt32(nodo.ChiaviPrimarie[0].valore), Convert.ToInt32(città.Controls[1].Text)).ShowDialog();
                     }
                     else
-                        new Modifiche(panel.Tag.ToString(), int.MaxValue).ShowDialog();
+                        new Modifiche(panel.Tag.ToString(), int.MaxValue, Convert.ToInt32(città.Controls[1].Text)).ShowDialog();
                 break;
                 case "modifica":
                     if (app > -1)
                     {
-                        Panel selezionato = panelSelezionato(app);
+                        selezionato = panelSelezionato(app);
                         new Modifiche(creaNodoPadre(selezionato.Tag.ToString(), selezionato), creaNodoPadre(panel.Tag.ToString(), panel)).ShowDialog();
                     }
                     else
@@ -375,6 +376,24 @@ namespace Programma
                 case "elimina": elimina();  break;
             }
             Program.scelta = "";
+            if(app > -1)
+            {
+                for(int i = app + 2; i < mostra.Length; i++)
+                {
+                    Control[] appoggio = Controls.Find(mostra[i], true);
+                    if(appoggio.Length > 0)
+                    {
+                        panel = (Panel)appoggio[0];
+                        if (panel.Visible)
+                            panel.Visible = false;
+                    }
+                }
+                aggiornaSezione((Panel)Controls.Find(mostra[app], true)[0], selezionato, padre.Tag.ToString());
+            }
+            else
+                aggiornaSezione(padre, panel, padre.Tag.ToString());
+            if (padre.Tag.ToString() != "risultato")
+                ((MaterialFlatButton)Controls.Find("visualizza", true)[0]).Visible = false;
         }
 
         void azioneClick(object sender, EventArgs e)
@@ -391,7 +410,7 @@ namespace Programma
                     if (Controls.Find(mostra[index], true).Length == 0)
                         creaContenitore(mostra[index], padre.Name, index, panel);
                     else
-                        aggiornaSezione(padre, panel);
+                        aggiornaSezione(padre, panel, mostra[index]);
                 }
                 for (int i = 0; i < principale.Controls.Count; i++)
                 {
@@ -417,7 +436,9 @@ namespace Programma
 
         void azioneBottone(object sender, EventArgs e)
         {
+            Panel selezionato = panelSelezionato(4);
 
+           // new SkillCard(false, ).ShowDialog();
         }
 
         Panel panelSelezionato(int index)
@@ -435,7 +456,7 @@ namespace Programma
             DialogResult result = MessageBox.Show("Vuoi eliminare questo campo (tutti i campi collegati verranno eliminati)", "ATTENZIONE", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
             if(result == DialogResult.OK)
             {
-
+                
             }
         }
 
