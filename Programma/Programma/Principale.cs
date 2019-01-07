@@ -350,14 +350,13 @@ namespace Programma
             new Messaggio(campi).ShowDialog();
             int app = mostra.ToList().FindIndex(dato => dato == padre.Name) - 1;
             Nodo nodo = new Nodo();
-            Panel selezionato = new Panel();
+            Panel selezionato = selezionato = panelSelezionato(app);
             Panel città = panelSelezionato(0);
             switch (Program.scelta)
             {
                 case "aggiungi":
                     if (app > -1)
                     {
-                        selezionato = panelSelezionato(app);
                         nodo = creaNodoPadre(selezionato.Tag.ToString(), selezionato);
                         new Modifiche(panel.Tag.ToString(), Convert.ToInt32(nodo.ChiaviPrimarie[0].valore), Convert.ToInt32(città.Controls[1].Text)).ShowDialog();
                     }
@@ -366,10 +365,7 @@ namespace Programma
                 break;
                 case "modifica":
                     if (app > -1)
-                    {
-                        selezionato = panelSelezionato(app);
                         new Modifiche(creaNodoPadre(selezionato.Tag.ToString(), selezionato), creaNodoPadre(panel.Tag.ToString(), panel)).ShowDialog();
-                    }
                     else
                         new Modifiche(null, creaNodoPadre(panel.Tag.ToString(), panel));
                     break;
