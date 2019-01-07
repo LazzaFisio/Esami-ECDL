@@ -358,7 +358,7 @@ namespace Programma
                     {
                         Panel selezionato = panelSelezionato(app);
                         nodo = creaNodoPadre(selezionato.Tag.ToString(), selezionato);
-                        new Modifiche(nodo.Tabella, Convert.ToInt32(nodo.ChiaviPrimarie[0].valore));
+                        new Modifiche(panel.Tag.ToString(), Convert.ToInt32(nodo.ChiaviPrimarie[0].valore)).ShowDialog();
                     }
                     else
                         new Modifiche(panel.Tag.ToString(), int.MaxValue).ShowDialog();

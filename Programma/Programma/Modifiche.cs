@@ -70,7 +70,10 @@ namespace Programma
                         if (idPadre != int.MaxValue)
                             query += idPadre + "', '";
                         for (int i = 0; i < text.Count; i++)
-                            query += text[i].Text + "', '";
+                            if (tabella != "sessione")
+                                query += text[i].Text + "', '";
+                            else
+                                query += Convert.ToDateTime(text[i].Text).ToString("yyyy/MM/dd") + "', '";
                         query = query.Remove(query.Length - 4, 3);
                         query += ")";
 
