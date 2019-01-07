@@ -349,20 +349,30 @@ namespace Programma
                     cambiaColoreAiCampi(panel, Color.LightBlue);
             }
             new Messaggio(campi).ShowDialog();
-            int index = mostra.ToList().FindIndex(dato => dato == padre.Name) - 1;
+            int app = mostra.ToList().FindIndex(dato => dato == padre.Name) - 1;
             switch (Program.scelta)
             {
                 case "aggiungi":
-
+                    if (app > -1)
+                    {
+                        Program.query(new MySqlCommand("SELCET * FROM " + panel.Tag.ToString(), Program.connection).ExecuteReader());
+                        if (Program.risQuery.Count > 0)
+                            new Modifiche(panel.Tag.ToString(), Convert.ToInt32(Program.risQuery[Program.risQuery.Count - 1][0])).ShowDialog();
+                        else
+                            new Modifiche(panel.Tag.ToString(), 1).ShowDialog();
+                    }
+                    else
+                        new Modifiche(panel.Tag.ToString(), int.MaxValue).ShowDialog();
                 break;
                 case "modifica":
-                    if(index > -1)
+                    if (app > -1)
                     {
 
-                    }else
-                        new Modifiche(null, creaNodoPadre())
+                    }
+                    else
+                        new Modifiche(null, creaNodoPadre(panel.Tag.ToString(), panel));
                     break;
-                case "elimina": break;
+                case "elimina": elimina();  break;
             }
             Program.scelta = "";
         }
@@ -408,6 +418,15 @@ namespace Programma
         void azioneBottone(object sender, EventArgs e)
         {
 
+        }
+
+        void elimina()
+        {
+            DialogResult result = MessageBox.Show("Vuoi eliminare questo campo (tutti i campi collegati verranno eliminati)", "ATTENZIONE", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            if(result == DialogResult.OK)
+            {
+
+            }
         }
 
         void cambiaColore(Panel padre, Panel panel)
