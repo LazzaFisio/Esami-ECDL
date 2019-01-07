@@ -437,8 +437,15 @@ namespace Programma
         void azioneBottone(object sender, EventArgs e)
         {
             Panel selezionato = panelSelezionato(4);
-
-           // new SkillCard(false, ).ShowDialog();
+            int index = 0;
+            Program.query(new MySqlCommand("SELECT * FROM skillcard", Program.connection).ExecuteReader());
+            for(int i = 0; i < Program.risQuery.Count; i++)
+                if(Program.risQuery[i][Program.risQuery[i].Length - 1] == selezionato.Controls[1].Text)
+                {
+                    index = i;
+                    i = Program.risQuery.Count;
+                }
+            new SkillCard(false, creaNodo("skillcard", index, "")).ShowDialog();
         }
 
         Panel panelSelezionato(int index)

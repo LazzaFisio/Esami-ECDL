@@ -178,6 +178,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel3);
             this.Name = "SkillCard";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SkillCard";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
