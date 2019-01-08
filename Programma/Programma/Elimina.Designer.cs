@@ -28,25 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tabelle = new MaterialSkin.Controls.MaterialTabControl();
             this.modifica = new MaterialSkin.Controls.MaterialFlatButton();
             this.btnElimina = new MaterialSkin.Controls.MaterialFlatButton();
             this.label1 = new System.Windows.Forms.Label();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
-            this.tabelle.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tabelle
-            // 
-            this.tabelle.Controls.Add(this.tabPage1);
-            this.tabelle.Depth = 0;
-            this.tabelle.Location = new System.Drawing.Point(12, 275);
-            this.tabelle.MouseState = MaterialSkin.MouseState.HOVER;
-            this.tabelle.Name = "tabelle";
-            this.tabelle.SelectedIndex = 0;
-            this.tabelle.Size = new System.Drawing.Size(776, 291);
-            this.tabelle.TabIndex = 0;
             // 
             // modifica
             // 
@@ -89,53 +74,26 @@
             this.label1.TabIndex = 4;
             this.label1.Text = "CAMPO:";
             // 
-            // tabPage1
-            // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(768, 265);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // materialTabSelector1
-            // 
-            this.materialTabSelector1.BaseTabControl = this.tabelle;
-            this.materialTabSelector1.Depth = 0;
-            this.materialTabSelector1.Location = new System.Drawing.Point(-1, 246);
-            this.materialTabSelector1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialTabSelector1.Name = "materialTabSelector1";
-            this.materialTabSelector1.Size = new System.Drawing.Size(801, 23);
-            this.materialTabSelector1.TabIndex = 5;
-            this.materialTabSelector1.Text = "materialTabSelector1";
-            // 
             // Elimina
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(800, 624);
-            this.Controls.Add(this.materialTabSelector1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnElimina);
             this.Controls.Add(this.modifica);
-            this.Controls.Add(this.tabelle);
             this.Name = "Elimina";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Elimina";
-            this.tabelle.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private MaterialSkin.Controls.MaterialTabControl tabelle;
         private MaterialSkin.Controls.MaterialFlatButton modifica;
         private MaterialSkin.Controls.MaterialFlatButton btnElimina;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private MaterialSkin.Controls.MaterialTabSelector materialTabSelector1;
     }
 }

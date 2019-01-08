@@ -15,12 +15,17 @@ namespace Programma
     public partial class Elimina : MaterialForm
     {
         Nodo nodo;
+        MaterialTabControl tabelle;
         List<DataGridView> dataGridViews = new List<DataGridView>();
 
         public Elimina(Nodo nodo, Panel appoggio)
         {
             InitializeComponent();
             this.nodo = nodo;
+            tabelle = new MaterialTabControl();
+            tabelle.Location = new Point(0, 275);
+            tabelle.Size = new Size(800, 291);
+            Controls.Add(tabelle);
             Panel panel = new Panel();
             panel.Size = appoggio.Size;
             panel.Location = new Point(280, 100);
@@ -29,13 +34,19 @@ namespace Programma
                 panel.Controls.Add(Program.creaLabel(control.Location, control.Text, control.Text, control.Tag.ToString()));
             Controls.Add(panel);
             caricaDati(nodo);
+            MaterialTabSelector selector = new MaterialTabSelector();
+            selector.Location = new Point(0, 246);
+            selector.Size = new Size(800, 29);
+            selector.BaseTabControl = tabelle;
+            Controls.Add(selector);
         }
 
         void caricaDati(Nodo nodo)
         {
             List<Nodo> nodos = new List<Nodo>() { nodo};
             List<Nodo> valori = new List<Nodo>();
-            controllo(nodos, valori);
+            List<string> tabellePassate = new List<string>();
+            controllo(nodos, valori, tabellePassate);
             while(valori.Count > 0)
             {
                 foreach(Nodo item in valori)
@@ -44,12 +55,14 @@ namespace Programma
                     if (data == null)
                         creaDataGridView(data, item);
                     caricaValori(data, item);
+                    if (!tabellePassate.Contains(item.Tabella))
+                        tabellePassate.Add(item.Tabella);
                 }
                 nodos.Clear();
                 foreach (Nodo item in valori)
                     nodos.Add(item);
                 valori.Clear();
-                controllo(nodos, valori);
+                controllo(nodos, valori, tabellePassate);
             }
         }
 
@@ -57,7 +70,7 @@ namespace Programma
         {
             data = new DataGridView();
             data.Name = "tabella:" + item.Tabella;
-            data.Size = new Size(765, 265);
+            data.Size = new Size(tabelle.Size.Width, tabelle.Size.Height);
             data.Location = new Point(0, 0);
             TabPage tabPage = new TabPage(item.Tabella);
             tabPage.Name = item.Tabella;
@@ -70,7 +83,7 @@ namespace Programma
 
         }
 
-        void controllo(List<Nodo> nodos, List<Nodo> valori)
+        void controllo(List<Nodo> nodos, List<Nodo> valori, List<string> tabelle)
         {
             foreach(Nodo item in nodos)
             {
@@ -80,7 +93,7 @@ namespace Programma
                 foreach (string[] item1 in Program.risQuery)
                     ris.Add(item1);
                 foreach (string[] item1 in ris)
-                    if(item1[0] != item.Tabella)
+                    if(!tabelle.Contains(item1[0]))
                     {
                         cond = " WHERE " + item1[1] + " = '" + item.ChiaviPrimarie[0].valore + "'";
                         Program.query(new MySqlCommand("SELECT * FROM " + item1[0] + cond, Program.connection).ExecuteReader());
@@ -91,6 +104,7 @@ namespace Programma
                             valori.Add(Program.creaNodo(item1[0], i, cond));
                     }
             }
+
         }
     }
 }
