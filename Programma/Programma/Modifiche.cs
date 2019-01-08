@@ -24,9 +24,11 @@ namespace Programma
         List<string> gerarchie = new List<string> { "città", "sede", "sessione", "esami", "esaminandi", "skillcard", "risultato" };
         List<string> primary = new List<string>();
         List<string> key = new List<string>();
-        List<string[]> campi = new List<string[]>();        
+        List<string[]> campi = new List<string[]>();
         List<MaterialLabel> label = new List<MaterialLabel>();
         List<MaterialSingleLineTextField> text = new List<MaterialSingleLineTextField>();
+
+        Nodo daModificare = new Nodo();
 
         public Modifiche(string tabella, int id, int idCittà)
         {
@@ -44,11 +46,12 @@ namespace Programma
             panel4.BringToFront();
         }
 
-        public Modifiche(Nodo padre, Nodo figlio)
+        public Modifiche(Nodo figlio)
         {
             InitializeComponent();
             tabella = figlio.Tabella;
             creaOggetti();
+            daModificare = figlio;
             riempi(figlio.Attributi);
             insert = false;
 
@@ -110,10 +113,13 @@ namespace Programma
                     query = "UPDATE " + tabella + " SET ";                    
                     for (int i = 0; i < text.Count; i++)
                         query += label[i].Text + " = '" + text[i].Text + "', ";
-                    if (idPadre != int.MaxValue)
-                        query += labelcmb.Text + " = '" + idPadre;
+                    /*
+                     Modifiche delle chiavi esterne   
+                     */
                     query += " WHERE ";
-
+                    foreach (var item in daModificare.ChiaviPrimarie)
+                        query += item.nome + " = '" + item.valore + "', ";
+                    query.Remove(query.Length - 2, 1);
                     query += ";";
 
                     richiamaQuery(query);
