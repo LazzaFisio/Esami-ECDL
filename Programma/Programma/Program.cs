@@ -84,5 +84,23 @@ namespace Programma
             panel.AutoScroll = allowScroll;
             return panel;
         }
+
+        public static Nodo creaNodo(string tabella, int index, string cond)
+        {
+            List<string> chiaviP = Program.chiaviPrimarie(tabella);
+            Program.query(new MySqlCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = '" + tabella + "' AND TABLE_SCHEMA = 'esami ecdl'", Program.connection).ExecuteReader());
+            List<string[]> chiaviE = new List<string[]>();
+            foreach (string[] item in Program.risQuery)
+                chiaviE.Add(item);
+            Program.query(new MySqlCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'esami ecdl' AND TABLE_NAME = '" + tabella + "'", Program.connection).ExecuteReader());
+            List<string[]> att = new List<string[]>();
+            foreach (string[] item in Program.risQuery)
+                att.Add(item);
+            Program.query(new MySqlCommand("SELECT * FROM " + tabella + cond, Program.connection).ExecuteReader());
+            List<string> allData = new List<string>();
+            if (index > -1)
+                allData = Program.risQuery[index].ToList();
+            return new Nodo(tabella, chiaviP, chiaviE, att, allData);
+        }
     }
 }

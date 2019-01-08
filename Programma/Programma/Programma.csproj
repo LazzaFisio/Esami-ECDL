@@ -74,6 +74,12 @@
     <Compile Include="Dettagli.Designer.cs">
       <DependentUpon>Dettagli.cs</DependentUpon>
     </Compile>
+    <Compile Include="Elimina.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Elimina.Designer.cs">
+      <DependentUpon>Elimina.cs</DependentUpon>
+    </Compile>
     <Compile Include="Grafo\Campo.cs" />
     <Compile Include="Grafo\Grafo.cs" />
     <Compile Include="Grafo\Nodo.cs" />
@@ -114,6 +120,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dettagli.resx">
       <DependentUpon>Dettagli.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Elimina.resx">
+      <DependentUpon>Elimina.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
