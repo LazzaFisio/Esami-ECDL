@@ -24,6 +24,14 @@ namespace Programma
             lblEsame.Text = esame;
         }
 
+        public Dettagli(string sessione, string esame, string durata)
+        {
+            InitializeComponent();
+            lblSessione.Text = sessione;
+            lblEsame.Text = esame;
+            txtDurata.Text = durata;
+        }
+
         private void btnConf_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Sei sicuro di voler inserire questa durata?", "Attenzione", MessageBoxButtons.YesNoCancel);
