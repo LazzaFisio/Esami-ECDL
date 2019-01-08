@@ -46,7 +46,7 @@ namespace Programma
             if (tabella == "esaminando")
             {
                 panel5.Show();
-                lblEsterna.Text = "Città_idCittà";
+                lblEsterna.Text = "idCittà";
                 Queryleggi("SELECT idCittà FROM città");
                 for (int i = 0; i < Program.risQuery.Count; i++)
                     cmbEsterna.Items.Add(Program.risQuery[i][0]);
@@ -165,7 +165,7 @@ namespace Programma
 
         void aggiungiSkill_Risultato(int index)
         {
-            Queryleggi("SELECT * FROM `skillcard` WHERE DataScadenza > CURRENT_DATE AND Esaminandi_codice = '" + index + "'");
+            Queryleggi("SELECT * FROM `skillcard` WHERE DataScadenza > CURRENT_DATE AND codice = '" + index + "'");
 
             if (Program.risQuery.Count == 0)
             {
@@ -174,7 +174,7 @@ namespace Programma
                 SkillCard skillCard = new SkillCard();
                 skillCard.ShowDialog();
                 if (SkillCard.dataEmissione != "" && SkillCard.dataScadenza != "")
-                    richiamaQuery("INSERT INTO skillcard (idSkillCard,DataEmissione,DataScadenza,Esaminandi_codice) VALUES ('" + idSkillCard + "', '" + SkillCard.dataEmissione + "', '" + SkillCard.dataScadenza + "', '" + index + "') ");
+                    richiamaQuery("INSERT INTO skillcard (idSkillCard,DataEmissione,DataScadenza,codice) VALUES ('" + idSkillCard + "', '" + SkillCard.dataEmissione + "', '" + SkillCard.dataScadenza + "', '" + index + "') ");
 
                 richiamaQuery("INSERT INTO risultato (idEsami,idSkillCard,esito) VALUES ('" + idPadre + "',' " + idSkillCard + "', 'Non valutato')");
             }
