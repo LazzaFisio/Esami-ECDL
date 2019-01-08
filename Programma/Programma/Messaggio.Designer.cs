@@ -28,25 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.aggiungi = new MaterialSkin.Controls.MaterialFlatButton();
             this.modifica = new MaterialSkin.Controls.MaterialFlatButton();
             this.elimina = new MaterialSkin.Controls.MaterialFlatButton();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // materialLabel1
-            // 
-            this.materialLabel1.AutoSize = true;
-            this.materialLabel1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(130, 88);
-            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(253, 19);
-            this.materialLabel1.TabIndex = 0;
-            this.materialLabel1.Text = "CHE AZIONE DESIDERE COMPIERE?";
             // 
             // aggiungi
             // 
@@ -99,16 +85,27 @@
             this.elimina.UseVisualStyleBackColor = true;
             this.elimina.Click += new System.EventHandler(this.elimina_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label1.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(57, 92);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(510, 32);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "CHE AZIONE DESIDERI  COMPIERE?";
+            // 
             // Messaggio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(653, 224);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.elimina);
             this.Controls.Add(this.modifica);
             this.Controls.Add(this.aggiungi);
-            this.Controls.Add(this.materialLabel1);
             this.MaximizeBox = false;
             this.Name = "Messaggio";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -119,10 +116,9 @@
         }
 
         #endregion
-
-        private MaterialSkin.Controls.MaterialLabel materialLabel1;
         private MaterialSkin.Controls.MaterialFlatButton aggiungi;
         private MaterialSkin.Controls.MaterialFlatButton modifica;
         private MaterialSkin.Controls.MaterialFlatButton elimina;
+        private System.Windows.Forms.Label label1;
     }
 }

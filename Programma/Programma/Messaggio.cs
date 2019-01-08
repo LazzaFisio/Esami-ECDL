@@ -15,14 +15,14 @@ namespace Programma
 {
     public partial class Messaggio : MaterialForm
     {
-        List<string> campi;
 
-        public Messaggio(List<string> campi)
+        public Messaggio(string tabella, List<string> campi)
         {
             InitializeComponent();
-            this.campi = campi;
             if (campi.Count == 0)
                 modifica.Enabled = elimina.Enabled = false;
+            if (tabella == "risultato")
+                elimina.Enabled = false;
         }
 
         private void aggiungi_Click(object sender, EventArgs e)

@@ -347,17 +347,16 @@ namespace Programma
                 else
                     cambiaColoreAiCampi(panel, Color.LightBlue);
             }
-            new Messaggio(campi).ShowDialog();
-            int app = mostra.ToList().FindIndex(dato => dato == padre.Name) - 1;
+            new Messaggio(panel.Tag.ToString(), campi).ShowDialog();
+            int app = mostra.ToList().FindIndex(dato => dato == padre.Name);
             Nodo nodo = new Nodo();
             Panel selezionato = new Panel();
-            if(app > -1)
-                 selezionato = panelSelezionato(app);
+            selezionato = panelSelezionato(app);
             Panel città = panelSelezionato(0);
             switch (Program.scelta)
             {
                 case "aggiungi":
-                    if (app > -1)
+                    if (app > 0)
                     {
                         nodo = creaNodoPadre(selezionato.Tag.ToString(), selezionato);
                         new Modifiche(panel.Tag.ToString(), Convert.ToInt32(nodo.ChiaviPrimarie[0].valore), Convert.ToInt32(città.Controls[1].Text)).ShowDialog();
@@ -365,13 +364,8 @@ namespace Programma
                     else
                         new Modifiche(panel.Tag.ToString(), int.MaxValue, Convert.ToInt32(città.Controls[1].Text)).ShowDialog();
                 break;
-                case "modifica":
-                    if (app > -1)
-                        new Modifiche(creaNodoPadre(selezionato.Tag.ToString(), selezionato), creaNodoPadre(panel.Tag.ToString(), panel)).ShowDialog();
-                    else
-                        new Modifiche(null, creaNodoPadre(panel.Tag.ToString(), panel));
-                    break;
-                case "elimina": elimina(creaNodoPadre(selezionato.Tag.ToString(), selezionato));  break;
+                case "modifica":  new Modifiche(creaNodoPadre(panel.Tag.ToString(), panel)).ShowDialog(); break;
+                case "elimina": elimina(creaNodoPadre(panel.Tag.ToString(), panel), panel);  break;
             }
             Program.scelta = "";
             if(app > -1)
@@ -456,22 +450,25 @@ namespace Programma
             return selezionato;
         }
 
-        void elimina(Nodo selezionato)
+        void elimina(Nodo selezionato, Panel panel)
         {
+            string cond = "";
             DialogResult result = MessageBox.Show("Vuoi eliminare questo campo? ", "ATTENZIONE", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
             if(result == DialogResult.OK)
                 try
                 {
-                    if(selezionato.Tabella == "esaminandi")
-                    {
-
-                    }
-                    else
-                    {
-
-                    }
+                    cond = " WHERE ";
+                    foreach (Campo campo in selezionato.ChiaviPrimarie)
+                        cond += campo.nome + " = '" + campo.valore + "' ,";
+                    cond = cond.Remove(cond.Length - 2, 2);
+                    new MySqlCommand("DELETE FROM " + selezionato.Tabella + cond, Program.connection).ExecuteNonQuery();
                 }
-                catch { MessageBox.Show("Ci sono delle informazioni collegate a questo campo", "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+                catch
+                {
+                   result =  MessageBox.Show("Ci sono delle informazioni collegate a questo campo. Vuoi controllare?", "ATTENZIONE", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                    if (result == DialogResult.OK)
+                        new Elimina(selezionato, panel).ShowDialog();
+                }
         }
 
         void cambiaColore(Panel padre, Panel panel)
