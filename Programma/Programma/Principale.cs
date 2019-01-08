@@ -340,7 +340,7 @@ namespace Programma
                 case "aggiungi":
                     if (app > 0)
                     {
-                        if (campi.Count > 0)
+                        if (padre.Name != panel.Name)
                             nodo = creaNodoPadre(selezionato.Tag.ToString(), selezionato);
                         else
                             nodo = Program.creaNodo(mostra[app], -1, "");
