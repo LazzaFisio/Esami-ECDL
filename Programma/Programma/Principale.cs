@@ -74,14 +74,14 @@ namespace Programma
         {
             Panel principale = (Panel)Controls.Find(tag, true)[0];
             principale.Controls.Add(Program.creaPanel(new Size(principale.Width - 4, principale.Height / 40 * 2), new Point(0, 0), "Titolo", "Titolo", Color.White, false));
-            principale.Controls[0].Controls.Add(Program.creaLabel(new Point(principale.Controls[0].Size.Width / 23 * 10, principale.Controls[0].Size.Height / 7), "Caricamento" , tag, tag));
+            principale.Controls[0].Controls.Add(Program.creaLabel(new Point(principale.Controls[0].Size.Width / 23 * 10, principale.Controls[0].Size.Height / 7), "Caricamento", tag, tag));
             List<Nodo> daInserire = new List<Nodo>();
             if (tag == "città")
             {
                 Program.query(new MySqlCommand("SELECT COUNT(*) FROM " + tag, Program.connection).ExecuteReader());
                 int dim = Convert.ToInt32(Program.risQuery[0][0]);
                 for (int i = 0; i < dim; i++)
-                    daInserire.Add(creaNodo(tag, i, ""));
+                    daInserire.Add(Program.creaNodo(tag, i, ""));
             }
             else
             {
@@ -98,7 +98,7 @@ namespace Programma
             string[] colonne = new string[Program.risQuery.Count];
             for (int i = 0; i < colonne.Length; i++)
                 colonne[i] = Program.risQuery[i][0];
-            for(int i = 0; i < daInserire.Count; i++)
+            for (int i = 0; i < daInserire.Count; i++)
                 if (daInserire[i].Tabella == tag)
                 {
                     int altezza = principale.Controls[0].Location.Y + principale.Controls[0].Size.Height;
@@ -121,24 +121,6 @@ namespace Programma
                     principale.Controls.Add(appoggio);
                 }
             principale.Controls[0].Controls[0].Text = tag;
-        }
-
-        Nodo creaNodo(string tabella, int index, string cond)
-        {
-            List<string> chiaviP = Program.chiaviPrimarie(tabella);
-            Program.query(new MySqlCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = '" + tabella + "' AND TABLE_SCHEMA = 'esami ecdl'", Program.connection).ExecuteReader());
-            List<string[]> chiaviE = new List<string[]>();
-            foreach (string[] item in Program.risQuery)
-                chiaviE.Add(item);
-            Program.query(new MySqlCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'esami ecdl' AND TABLE_NAME = '" + tabella + "'", Program.connection).ExecuteReader());
-            List<string[]> att = new List<string[]>();
-            foreach (string[] item in Program.risQuery)
-                att.Add(item);
-            Program.query(new MySqlCommand("SELECT * FROM " + tabella + cond, Program.connection).ExecuteReader());
-            List<string> allData = new List<string>();
-            if (index > -1)
-                allData = Program.risQuery[index].ToList();
-            return new Nodo(tabella, chiaviP, chiaviE, att, allData);
         }
 
         void controlloPerRisultato(List<Nodo> daInserire)
@@ -266,7 +248,7 @@ namespace Programma
             Program.query(new MySqlCommand("SELECT COUNT(*) FROM " + tabPrec + cond, Program.connection).ExecuteReader());
             int dim = Convert.ToInt32(Program.risQuery[0][0]);
             for (int y = 0; y < dim; y++)
-                daInserire.Add(creaNodo(tabPrec, y, cond));
+                daInserire.Add(Program.creaNodo(tabPrec, y, cond));
         }
 
         Nodo creaNodoPadre(string tabella, Panel panel)
@@ -283,7 +265,7 @@ namespace Programma
                     index = i;
                     i = app.Count;
                 }
-            return creaNodo(tabella, index, "");
+            return Program.creaNodo(tabella, index, "");
         }
 
         string listaChiavi(string tabella, string aggiunta)
@@ -437,7 +419,7 @@ namespace Programma
                     index = i;
                     i = Program.risQuery.Count;
                 }
-            new SkillCard(false, creaNodo("skillcard", index, "")).ShowDialog();
+            new SkillCard(false, Program.creaNodo("skillcard", index, "")).ShowDialog();
         }
 
         Panel panelSelezionato(int index)
