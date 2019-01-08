@@ -29,6 +29,7 @@ namespace Programma
             btnConfermaCreazione.Enabled = cond;
             aggiungiData(dateTimePicker1, nodo, 0);
             aggiungiData(dateTimePicker2, nodo, 1);
+            panel3.BringToFront();
         }
 
         void aggiungiData(DateTimePicker date, Nodo nodo , int index)

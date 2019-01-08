@@ -37,8 +37,14 @@
             this.labelcmb = new MaterialSkin.Controls.MaterialLabel();
             this.cmbEsistente = new System.Windows.Forms.ComboBox();
             this.lblSeleziona = new MaterialSkin.Controls.MaterialLabel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.lblEsterna = new MaterialSkin.Controls.MaterialLabel();
+            this.cmbEsistenti = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnConferma
@@ -59,10 +65,10 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.rbEsistente);
-            this.panel1.Controls.Add(this.rbNuovo);
+            this.panel1.Controls.Add(this.panel4);
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.panel2);
+            this.panel1.Controls.Add(this.panel5);
             this.panel1.Location = new System.Drawing.Point(13, 79);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(362, 247);
@@ -73,7 +79,7 @@
             this.rbEsistente.AutoSize = true;
             this.rbEsistente.Depth = 0;
             this.rbEsistente.Font = new System.Drawing.Font("Roboto", 10F);
-            this.rbEsistente.Location = new System.Drawing.Point(180, 15);
+            this.rbEsistente.Location = new System.Drawing.Point(161, 3);
             this.rbEsistente.Margin = new System.Windows.Forms.Padding(0);
             this.rbEsistente.MouseLocation = new System.Drawing.Point(-1, -1);
             this.rbEsistente.MouseState = MaterialSkin.MouseState.HOVER;
@@ -91,7 +97,7 @@
             this.rbNuovo.Checked = true;
             this.rbNuovo.Depth = 0;
             this.rbNuovo.Font = new System.Drawing.Font("Roboto", 10F);
-            this.rbNuovo.Location = new System.Drawing.Point(30, 15);
+            this.rbNuovo.Location = new System.Drawing.Point(11, 3);
             this.rbNuovo.Margin = new System.Windows.Forms.Padding(0);
             this.rbNuovo.MouseLocation = new System.Drawing.Point(-1, -1);
             this.rbNuovo.MouseState = MaterialSkin.MouseState.HOVER;
@@ -118,7 +124,7 @@
             this.panel2.Controls.Add(this.lblSeleziona);
             this.panel2.Location = new System.Drawing.Point(22, 47);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(311, 140);
+            this.panel2.Size = new System.Drawing.Size(311, 180);
             this.panel2.TabIndex = 15;
             // 
             // labelcmb
@@ -154,6 +160,44 @@
             this.lblSeleziona.TabIndex = 0;
             this.lblSeleziona.Text = "Seleziona esistente:";
             // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.rbEsistente);
+            this.panel4.Controls.Add(this.rbNuovo);
+            this.panel4.Location = new System.Drawing.Point(22, 7);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(311, 35);
+            this.panel4.TabIndex = 4;
+            // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.cmbEsistenti);
+            this.panel5.Controls.Add(this.lblEsterna);
+            this.panel5.Location = new System.Drawing.Point(22, 7);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(311, 35);
+            this.panel5.TabIndex = 5;
+            // 
+            // lblEsterna
+            // 
+            this.lblEsterna.AutoSize = true;
+            this.lblEsterna.Depth = 0;
+            this.lblEsterna.Font = new System.Drawing.Font("Roboto", 11F);
+            this.lblEsterna.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblEsterna.Location = new System.Drawing.Point(8, 8);
+            this.lblEsterna.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblEsterna.Name = "lblEsterna";
+            this.lblEsterna.Size = new System.Drawing.Size(0, 19);
+            this.lblEsterna.TabIndex = 0;
+            // 
+            // cmbEsistenti
+            // 
+            this.cmbEsistenti.FormattingEnabled = true;
+            this.cmbEsistenti.Location = new System.Drawing.Point(141, 8);
+            this.cmbEsistenti.Name = "cmbEsistenti";
+            this.cmbEsistenti.Size = new System.Drawing.Size(152, 21);
+            this.cmbEsistenti.TabIndex = 1;
+            // 
             // Modifiche
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -168,9 +212,12 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Modifiche";
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -186,5 +233,9 @@
         private System.Windows.Forms.ComboBox cmbEsistente;
         private MaterialSkin.Controls.MaterialLabel lblSeleziona;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.ComboBox cmbEsistenti;
+        private MaterialSkin.Controls.MaterialLabel lblEsterna;
+        private System.Windows.Forms.Panel panel4;
     }
 }
