@@ -74,29 +74,22 @@ namespace Programma
         {
             foreach(Nodo item in nodos)
             {
-                string cond = "";
-                if(item.ChiaviPrimarie.Count == 1)
-                    cond += "REFERENCED_COLUMN_NAME = '" + item.ChiaviPrimarie[0].nome + "'";
-                else
-                    cond += "REFERENCED_COLUMN_NAME = '" + item.ChiaviPrimarie[1].nome + "'";
+                string cond = "REFERENCED_COLUMN_NAME = '" + item.ChiaviPrimarie[0].nome + "'";
                 Program.query(new MySqlCommand("SELECT table_name, column_name FROM information_schema.KEY_COLUMN_USAGE WHERE referenced_table_name IS NOT NULL AND " + cond, Program.connection).ExecuteReader());
                 List<string[]> ris = new List<string[]>();
                 foreach (string[] item1 in Program.risQuery)
                     ris.Add(item1);
                 foreach (string[] item1 in ris)
-                {
-                    cond = " WHERE ";
-                    if (item.ChiaviPrimarie.Count == 1)
-                        cond += item1[1] + " = '" + item.ChiaviPrimarie[0].nome + "'";
-                    else
-                        cond += item1[1] + " = '" + item.ChiaviPrimarie[1].nome + "'";
-                    Program.query(new MySqlCommand("SELECT * FROM " + item1[0] + cond, Program.connection).ExecuteReader());
-                    List<string[]> ris1 = new List<string[]>();
-                    foreach (string[] item2 in Program.risQuery)
-                        ris1.Add(item2);
-                    for (int i = 0; i < ris1.Count; i++)
-                        valori.Add(Program.creaNodo(item1[0], i, cond));
-                }
+                    if(item1[0] != item.Tabella)
+                    {
+                        cond = " WHERE " + item1[1] + " = '" + item.ChiaviPrimarie[0].valore + "'";
+                        Program.query(new MySqlCommand("SELECT * FROM " + item1[0] + cond, Program.connection).ExecuteReader());
+                        List<string[]> ris1 = new List<string[]>();
+                        foreach (string[] item2 in Program.risQuery)
+                            ris1.Add(item2);
+                        for (int i = 0; i < ris1.Count; i++)
+                            valori.Add(Program.creaNodo(item1[0], i, cond));
+                    }
             }
         }
     }
