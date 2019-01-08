@@ -43,7 +43,14 @@ namespace Programma
             else
                 rbEsistente.Enabled = true;
 
-            panel4.BringToFront();
+            if (tabella == "esaminando")
+            {
+                panel5.Show();
+                lblEsterna.Text = "Città_idCittà";
+                Queryleggi("SELECT idCittà FROM città");
+                for (int i = 0; i < Program.risQuery.Count; i++)
+                    cmbEsterna.Items.Add(Program.risQuery[i][0]);
+            }
         }
 
         public Modifiche(Nodo figlio)
@@ -52,10 +59,10 @@ namespace Programma
             tabella = figlio.Tabella;
             creaOggetti();
             daModificare = figlio;
-            riempi(figlio.Attributi);
+            riempi();
             insert = false;
 
-            panel5.BringToFront();
+            panel4.Hide();
         }
 
         void btnConferma_Click(object sender, EventArgs e)
@@ -74,7 +81,10 @@ namespace Programma
                             query += key[i] + ", ";
                         for (int i = 0; i < label.Count; i++)
                             query += label[i].Text + ", ";
-                        query = query.Remove(query.Length - 2, 1);
+                        if (tabella == "esaminando")
+                            query += lblEsterna.Text;
+                        else
+                            query = query.Remove(query.Length - 2, 1);
                         query += ") VALUES ( ' ";
                         query += index + " ', '";
                         if (idPadre != int.MaxValue && tabella != "esami")
@@ -87,7 +97,10 @@ namespace Programma
                                 query += text[i].Text + "', '";
                             else
                                 query += Convert.ToDateTime(text[i].Text).ToString("yyyy/MM/dd") + "', '";
-                        query = query.Remove(query.Length - 4, 3);
+                        if (tabella == "esaminando")
+                            query += cmbEsterna.Text + "'";
+                        else
+                            query = query.Remove(query.Length - 4, 3);
                         query += ")";
 
                         richiamaQuery(query);
@@ -113,9 +126,7 @@ namespace Programma
                     query = "UPDATE " + tabella + " SET ";                    
                     for (int i = 0; i < text.Count; i++)
                         query += label[i].Text + " = '" + text[i].Text + "', ";
-                    /*
-                     Modifiche delle chiavi esterne   
-                     */
+                    query += lblEsterna.Text + " = '" + cmbEsterna.Text + "'";
                     query += " WHERE ";
                     foreach (var item in daModificare.ChiaviPrimarie)
                         query += item.nome + " = '" + item.valore + "', ";
@@ -123,6 +134,23 @@ namespace Programma
                     query += ";";
 
                     richiamaQuery(query);
+
+                    if (tabella == "esami")
+                    {
+                        if (cmbEsterna.Text != daModificare.ChiaviEsterne[0].valore)
+                            aggiungiDurata(daModificare.ChiaviPrimarie[0].valore, cmbEsterna.Text);
+                        else
+                        {
+                            result = MessageBox.Show("Vuoi modificare la durata dell'esame?", "Attenzione", MessageBoxButtons.YesNoCancel);
+                            if (result == DialogResult.Yes)
+                            {
+                                Queryleggi("SELECT durata FROM esamesessione WHERE idEsame = '" + daModificare.ChiaviPrimarie[0].valore + "' AND idSessione = '" + cmbEsterna.Text + "'");
+                                Dettagli dettagli = new Dettagli(cmbEsterna.Text, daModificare.ChiaviPrimarie[0].valore, Program.risQuery[0][0]);
+                                dettagli.ShowDialog();
+                                richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione,DurataEsame) VALUES ('" + daModificare.ChiaviPrimarie[0].valore + "', '" + cmbEsterna.Text + "', '" + Dettagli.durata + "')");
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -131,9 +159,7 @@ namespace Programma
         {
             Dettagli dettagli = new Dettagli(sessione,esame);
             dettagli.ShowDialog();
-            if (Dettagli.durata != "")
-                if (tabella == "esami")
-                    richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione,DurataEsame) VALUES ('" + esame + "', '" + sessione + "', '" + Dettagli.durata + "')");
+            richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione,DurataEsame) VALUES ('" + esame + "', '" + sessione + "', '" + Dettagli.durata + "')");
         }
 
         void aggiungiSkill_Risultato(int index)
@@ -226,10 +252,13 @@ namespace Programma
             catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
         }
 
-        void riempi(List<Programma.Campo> valori)
+        void riempi()
         {
             for (int i = 0; i < text.Count; i++)
-                text[i].Text = valori[i].valore;
+                text[i].Text = daModificare.Attributi[i].valore;
+
+            lblEsterna.Text = daModificare.ChiaviEsterne[0].nome;
+            cmbEsterna.Text = daModificare.ChiaviEsterne[0].valore;
         }
 
         void riempiCmb(ComboBox cmb, Label lbl, int index)
