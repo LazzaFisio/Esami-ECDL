@@ -340,8 +340,11 @@ namespace Programma
                 case "aggiungi":
                     if (app > 0)
                     {
-                        nodo = creaNodoPadre(selezionato.Tag.ToString(), selezionato);
-                        new Modifiche(panel.Tag.ToString(), Convert.ToInt32(nodo.ChiaviPrimarie[0].valore), Convert.ToInt32(città.Controls[1].Text)).ShowDialog();
+                        if (campi.Count > 0)
+                            nodo = creaNodoPadre(selezionato.Tag.ToString(), selezionato);
+                        else
+                            nodo = Program.creaNodo(mostra[app], -1, "");
+                       new Modifiche(panel.Tag.ToString(), Convert.ToInt32(nodo.ChiaviPrimarie[0].valore), Convert.ToInt32(città.Controls[1].Text)).ShowDialog();
                     }
                     else
                     {
