@@ -330,17 +330,18 @@ namespace Programma
                     cambiaColoreAiCampi(panel, Color.LightBlue);
             }
             new Messaggio(panel.Tag.ToString(), campi).ShowDialog();
-            int app = mostra.ToList().FindIndex(dato => dato == padre.Name);
+            int app = mostra.ToList().FindIndex(dato => dato == padre.Name) - 1;
             Nodo nodo = new Nodo();
             Panel selezionato = new Panel();
-            selezionato = panelSelezionato(app);
+            if(app > -1)
+                selezionato = panelSelezionato(app);
             Panel città = panelSelezionato(0);
             switch (Program.scelta)
             {
                 case "aggiungi":
-                    if (app > 0)
+                    if (app > -1)
                     {
-                        nodo = creaNodoPadre(città.Tag.ToString(), città);
+                        nodo = creaNodoPadre(selezionato.Tag.ToString(), selezionato);
                         new Modifiche(panel.Tag.ToString(), Convert.ToInt32(nodo.ChiaviPrimarie[0].valore), Convert.ToInt32(città.Controls[1].Text)).ShowDialog();
                     }
                     else
@@ -351,11 +352,10 @@ namespace Programma
                         new Modifiche(panel.Tag.ToString(), int.MaxValue, index).ShowDialog();
                     }
                 break;
-                case "modifica":  new Modifiche(creaNodoPadre(panel.Tag.ToString(), panel)).ShowDialog(); break;
-                case "elimina": elimina(creaNodoPadre(panel.Tag.ToString(), panel), panel);  break;
+                case "modifica":  new Modifiche(creaNodoPadre(padre.Tag.ToString(), panel)).ShowDialog(); break;
+                case "elimina": elimina(creaNodoPadre(padre.Tag.ToString(), panel), panel);  break;
             }
             Program.scelta = "";
-            app--;
             if (app > -1)
             {
                 for(int i = app + 2; i < mostra.Length; i++)

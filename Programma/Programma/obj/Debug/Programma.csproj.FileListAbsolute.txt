@@ -87,3 +87,5 @@ C:\Users\Fisio\Desktop\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Messag
 C:\Users\Fisio\Desktop\Esami-ECDL\Programma\Programma\obj\Debug\Programma.SkillCard.resources
 C:\Users\Fisio\Desktop\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Elimina.resources
 C:\Users\User\Desktop\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Elimina.resources
+I:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Elimina.resources
+I:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.SkillCard.resources
