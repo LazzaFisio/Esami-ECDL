@@ -40,6 +40,8 @@ namespace Programma
                 rbEsistente.Enabled = false;
             else
                 rbEsistente.Enabled = true;
+
+            panel4.BringToFront();
         }
 
         public Modifiche(Nodo padre, Nodo figlio)
@@ -49,6 +51,8 @@ namespace Programma
             creaOggetti();
             riempi(figlio.Attributi);
             insert = false;
+
+            panel5.BringToFront();
         }
 
         void btnConferma_Click(object sender, EventArgs e)
@@ -103,7 +107,7 @@ namespace Programma
                 }
                 else
                 {
-                    query = "UPDATE " + tabella + " SET ";
+                    query = "UPDATE " + tabella + " SET ";                    
                     for (int i = 0; i < text.Count; i++)
                         query += label[i].Text + " = '" + text[i].Text + "', ";
                     if (idPadre != int.MaxValue)
