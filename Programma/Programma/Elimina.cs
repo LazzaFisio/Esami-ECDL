@@ -14,14 +14,12 @@ namespace Programma
 {
     public partial class Elimina : MaterialForm
     {
-        Nodo nodo;
         MaterialTabControl tabelle;
         List<DataGridView> dataGridViews = new List<DataGridView>();
 
         public Elimina(Nodo nodo, Panel appoggio)
         {
             InitializeComponent();
-            this.nodo = nodo;
             tabelle = new MaterialTabControl();
             tabelle.Location = new Point(0, 275);
             tabelle.Size = new Size(800, 291);
@@ -72,6 +70,10 @@ namespace Programma
             data.Name = "tabella:" + item.Tabella;
             data.Size = new Size(tabelle.Size.Width, tabelle.Size.Height);
             data.Location = new Point(0, 0);
+            data.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            List<string> app = nomeTabelle(item);
+            foreach (string item1 in app)
+                data.Columns.Add(item1, item1);
             TabPage tabPage = new TabPage(item.Tabella);
             tabPage.Name = item.Tabella;
             tabPage.Controls.Add(data);
@@ -106,5 +108,25 @@ namespace Programma
             }
 
         }
+
+        List<string> infoNodo(Nodo nodo, bool nome)
+        {
+            List<string> appoggio = new List<string>();
+            foreach (Campo item in nodo.ChiaviPrimarie)
+                appoggio.Add(info(item, nome));
+            foreach (Campo item in nodo.Attributi)
+                appoggio.Add(info(item, nome));
+            foreach (Campo item in nodo.ChiaviEsterne)
+                appoggio.Add(info(item, nome));
+            return appoggio;
+        }
+
+        string info(Campo campo, bool nome)
+        {
+            if (nome)
+                return campo.nome;
+            else
+                return campo.valore;
+        } 
     }
 }
