@@ -350,7 +350,8 @@ namespace Programma
                 case "elimina": elimina(creaNodoPadre(panel.Tag.ToString(), panel), panel);  break;
             }
             Program.scelta = "";
-            if(app > -1)
+            app--;
+            if (app > -1)
             {
                 for(int i = app + 2; i < mostra.Length; i++)
                 {

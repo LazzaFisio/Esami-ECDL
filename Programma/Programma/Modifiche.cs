@@ -63,6 +63,7 @@ namespace Programma
             insert = false;
 
             panel4.Hide();
+            panel5.Show();
         }
 
         void btnConferma_Click(object sender, EventArgs e)
@@ -130,7 +131,7 @@ namespace Programma
                     query += " WHERE ";
                     foreach (var item in daModificare.ChiaviPrimarie)
                         query += item.nome + " = '" + item.valore + "', ";
-                    query.Remove(query.Length - 2, 1);
+                    query.Remove(query.Length - 3, 2);
                     query += ";";
 
                     richiamaQuery(query);
@@ -257,8 +258,15 @@ namespace Programma
             for (int i = 0; i < text.Count; i++)
                 text[i].Text = daModificare.Attributi[i].valore;
 
-            lblEsterna.Text = daModificare.ChiaviEsterne[0].nome;
-            cmbEsterna.Text = daModificare.ChiaviEsterne[0].valore;
+            if (daModificare.ChiaviEsterne.Count > 0)
+            {
+                lblEsterna.Text = daModificare.ChiaviEsterne[0].nome;
+
+                Queryleggi("SELECT " + daModificare.ChiaviEsterne[0].nome + " FROM " + gerarchie[gerarchie.FindIndex(dato => dato == daModificare.Tabella) - 1]);
+
+                for (int i = 0; i < Program.risQuery.Count; i++)
+                    cmbEsterna.Items.Add(Program.risQuery[i][0]);
+            }
         }
 
         void riempiCmb(ComboBox cmb, Label lbl, int index)
