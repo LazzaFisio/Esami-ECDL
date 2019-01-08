@@ -28,7 +28,7 @@ namespace Programma
             foreach (Control control in appoggio.Controls)
                 panel.Controls.Add(Program.creaLabel(control.Location, control.Text, control.Text, control.Tag.ToString()));
             Controls.Add(panel);
-
+            caricaDati(nodo);
         }
 
         void caricaDati(Nodo nodo)
@@ -38,35 +38,58 @@ namespace Programma
             controllo(nodos, valori);
             while(valori.Count > 0)
             {
-
+                foreach(Nodo item in valori)
+                {
+                    DataGridView data = dataGridViews.Find(dato => dato.Name.Split(':')[1] == item.Tabella);
+                    if (data == null)
+                        creaDataGridView(data, item);
+                    caricaValori(data, item);
+                }
+                nodos.Clear();
+                foreach (Nodo item in valori)
+                    nodos.Add(item);
+                valori.Clear();
+                controllo(nodos, valori);
             }
+        }
+
+        void creaDataGridView(DataGridView data, Nodo item)
+        {
+            data = new DataGridView();
+            data.Name = "tabella:" + item.Tabella;
+            data.Size = new Size(765, 265);
+            data.Location = new Point(0, 0);
+            TabPage tabPage = new TabPage(item.Tabella);
+            tabPage.Name = item.Tabella;
+            tabPage.Controls.Add(data);
+            tabelle.TabPages.Add(tabPage);
+        }
+
+        void caricaValori(DataGridView data, Nodo appoggio)
+        {
+
         }
 
         void controllo(List<Nodo> nodos, List<Nodo> valori)
         {
             foreach(Nodo item in nodos)
             {
-                string cond = "";
-                foreach (Campo item1 in item.ChiaviPrimarie)
-                    cond += "REFERENCED_COLUMN_NAME = '" + item1.nome + "' ,";
-                cond = cond.Remove(cond.Length - 2, 2);
+                string cond = "REFERENCED_COLUMN_NAME = '" + item.ChiaviPrimarie[0].nome + "'";
                 Program.query(new MySqlCommand("SELECT table_name, column_name FROM information_schema.KEY_COLUMN_USAGE WHERE referenced_table_name IS NOT NULL AND " + cond, Program.connection).ExecuteReader());
                 List<string[]> ris = new List<string[]>();
                 foreach (string[] item1 in Program.risQuery)
                     ris.Add(item1);
                 foreach (string[] item1 in ris)
-                {
-                    cond = " WHERE ";
-                    foreach (Campo item2 in item.ChiaviPrimarie)
-                        cond += item1[1] + " = '" + item2.valore + "' ,";
-                    cond = cond.Remove(cond.Length - 2, 2);
-                    Program.query(new MySqlCommand("SELECT * FROM " + item1[0] + cond, Program.connection).ExecuteReader());
-                    List<string[]> ris1 = new List<string[]>();
-                    foreach (string[] item2 in Program.risQuery)
-                        ris1.Add(item2);
-                    for (int i = 0; i < ris1.Count; i++)
-                        valori.Add(Program.creaNodo(item1[0], i, cond));
-                }
+                    if(item1[0] != item.Tabella)
+                    {
+                        cond = " WHERE " + item1[1] + " = '" + item.ChiaviPrimarie[0].valore + "'";
+                        Program.query(new MySqlCommand("SELECT * FROM " + item1[0] + cond, Program.connection).ExecuteReader());
+                        List<string[]> ris1 = new List<string[]>();
+                        foreach (string[] item2 in Program.risQuery)
+                            ris1.Add(item2);
+                        for (int i = 0; i < ris1.Count; i++)
+                            valori.Add(Program.creaNodo(item1[0], i, cond));
+                    }
             }
         }
     }

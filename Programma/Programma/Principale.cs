@@ -344,7 +344,12 @@ namespace Programma
                         new Modifiche(panel.Tag.ToString(), Convert.ToInt32(nodo.ChiaviPrimarie[0].valore), Convert.ToInt32(città.Controls[1].Text)).ShowDialog();
                     }
                     else
-                        new Modifiche(panel.Tag.ToString(), int.MaxValue, Convert.ToInt32(città.Controls[1].Text)).ShowDialog();
+                    {
+                        int index = 0;
+                        if (padre.Name != panel.Name)
+                            index = Convert.ToInt32(città.Controls[1].Text);
+                        new Modifiche(panel.Tag.ToString(), int.MaxValue, index).ShowDialog();
+                    }
                 break;
                 case "modifica":  new Modifiche(creaNodoPadre(panel.Tag.ToString(), panel)).ShowDialog(); break;
                 case "elimina": elimina(creaNodoPadre(panel.Tag.ToString(), panel), panel);  break;
