@@ -46,7 +46,7 @@ namespace Programma
             if (tabella == "esaminando")
             {
                 panel5.Show();
-                lblEsterna.Text = "Città_idCittà";
+                lblEsterna.Text = "idCittà";
                 Queryleggi("SELECT idCittà FROM città");
                 for (int i = 0; i < Program.risQuery.Count; i++)
                     cmbEsterna.Items.Add(Program.risQuery[i][0]);
@@ -121,6 +121,8 @@ namespace Programma
                         if (tabella == "esaminandi")
                             aggiungiSkill_Risultato(Convert.ToInt32(cmbEsistente.Text));
                     }
+
+                    this.Close();
                 }
                 else
                 {
@@ -131,8 +133,7 @@ namespace Programma
                     query += " WHERE ";
                     foreach (var item in daModificare.ChiaviPrimarie)
                         query += item.nome + " = '" + item.valore + "', ";
-                    query.Remove(query.Length - 3, 2);
-                    query += ";";
+                    query = query.Remove(query.Length - 2, 1);
 
                     richiamaQuery(query);
 
@@ -152,6 +153,7 @@ namespace Programma
                             }
                         }
                     }
+                    this.Close();
                 }
             }
         }
@@ -165,7 +167,7 @@ namespace Programma
 
         void aggiungiSkill_Risultato(int index)
         {
-            Queryleggi("SELECT * FROM `skillcard` WHERE DataScadenza > CURRENT_DATE AND Esaminandi_codice = '" + index + "'");
+            Queryleggi("SELECT * FROM `skillcard` WHERE DataScadenza > CURRENT_DATE AND codice = '" + index + "'");
 
             if (Program.risQuery.Count == 0)
             {
@@ -174,7 +176,7 @@ namespace Programma
                 SkillCard skillCard = new SkillCard();
                 skillCard.ShowDialog();
                 if (SkillCard.dataEmissione != "" && SkillCard.dataScadenza != "")
-                    richiamaQuery("INSERT INTO skillcard (idSkillCard,DataEmissione,DataScadenza,Esaminandi_codice) VALUES ('" + idSkillCard + "', '" + SkillCard.dataEmissione + "', '" + SkillCard.dataScadenza + "', '" + index + "') ");
+                    richiamaQuery("INSERT INTO skillcard (idSkillCard,DataEmissione,DataScadenza,codice) VALUES ('" + idSkillCard + "', '" + SkillCard.dataEmissione + "', '" + SkillCard.dataScadenza + "', '" + index + "') ");
 
                 richiamaQuery("INSERT INTO risultato (idEsami,idSkillCard,esito) VALUES ('" + idPadre + "',' " + idSkillCard + "', 'Non valutato')");
             }
@@ -249,7 +251,7 @@ namespace Programma
 
         void Queryleggi(string query)
         {
-            try { Program.query(new MySqlCommand(query, Program.connection).ExecuteReader()); }
+            try { Program.query(new MySqlCommand(query, Program.connection).ExecuteReader());  }
             catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
         }
 
@@ -266,7 +268,11 @@ namespace Programma
 
                 for (int i = 0; i < Program.risQuery.Count; i++)
                     cmbEsterna.Items.Add(Program.risQuery[i][0]);
+
+                cmbEsterna.Text = daModificare.ChiaviEsterne[0].valore;
             }
+            else
+                cmbEsterna.Enabled = false;
         }
 
         void riempiCmb(ComboBox cmb, Label lbl, int index)
