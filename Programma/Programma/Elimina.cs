@@ -15,12 +15,17 @@ namespace Programma
     public partial class Elimina : MaterialForm
     {
         MaterialTabControl tabelle;
+        MaterialTabSelector selector;
+        Nodo nodo;
+        Panel panel;
         List<Nodo> nodos = new List<Nodo>();
 
-        public Elimina(Nodo nodo, Panel appoggio)
+        public Elimina(Nodo nodo, Panel panel)
         {
             InitializeComponent();
-            genera(nodo, appoggio);
+            this.nodo = nodo;
+            this.panel = panel;
+            genera(nodo, panel);
         }
 
         void genera(Nodo nodo, Panel appoggio)
@@ -37,7 +42,7 @@ namespace Programma
                 panel.Controls.Add(Program.creaLabel(control.Location, control.Text, control.Text, control.Tag.ToString()));
             Controls.Add(panel);
             caricaDati(nodo);
-            MaterialTabSelector selector = new MaterialTabSelector();
+            selector = new MaterialTabSelector();
             selector.Location = new Point(0, 246);
             selector.Size = new Size(800, 29);
             selector.BaseTabControl = tabelle;
@@ -155,6 +160,9 @@ namespace Programma
         {
             Nodo nodo = selezionato();
             new Modifiche(nodo).ShowDialog();
+            Controls.Remove(tabelle);
+            Controls.Remove(selector);
+            genera(this.nodo, panel);
         }
 
         private void btnElimina_Click(object sender, EventArgs e)
