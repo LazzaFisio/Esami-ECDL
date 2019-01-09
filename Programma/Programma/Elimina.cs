@@ -15,11 +15,16 @@ namespace Programma
     public partial class Elimina : MaterialForm
     {
         MaterialTabControl tabelle;
-        List<DataGridView> dataGridViews = new List<DataGridView>();
+        List<Nodo> nodos = new List<Nodo>();
 
         public Elimina(Nodo nodo, Panel appoggio)
         {
             InitializeComponent();
+            genera(nodo, appoggio);
+        }
+
+        void genera(Nodo nodo, Panel appoggio)
+        {
             tabelle = new MaterialTabControl();
             tabelle.Location = new Point(0, 275);
             tabelle.Size = new Size(800, 291);
@@ -36,12 +41,13 @@ namespace Programma
             selector.Location = new Point(0, 246);
             selector.Size = new Size(800, 29);
             selector.BaseTabControl = tabelle;
+            selector.Name = "selector";
             Controls.Add(selector);
         }
 
         void caricaDati(Nodo nodo)
         {
-            List<Nodo> nodos = new List<Nodo>() { nodo};
+            nodos.Add(nodo);
             List<Nodo> valori = new List<Nodo>();
             List<string> tabellePassate = new List<string>();
             controllo(nodos, valori, tabellePassate);
@@ -49,7 +55,17 @@ namespace Programma
             {
                 foreach(Nodo item in valori)
                 {
-                    DataGridView data = dataGridViews.Find(dato => dato.Name.Split(':')[1] == item.Tabella);
+                    DataGridView data = null;
+                    for(int i = 0; i < tabelle.TabPages.Count; i++)
+                    {
+                        TabPage page = tabelle.TabPages[i];
+                        if(page.Name == item.Tabella)
+                        {
+                            if (page.Controls.Count > 0)
+                                data = (DataGridView)page.Controls[0];
+                            i = tabelle.TabPages.Count;
+                        }
+                    }
                     if (data == null)
                         creaDataGridView(ref data, item);
                     caricaValori(data, item);
@@ -67,7 +83,7 @@ namespace Programma
         void creaDataGridView(ref DataGridView data, Nodo item)
         {
             data = new DataGridView();
-            data.Name = "tabella:" + item.Tabella;
+            data.Name = item.Tabella;
             data.Size = new Size(tabelle.Size.Width, tabelle.Size.Height);
             data.Location = new Point(0, 0);
             data.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -80,7 +96,6 @@ namespace Programma
             tabPage.Name = item.Tabella;
             tabPage.Controls.Add(data);
             tabelle.TabPages.Add(tabPage);
-            dataGridViews.Add(data);
         }
 
         void caricaValori(DataGridView data, Nodo appoggio)
@@ -134,6 +149,34 @@ namespace Programma
                 return campo.nome;
             else
                 return campo.valore;
-        } 
+        }
+
+        private void modifica_Click(object sender, EventArgs e)
+        {
+            Nodo nodo = selezionato();
+            new Modifiche(nodo).ShowDialog();
+        }
+
+        private void btnElimina_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        Nodo selezionato()
+        {
+            DataGridView data = (DataGridView)tabelle.SelectedTab.Controls[0];
+            List<string> chiavi = Program.chiaviPrimarie(data.Name);
+            DataGridViewRow row = new DataGridViewRow();
+            string cond = " WHERE ";
+            if (data.SelectedRows.Count == 0)
+                row = data.SelectedCells[0].OwningRow;
+            else
+                row = data.SelectedRows[0];
+            for (int i = 0; i < chiavi.Count; i++)
+                cond += chiavi[i] + " = '" + row.Cells[i].Value.ToString() + "' ,";
+            cond = cond.Remove(cond.Length - 2, 2);
+            Nodo daTrovare = Program.creaNodo(data.Name, 0, cond);
+            return nodos.Find(dato => dato.Equals(daTrovare));
+        }
     }
 }

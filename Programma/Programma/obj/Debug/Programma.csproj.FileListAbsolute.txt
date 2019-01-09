@@ -89,3 +89,4 @@ C:\Users\Fisio\Desktop\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Elimin
 C:\Users\User\Desktop\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Elimina.resources
 I:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Elimina.resources
 I:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.SkillCard.resources
+F:\Informatica\DataBase\Esami-ECDL\Programma\Programma\obj\Debug\Programma.Elimina.resources

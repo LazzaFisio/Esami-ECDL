@@ -47,6 +47,7 @@
             this.modifica.TabIndex = 2;
             this.modifica.Text = "modifica";
             this.modifica.UseVisualStyleBackColor = true;
+            this.modifica.Click += new System.EventHandler(this.modifica_Click);
             // 
             // btnElimina
             // 
@@ -62,6 +63,7 @@
             this.btnElimina.TabIndex = 3;
             this.btnElimina.Text = "elimina";
             this.btnElimina.UseVisualStyleBackColor = true;
+            this.btnElimina.Click += new System.EventHandler(this.btnElimina_Click);
             // 
             // label1
             // 
