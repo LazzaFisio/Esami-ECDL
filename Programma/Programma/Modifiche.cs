@@ -298,11 +298,11 @@ namespace Programma
             primary = Program.chiaviPrimarie(tabella);
 
             Program.query(new MySqlCommand("SELECT " + primary[0] + " FROM " + tabella, Program.connection).ExecuteReader());
-            List<string[]> campi = new List<string[]>();
+            List<string> campi = new List<string>();
             foreach (var item in Program.risQuery)
-                campi.Add(item);
+                campi.Add(item[0]);
             for (int i = 1; i <= campi.Count; i++)
-                if (i != Convert.ToInt16(campi[i - 1][0]))
+                if (!campi.Contains(i.ToString()))
                     num = i;
 
             if (num == 0)
