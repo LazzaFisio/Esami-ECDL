@@ -121,6 +121,8 @@ namespace Programma
                         if (tabella == "esaminandi")
                             aggiungiSkill_Risultato(Convert.ToInt32(cmbEsistente.Text));
                     }
+
+                    this.Close();
                 }
                 else
                 {
@@ -131,8 +133,7 @@ namespace Programma
                     query += " WHERE ";
                     foreach (var item in daModificare.ChiaviPrimarie)
                         query += item.nome + " = '" + item.valore + "', ";
-                    query.Remove(query.Length - 3, 2);
-                    query += ";";
+                    query = query.Remove(query.Length - 2, 1);
 
                     richiamaQuery(query);
 
@@ -152,6 +153,7 @@ namespace Programma
                             }
                         }
                     }
+                    this.Close();
                 }
             }
         }
@@ -243,13 +245,13 @@ namespace Programma
 
         void richiamaQuery(string query)
         {
-            try { new MySqlCommand(query, Program.connection).ExecuteNonQuery(); this.Close(); }
+            try { new MySqlCommand(query, Program.connection).ExecuteNonQuery(); }
             catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
         }
 
         void Queryleggi(string query)
         {
-            try { Program.query(new MySqlCommand(query, Program.connection).ExecuteReader()); this.Close(); }
+            try { Program.query(new MySqlCommand(query, Program.connection).ExecuteReader());  }
             catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
         }
 
@@ -266,7 +268,11 @@ namespace Programma
 
                 for (int i = 0; i < Program.risQuery.Count; i++)
                     cmbEsterna.Items.Add(Program.risQuery[i][0]);
+
+                cmbEsterna.Text = daModificare.ChiaviEsterne[0].valore;
             }
+            else
+                cmbEsterna.Enabled = false;
         }
 
         void riempiCmb(ComboBox cmb, Label lbl, int index)
