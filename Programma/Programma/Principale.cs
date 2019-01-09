@@ -254,8 +254,7 @@ namespace Programma
         Nodo creaNodoPadre(string tabella, Panel panel)
         {
             int index = -1;
-            string appoggio = listaChiavi(tabella, ", ");
-            Program.query(new MySqlCommand("SELECT " + appoggio + " FROM " + tabella, Program.connection).ExecuteReader());
+            Program.query(new MySqlCommand("SELECT * FROM " + tabella, Program.connection).ExecuteReader());
             List<string[]> app = new List<string[]>();
             foreach (string[] item in Program.risQuery)
                 app.Add(item);

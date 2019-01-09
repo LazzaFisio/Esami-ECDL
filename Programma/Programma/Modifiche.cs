@@ -243,13 +243,13 @@ namespace Programma
 
         void richiamaQuery(string query)
         {
-            try { new MySqlCommand(query, Program.connection).ExecuteNonQuery(); this.Close(); }
+            try { new MySqlCommand(query, Program.connection).ExecuteNonQuery(); }
             catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
         }
 
         void Queryleggi(string query)
         {
-            try { Program.query(new MySqlCommand(query, Program.connection).ExecuteReader()); this.Close(); }
+            try { Program.query(new MySqlCommand(query, Program.connection).ExecuteReader()); }
             catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
         }
 
