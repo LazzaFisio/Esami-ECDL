@@ -36,7 +36,7 @@ namespace Programma
             try
             {
                 
-        }
+            }
             catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); Show(); }
         }
 

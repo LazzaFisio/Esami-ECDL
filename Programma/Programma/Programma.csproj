@@ -68,6 +68,7 @@
     <Compile Include="Attesa.Designer.cs">
       <DependentUpon>Attesa.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controllo.cs" />
     <Compile Include="Dettagli.cs">
       <SubType>Form</SubType>
     </Compile>

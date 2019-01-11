@@ -69,7 +69,8 @@ namespace Programma
         void btnConferma_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Sei sicuro di voler confermare questi dati?", "Attenzione", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-            if (result == DialogResult.Yes)
+            Controllo controllo = new Controllo(panel3.Controls, tabella);
+            if (result == DialogResult.Yes && controllo.Errore == 0)
             {
                 if (insert)
                 {

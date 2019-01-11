@@ -1,0 +1,4 @@
+1: errore insermento dati
+2: errore formattazione data
+3: errore mancata chiave esterna
+
