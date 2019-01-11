@@ -31,6 +31,7 @@
             this.modifica = new MaterialSkin.Controls.MaterialFlatButton();
             this.btnElimina = new MaterialSkin.Controls.MaterialFlatButton();
             this.label1 = new System.Windows.Forms.Label();
+            this.eliminaPanel = new MaterialSkin.Controls.MaterialFlatButton();
             this.SuspendLayout();
             // 
             // modifica
@@ -76,12 +77,30 @@
             this.label1.TabIndex = 4;
             this.label1.Text = "CAMPO:";
             // 
+            // eliminaPanel
+            // 
+            this.eliminaPanel.AutoSize = true;
+            this.eliminaPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.eliminaPanel.Depth = 0;
+            this.eliminaPanel.Location = new System.Drawing.Point(664, 136);
+            this.eliminaPanel.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.eliminaPanel.MouseState = MaterialSkin.MouseState.HOVER;
+            this.eliminaPanel.Name = "eliminaPanel";
+            this.eliminaPanel.Primary = false;
+            this.eliminaPanel.Size = new System.Drawing.Size(66, 36);
+            this.eliminaPanel.TabIndex = 5;
+            this.eliminaPanel.Text = "elimina";
+            this.eliminaPanel.UseVisualStyleBackColor = true;
+            this.eliminaPanel.Visible = false;
+            this.eliminaPanel.Click += new System.EventHandler(this.eliminaPanel_Click);
+            // 
             // Elimina
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(800, 624);
+            this.Controls.Add(this.eliminaPanel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnElimina);
             this.Controls.Add(this.modifica);
@@ -97,5 +116,6 @@
         private MaterialSkin.Controls.MaterialFlatButton modifica;
         private MaterialSkin.Controls.MaterialFlatButton btnElimina;
         private System.Windows.Forms.Label label1;
+        private MaterialSkin.Controls.MaterialFlatButton eliminaPanel;
     }
 }

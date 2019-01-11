@@ -25,29 +25,40 @@ namespace Programma
             InitializeComponent();
             this.nodo = nodo;
             this.panel = panel;
-            genera(nodo, panel);
+            genera(nodo, panel, true);
         }
 
-        void genera(Nodo nodo, Panel appoggio)
+        void genera(Nodo nodo, Panel appoggio, bool contruttore)
         {
             tabelle = new MaterialTabControl();
             tabelle.Location = new Point(0, 275);
             tabelle.Size = new Size(800, 291);
-            Controls.Add(tabelle);
-            Panel panel = new Panel();
-            panel.Size = appoggio.Size;
-            panel.Location = new Point(280, 80);
-            panel.BackColor = appoggio.BackColor;
-            foreach (Control control in appoggio.Controls)
-                panel.Controls.Add(Program.creaLabel(control.Location, control.Text, control.Text, control.Tag.ToString()));
-            Controls.Add(panel);
+            if (contruttore)
+            {
+                Panel panel = new Panel();
+                panel.Size = appoggio.Size;
+                panel.Location = new Point(280, 80);
+                panel.BackColor = appoggio.BackColor;
+                foreach (Control control in appoggio.Controls)
+                    panel.Controls.Add(Program.creaLabel(control.Location, control.Text, control.Text, control.Tag.ToString()));
+                Controls.Add(panel);
+            }
             caricaDati(nodo);
             selector = new MaterialTabSelector();
             selector.Location = new Point(0, 246);
             selector.Size = new Size(800, 29);
             selector.BaseTabControl = tabelle;
             selector.Name = "selector";
-            Controls.Add(selector);
+            if (tabelle.TabPages.Count > 0)
+            {
+                Controls.Add(tabelle);
+                Controls.Add(selector);
+            }
+            else
+            {
+                modifica.Visible = btnElimina.Visible = false;
+                eliminaPanel.Visible = true;
+            }
         }
 
         void caricaDati(Nodo nodo)
@@ -160,14 +171,27 @@ namespace Programma
         {
             Nodo nodo = selezionato();
             new Modifiche(nodo).ShowDialog();
-            Controls.Remove(tabelle);
-            Controls.Remove(selector);
-            genera(this.nodo, panel);
+            aggiorna();
         }
 
         private void btnElimina_Click(object sender, EventArgs e)
         {
+            Nodo nodo = selezionato();
+            try
+            {
+                string cond = condizione(nodo);
+                new MySqlCommand("DELETE FROM " + nodo.Tabella + cond, Program.connection).ExecuteNonQuery();
+                MessageBox.Show("Eliminato con successo");
+                aggiorna();
+            }
+            catch { MessageBox.Show("Impossibile eliminare perchè ci sono dei campi collegati", "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+        }
 
+        private void eliminaPanel_Click(object sender, EventArgs e)
+        {
+            string cond = condizione(nodo);
+            new MySqlCommand("DELETE FROM " + nodo.Tabella + cond, Program.connection).ExecuteNonQuery();
+            Close();
         }
 
         Nodo selezionato()
@@ -185,6 +209,22 @@ namespace Programma
             cond = cond.Remove(cond.Length - 2, 2);
             Nodo daTrovare = Program.creaNodo(data.Name, 0, cond);
             return nodos.Find(dato => dato.Equals(daTrovare));
+        }
+
+        string condizione(Nodo nodo)
+        {
+            string cond = " WHERE ";
+            foreach (Campo item in nodo.ChiaviPrimarie)
+                cond += item.nome + " = '" + item.valore + "' .,";
+            cond = cond.Remove(cond.Length - 2, 2);
+            return cond;
+        }
+
+        void aggiorna()
+        {
+            Controls.Remove(selector);
+            Controls.Remove(tabelle);
+            genera(this.nodo, panel, false);
         }
     }
 }
