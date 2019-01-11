@@ -370,7 +370,12 @@ namespace Programma
                 aggiornaSezione((Panel)Controls.Find(mostra[app], true)[0], selezionato, padre.Tag.ToString());
             }
             else
+            {
                 aggiornaSezione(padre, panel, padre.Tag.ToString());
+                Panel principale = (Panel)Controls.Find("principale", true)[0];
+                for (int i = 1; i < principale.Controls.Count; i++)
+                    principale.Controls[i].Visible = false;
+            }
             if (padre.Tag.ToString() != "risultato")
                 ((MaterialFlatButton)Controls.Find("visualizza", true)[0]).Visible = false;
         }
