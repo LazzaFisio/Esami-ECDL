@@ -81,24 +81,33 @@ namespace Programma
                         query = "INSERT INTO " + tabella + "( ";
                         for (int i = 0; i < key.Count; i++)
                             query += key[i] + ", ";
+
                         for (int i = 0; i < label.Count; i++)
                             query += label[i].Text + ", ";
+
                         if (tabella == "esaminando")
                             query += lblEsterna.Text;
                         else
                             query = query.Remove(query.Length - 2, 1);
-                        query += ") VALUES ( ' ";
-                        query += index + " ', '";
+
+                        query += ") VALUES ( ' " + index + " ', '";
+
                         if (idPadre != int.MaxValue && tabella != "esami")
+                        {
                             if (tabella != "esaminandi")
                                 query += idPadre + "', '";
                             else
                                 query += idCittà + "', '";
+                        }
+
                         for (int i = 0; i < text.Count; i++)
-                            if (tabella != "sessione")
+                        {
+                            if(!isData(label[i].Text))
                                 query += text[i].Text + "', '";
                             else
                                 query += Convert.ToDateTime(text[i].Text).ToString("yyyy/MM/dd") + "', '";
+                        }
+
                         if (tabella == "esaminando")
                             query += cmbEsterna.Text + "'";
                         else
@@ -127,11 +136,19 @@ namespace Programma
                 }
                 else
                 {
-                    query = "UPDATE " + tabella + " SET ";                    
+                    query = "UPDATE " + tabella + " SET ";
+
                     for (int i = 0; i < text.Count; i++)
-                        query += label[i].Text + " = '" + text[i].Text + "', ";
+                    {
+                        if (!isData(label[i].Text))
+                            query += label[i].Text + " = '" + text[i].Text + "', ";
+                        else
+                            query += label[i].Text + " = '" + Convert.ToDateTime(text[i].Text).ToString("yyyy/MM/dd") + "', ";
+                    }
+
                     query += lblEsterna.Text + " = '" + cmbEsterna.Text + "'";
                     query += " WHERE ";
+
                     foreach (var item in daModificare.ChiaviPrimarie)
                         query += item.nome + " = '" + item.valore + "', ";
                     query = query.Remove(query.Length - 2, 1);
@@ -150,10 +167,22 @@ namespace Programma
                                 Queryleggi("SELECT durata FROM esamesessione WHERE idEsame = '" + daModificare.ChiaviPrimarie[0].valore + "' AND idSessione = '" + cmbEsterna.Text + "'");
                                 Dettagli dettagli = new Dettagli(cmbEsterna.Text, daModificare.ChiaviPrimarie[0].valore, Program.risQuery[0][0]);
                                 dettagli.ShowDialog();
-                                richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione,DurataEsame) VALUES ('" + daModificare.ChiaviPrimarie[0].valore + "', '" + cmbEsterna.Text + "', '" + Dettagli.durata + "')");
+                                richiamaQuery("UPDATE esamesessione SET DurataEsame = '" + Dettagli.durata + "'WHERE" + daModificare.ChiaviPrimarie[0].nome + " = '" + daModificare.ChiaviPrimarie[0].valore + "' AND" + daModificare.ChiaviPrimarie[1].nome + " = '" + daModificare.ChiaviPrimarie[1].valore);
                             }
                         }
                     }
+
+                    if (tabella == "esaminando")
+                    {
+                        Queryleggi("SELECT idSkillCard FROM 'skillcard` WHERE DataScadenza > CURRENT_DATE AND codice = '" + daModificare.ChiaviPrimarie[0].valore + "'");
+                        Queryleggi("SELECT * FROM risultato WHERE codice = '" + Program.risQuery[0][0] + "'");
+                        if (!(cmbEsterna.Text == Program.risQuery[0][0]))
+                        {
+                            richiamaQuery("DELECT FROM risultato WHERE idEsami  = '" + Program.risQuery[0][0] + "' AND idSillCard = '" + Program.risQuery[0][1]);
+                            richiamaQuery("INSERT INTO risultato (idEsami,idSkillCard,esito,percentuale) VALUES '" + Program.risQuery[0][0] + " '" + Program.risQuery[0][1] + " '" + Program.risQuery[0][2] + " '" + Program.risQuery[0][3] + "'");
+                        }                  
+                    }
+
                     this.Close();
                 }
             }
@@ -163,6 +192,10 @@ namespace Programma
         {
             Dettagli dettagli = new Dettagli(sessione,esame);
             dettagli.ShowDialog();
+
+            if (!insert)
+                richiamaQuery("DELETE FROM esamesessione WHERE idEsami = '" + daModificare.ChiaviPrimarie[0].valore + "' AND idSessione = '" + daModificare.ChiaviPrimarie[1].valore + "'");
+
             richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione,DurataEsame) VALUES ('" + esame + "', '" + sessione + "', '" + Dettagli.durata + "')");
         }
 
@@ -203,7 +236,7 @@ namespace Programma
                 {
                     MaterialLabel nuova = new MaterialLabel();
                     nuova.Location = new Point(5, panel3.Height / 5 * i + 5);
-                    nuova.Name = "lbl" + i;
+                    nuova.Name = campi[j][0];
                     nuova.BackColor = Color.Green;
                     nuova.Size = new Size(panel3.Width / 2 - 10, nuova.Height);
                     nuova.Text = campi[j][0];
@@ -213,7 +246,7 @@ namespace Programma
                     MaterialSingleLineTextField testo = new MaterialSingleLineTextField();
                     testo.Location = new Point(panel3.Width / 2, panel3.Height / 5 * i + 5);
                     testo.Size = new Size(panel3.Width / 2 - 10, panel3.Height / 5 - 10);
-                    testo.Name = "txt" + i;
+                    testo.Name = campi[j][0] + "-txt";
                     testo.BackColor = Color.Blue;
 
                     panel3.Controls.Add(testo);
@@ -272,6 +305,10 @@ namespace Programma
 
                 cmbEsterna.Text = daModificare.ChiaviEsterne[0].valore;
             }
+            else if (tabella == "esame" || tabella == "esaminando")
+            {
+
+            }
             else
                 cmbEsterna.Enabled = false;
         }
@@ -310,6 +347,15 @@ namespace Programma
                 num = campi.Count + 1;
 
             return num;
+        }
+
+        bool isData(string campo)
+        {
+            string data = campo.Substring(0, 4);
+            if (data.ToLower() == "data")
+                return true;
+
+            return false;
         }
     }
 }
