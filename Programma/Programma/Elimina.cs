@@ -63,10 +63,10 @@ namespace Programma
 
         void caricaDati(Nodo nodo)
         {
-            nodos.Add(nodo);
+            List<Nodo> app = new List<Nodo>() { nodo };
             List<Nodo> valori = new List<Nodo>();
             List<string> tabellePassate = new List<string>();
-            controllo(nodos, valori, tabellePassate);
+            controllo(app, valori, tabellePassate);
             while(valori.Count > 0)
             {
                 foreach(Nodo item in valori)
@@ -88,11 +88,14 @@ namespace Programma
                     if (!tabellePassate.Contains(item.Tabella))
                         tabellePassate.Add(item.Tabella);
                 }
-                nodos.Clear();
+                app.Clear();
                 foreach (Nodo item in valori)
+                {
+                    app.Add(item);
                     nodos.Add(item);
+                }
                 valori.Clear();
-                controllo(nodos, valori, tabellePassate);
+                controllo(app, valori, tabellePassate);
             }
         }
 
@@ -132,19 +135,28 @@ namespace Programma
                 List<string[]> ris = new List<string[]>();
                 foreach (string[] item1 in Program.risQuery)
                     ris.Add(item1);
-                foreach (string[] item1 in ris)
-                    if(!tabelle.Contains(item1[0]))
-                    {
-                        cond = " WHERE " + item1[1] + " = '" + item.ChiaviPrimarie[0].valore + "'";
-                        Program.query(new MySqlCommand("SELECT * FROM " + item1[0] + cond, Program.connection).ExecuteReader());
-                        List<string[]> ris1 = new List<string[]>();
-                        foreach (string[] item2 in Program.risQuery)
-                            ris1.Add(item2);
-                        for (int i = 0; i < ris1.Count; i++)
-                            valori.Add(Program.creaNodo(item1[0], i, cond));
-                    }
+                if (item.Tabella != "esamesessione")
+                {
+                    foreach (string[] item1 in ris)
+                        if (!tabelle.Contains(item1[0]))
+                            aggiugiNodo(item1[0], cond, item1[1], item, valori);
+                }
+                else
+                    aggiugiNodo("esami" ,cond, item.ChiaviPrimarie[0].nome, item, valori);
+                        
             }
 
+        }
+
+        void aggiugiNodo(string tabella, string cond, string item1, Nodo item, List<Nodo> valori)
+        {
+            cond = " WHERE " + item1 + " = '" + item.ChiaviPrimarie[0].valore + "'";
+            Program.query(new MySqlCommand("SELECT * FROM " + tabella + cond, Program.connection).ExecuteReader());
+            List<string[]> ris1 = new List<string[]>();
+            foreach (string[] item2 in Program.risQuery)
+                ris1.Add(item2);
+            for (int i = 0; i < ris1.Count; i++)
+                valori.Add(Program.creaNodo(tabella, i, cond));
         }
 
         List<string> infoNodo(Nodo nodo, bool nome)
@@ -205,8 +217,8 @@ namespace Programma
             else
                 row = data.SelectedRows[0];
             for (int i = 0; i < chiavi.Count; i++)
-                cond += chiavi[i] + " = '" + row.Cells[i].Value.ToString() + "' ,";
-            cond = cond.Remove(cond.Length - 2, 2);
+                cond += chiavi[i] + " = '" + row.Cells[i].Value.ToString() + "' AND ";
+            cond = cond.Remove(cond.Length - 4, 4);
             Nodo daTrovare = Program.creaNodo(data.Name, 0, cond);
             return nodos.Find(dato => dato.Equals(daTrovare));
         }
@@ -215,8 +227,8 @@ namespace Programma
         {
             string cond = " WHERE ";
             foreach (Campo item in nodo.ChiaviPrimarie)
-                cond += item.nome + " = '" + item.valore + "' .,";
-            cond = cond.Remove(cond.Length - 2, 2);
+                cond += item.nome + " = '" + item.valore + "' AND ";
+            cond = cond.Remove(cond.Length - 4, 4);
             return cond;
         }
 
