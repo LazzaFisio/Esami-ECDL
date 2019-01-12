@@ -9,7 +9,7 @@ using MaterialSkin.Controls;
 
 namespace Programma
 {
-    class Controllo
+    internal class Controllo
     {
         int errore;
         string descriozione;
@@ -22,12 +22,20 @@ namespace Programma
             this.tabella = tabella;
             errore = 0;
             descriozione = "";
-            new Action(controlloInserimento).Invoke();
+            avviaTuttiCotrolli();
         }
 
         public int Errore { get { return errore; } }
 
         public string Descriozione { get { return descriozione; } }
+
+        public string InStringa => errore + ": " + descriozione;
+
+        void avviaTuttiCotrolli()
+        {
+            controlloInserimento();
+            controlloFormattazioneData();
+        }
 
         void controlloInserimento()
         {
@@ -39,15 +47,32 @@ namespace Programma
                 for(int y = 0; y < nodo.Attributi.Count; y++)
                 {
                     MaterialSingleLineTextField label = (MaterialSingleLineTextField)control.Find(nodo.Attributi[y].nome + "-txt", true)[0];
-                    if(label.Text != nodo.Attributi[i].valore)
+                    if(label.Text != nodo.Attributi[y].valore)
                     {
                         doppione = false;
-                        i = nodo.Attributi.Count;
+                        y = nodo.Attributi.Count;
                     }
                 }
                 if (doppione)
                     caricaErrore(1, "errore inserimento dati");
             }
+        }
+
+        void controlloFormattazioneData()
+        {
+            MaterialSingleLineTextField field = new MaterialSingleLineTextField();
+            Control[] data = control.Find("data-txt", true);
+            if (data.Length > 0)
+                field = (MaterialSingleLineTextField)data[0];
+            else
+            {
+                data = control.Find("DataNascita-txt", true);
+                if(data.Length > 0)
+                    field = (MaterialSingleLineTextField)data[0];
+            }
+            if(field.Name != "")
+                try { Convert.ToDateTime(field.Text).ToString("yyyy/MM/dd"); }
+                catch { caricaErrore(2, "errore formattazione data"); }
         }
 
         void caricaErrore(int num, string err)

@@ -84,6 +84,7 @@
     <Compile Include="Grafo\Campo.cs" />
     <Compile Include="Grafo\Grafo.cs" />
     <Compile Include="Grafo\Nodo.cs" />
+    <Compile Include="IFormattable.cs" />
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>
