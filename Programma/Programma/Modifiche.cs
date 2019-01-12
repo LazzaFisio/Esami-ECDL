@@ -102,7 +102,7 @@ namespace Programma
 
                         for (int i = 0; i < text.Count; i++)
                         {
-                            if(!isData(label[i].Text))
+                            if (!isData(label[i].Text))
                                 query += text[i].Text + "', '";
                             else
                                 query += Convert.ToDateTime(text[i].Text).ToString("yyyy/MM/dd") + "', '";
@@ -180,12 +180,14 @@ namespace Programma
                         {
                             richiamaQuery("DELECT FROM risultato WHERE idEsami  = '" + Program.risQuery[0][0] + "' AND idSillCard = '" + Program.risQuery[0][1]);
                             richiamaQuery("INSERT INTO risultato (idEsami,idSkillCard,esito,percentuale) VALUES '" + Program.risQuery[0][0] + " '" + Program.risQuery[0][1] + " '" + Program.risQuery[0][2] + " '" + Program.risQuery[0][3] + "'");
-                        }                  
+                        }
                     }
 
                     this.Close();
                 }
             }
+            else
+                MessageBox.Show(controllo.Errore + ": " + controllo.Descriozione);
         }
 
         void aggiungiDurata(string esame, string sessione)
