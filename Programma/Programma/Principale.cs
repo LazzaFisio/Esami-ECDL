@@ -34,7 +34,7 @@ namespace Programma
         //AND ke.REFERENCED_COLUMN_NAME = 'idCittà'
         //Query per ottenere le tabelle dove è inserita la chiave primaria
 
-        string[] mostra;
+        public static string[] mostra;
         Size dimSchermo;
         
         public Principale()
@@ -139,7 +139,7 @@ namespace Programma
                 }
         }
 
-        List<Nodo> figliSucc(string tag, string tabPrec, Nodo nodo, bool eccezione)
+        public static List<Nodo> figliSucc(string tag, string tabPrec, Nodo nodo, bool eccezione)
         {
             List<Nodo> daInserire = new List<Nodo>();
             List<Nodo> nodi = new List<Nodo>();
@@ -222,7 +222,7 @@ namespace Programma
             return daInserire;
         }
 
-        bool condizione(Nodo ciao, Nodo nodo, int index)
+        static bool condizione(Nodo ciao, Nodo nodo, int index)
         {
             if (ciao.ChiaviEsterne.Count > 0)
             {
@@ -243,7 +243,7 @@ namespace Programma
             return false;
         }
 
-        void funzione(string tabPrec, string cond, List<Nodo> daInserire)
+        static void funzione(string tabPrec, string cond, List<Nodo> daInserire)
         {
             Program.query(new MySqlCommand("SELECT COUNT(*) FROM " + tabPrec + cond, Program.connection).ExecuteReader());
             int dim = Convert.ToInt32(Program.risQuery[0][0]);

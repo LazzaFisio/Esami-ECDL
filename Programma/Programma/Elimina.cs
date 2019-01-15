@@ -182,7 +182,15 @@ namespace Programma
         private void modifica_Click(object sender, EventArgs e)
         {
             Nodo nodo = selezionato();
-            //new Modifiche(nodo).ShowDialog();
+            string tabPrec = "";
+            for(int i = Program.tabelle.ToList().FindIndex(dato => dato == nodo.Tabella) - 1; i >= 0; i--)
+                if (Principale.mostra.Contains(Program.tabelle[i]))
+                {
+                    tabPrec = Program.tabelle[i];
+                    i = -1;
+                }
+            List<Nodo> appoggio = Principale.figliSucc(tabPrec, nodo.Tabella, nodo, true);
+            new Modifiche(nodo, Convert.ToInt32(appoggio[0].ChiaviPrimarie[0].valore)).ShowDialog();
             aggiorna();
         }
 
