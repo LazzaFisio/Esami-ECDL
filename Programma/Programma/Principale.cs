@@ -351,7 +351,8 @@ namespace Programma
                         new Modifiche(panel.Tag.ToString(), int.MaxValue, index).ShowDialog();
                     }
                 break;
-                case "modifica":  new Modifiche(creaNodoPadre(padre.Tag.ToString(), panel)).ShowDialog(); break;
+                case "modifica":  new Modifiche(creaNodoPadre(padre.Tag.ToString(), panel), 
+                                                Convert.ToInt32(creaNodoPadre(selezionato.Tag.ToString(), selezionato).ChiaviPrimarie[0].valore)).ShowDialog(); break;
                 case "elimina": elimina(creaNodoPadre(padre.Tag.ToString(), panel), panel);  break;
             }
             Program.scelta = "";
