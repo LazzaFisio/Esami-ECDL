@@ -192,7 +192,7 @@ namespace Programma
                 }
             }
             else
-                MessageBox.Show(controllo.Errore + ": " + controllo.Descriozione);
+                MessageBox.Show(controllo.InStringa);
         }
 
         void aggiungiDurata(string esame, string sessione)
