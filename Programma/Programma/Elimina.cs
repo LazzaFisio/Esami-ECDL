@@ -182,7 +182,7 @@ namespace Programma
         private void modifica_Click(object sender, EventArgs e)
         {
             Nodo nodo = selezionato();
-            new Modifiche(nodo).ShowDialog();
+            //new Modifiche(nodo).ShowDialog();
             aggiorna();
         }
 

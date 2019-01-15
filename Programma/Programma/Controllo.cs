@@ -33,7 +33,8 @@ namespace Programma
 
         void avviaTuttiCotrolli()
         {
-            controlloInserimento();
+            if(Modifiche.insert)
+                controlloInserimento();
             controlloFormattazioneData();
         }
 
