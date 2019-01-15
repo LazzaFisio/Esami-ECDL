@@ -30,9 +30,6 @@
         {
             this.btnConferma = new MaterialSkin.Controls.MaterialFlatButton();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.rbEsistente = new MaterialSkin.Controls.MaterialRadioButton();
-            this.rbNuovo = new MaterialSkin.Controls.MaterialRadioButton();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.labelcmb = new MaterialSkin.Controls.MaterialLabel();
@@ -41,10 +38,13 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.cmbEsterna = new System.Windows.Forms.ComboBox();
             this.lblEsterna = new MaterialSkin.Controls.MaterialLabel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.rbNuovo = new MaterialSkin.Controls.MaterialRadioButton();
+            this.rbEsistente = new MaterialSkin.Controls.MaterialRadioButton();
             this.panel1.SuspendLayout();
-            this.panel4.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel5.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnConferma
@@ -65,59 +65,14 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.panel3);
-            this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.panel5);
             this.panel1.Controls.Add(this.panel4);
+            this.panel1.Controls.Add(this.panel3);
+            this.panel1.Controls.Add(this.panel2);
             this.panel1.Location = new System.Drawing.Point(13, 79);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(362, 282);
             this.panel1.TabIndex = 3;
-            // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.rbNuovo);
-            this.panel4.Controls.Add(this.rbEsistente);
-            this.panel4.Location = new System.Drawing.Point(22, 7);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(311, 35);
-            this.panel4.TabIndex = 4;
-            // 
-            // rbEsistente
-            // 
-            this.rbEsistente.AutoSize = true;
-            this.rbEsistente.Depth = 0;
-            this.rbEsistente.Font = new System.Drawing.Font("Roboto", 10F);
-            this.rbEsistente.Location = new System.Drawing.Point(161, 3);
-            this.rbEsistente.Margin = new System.Windows.Forms.Padding(0);
-            this.rbEsistente.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.rbEsistente.MouseState = MaterialSkin.MouseState.HOVER;
-            this.rbEsistente.Name = "rbEsistente";
-            this.rbEsistente.Ripple = true;
-            this.rbEsistente.Size = new System.Drawing.Size(144, 30);
-            this.rbEsistente.TabIndex = 13;
-            this.rbEsistente.Text = "Aggiungi esistente";
-            this.rbEsistente.UseVisualStyleBackColor = true;
-            this.rbEsistente.CheckedChanged += new System.EventHandler(this.rb_CheckedChanged);
-            // 
-            // rbNuovo
-            // 
-            this.rbNuovo.AutoSize = true;
-            this.rbNuovo.Checked = true;
-            this.rbNuovo.Depth = 0;
-            this.rbNuovo.Font = new System.Drawing.Font("Roboto", 10F);
-            this.rbNuovo.Location = new System.Drawing.Point(11, 3);
-            this.rbNuovo.Margin = new System.Windows.Forms.Padding(0);
-            this.rbNuovo.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.rbNuovo.MouseState = MaterialSkin.MouseState.HOVER;
-            this.rbNuovo.Name = "rbNuovo";
-            this.rbNuovo.Ripple = true;
-            this.rbNuovo.Size = new System.Drawing.Size(125, 30);
-            this.rbNuovo.TabIndex = 12;
-            this.rbNuovo.TabStop = true;
-            this.rbNuovo.Text = "Aggiungi nuovo";
-            this.rbNuovo.UseVisualStyleBackColor = true;
-            this.rbNuovo.CheckedChanged += new System.EventHandler(this.rb_CheckedChanged);
             // 
             // panel3
             // 
@@ -199,6 +154,51 @@
             this.lblEsterna.Size = new System.Drawing.Size(0, 19);
             this.lblEsterna.TabIndex = 0;
             // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.rbNuovo);
+            this.panel4.Controls.Add(this.rbEsistente);
+            this.panel4.Location = new System.Drawing.Point(22, 7);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(311, 35);
+            this.panel4.TabIndex = 4;
+            // 
+            // rbNuovo
+            // 
+            this.rbNuovo.AutoSize = true;
+            this.rbNuovo.Checked = true;
+            this.rbNuovo.Depth = 0;
+            this.rbNuovo.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbNuovo.Location = new System.Drawing.Point(11, 3);
+            this.rbNuovo.Margin = new System.Windows.Forms.Padding(0);
+            this.rbNuovo.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.rbNuovo.MouseState = MaterialSkin.MouseState.HOVER;
+            this.rbNuovo.Name = "rbNuovo";
+            this.rbNuovo.Ripple = true;
+            this.rbNuovo.Size = new System.Drawing.Size(125, 30);
+            this.rbNuovo.TabIndex = 12;
+            this.rbNuovo.TabStop = true;
+            this.rbNuovo.Text = "Aggiungi nuovo";
+            this.rbNuovo.UseVisualStyleBackColor = true;
+            this.rbNuovo.CheckedChanged += new System.EventHandler(this.rb_CheckedChanged);
+            // 
+            // rbEsistente
+            // 
+            this.rbEsistente.AutoSize = true;
+            this.rbEsistente.Depth = 0;
+            this.rbEsistente.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbEsistente.Location = new System.Drawing.Point(161, 3);
+            this.rbEsistente.Margin = new System.Windows.Forms.Padding(0);
+            this.rbEsistente.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.rbEsistente.MouseState = MaterialSkin.MouseState.HOVER;
+            this.rbEsistente.Name = "rbEsistente";
+            this.rbEsistente.Ripple = true;
+            this.rbEsistente.Size = new System.Drawing.Size(144, 30);
+            this.rbEsistente.TabIndex = 13;
+            this.rbEsistente.Text = "Aggiungi esistente";
+            this.rbEsistente.UseVisualStyleBackColor = true;
+            this.rbEsistente.CheckedChanged += new System.EventHandler(this.rb_CheckedChanged);
+            // 
             // Modifiche
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -213,12 +213,12 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Modifiche";
             this.panel1.ResumeLayout(false);
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
