@@ -53,10 +53,11 @@ namespace Programma
             }
         }
 
-        public Modifiche(Nodo figlio)
+        public Modifiche(Nodo figlio, int idPadre)
         {
             InitializeComponent();
             tabella = figlio.Tabella;
+            this.idPadre = idPadre;
             creaOggetti();
             daModificare = figlio;
             riempi();
@@ -85,7 +86,7 @@ namespace Programma
                         for (int i = 0; i < label.Count; i++)
                             query += label[i].Text + ", ";
 
-                        if (tabella == "esaminando")
+                        if (tabella != "esaminando")
                             query += lblEsterna.Text;
                         else
                             query = query.Remove(query.Length - 2, 1);
@@ -108,7 +109,7 @@ namespace Programma
                                 query += Convert.ToDateTime(text[i].Text).ToString("yyyy/MM/dd") + "', '";
                         }
 
-                        if (tabella == "esaminando")
+                        if (tabella != "esaminando")
                             query += cmbEsterna.Text + "'";
                         else
                             query = query.Remove(query.Length - 4, 3);
@@ -145,8 +146,11 @@ namespace Programma
                         else
                             query += label[i].Text + " = '" + Convert.ToDateTime(text[i].Text).ToString("yyyy/MM/dd") + "', ";
                     }
+                    if (tabella != "esami" && tabella != "esaminando")
+                        query += lblEsterna.Text + " = '" + cmbEsterna.Text;
+                    else
+                        query = query.Remove(query.Length - 2, 1);
 
-                    query += lblEsterna.Text + " = '" + cmbEsterna.Text + "'";
                     query += " WHERE ";
 
                     foreach (var item in daModificare.ChiaviPrimarie)
@@ -156,8 +160,9 @@ namespace Programma
                     richiamaQuery(query);
 
                     if (tabella == "esami")
-                    {
-                        if (cmbEsterna.Text != daModificare.ChiaviEsterne[0].valore)
+                    { 
+
+                        if (Convert.ToInt32(cmbEsterna.Text) != idPadre)
                             aggiungiDurata(daModificare.ChiaviPrimarie[0].valore, cmbEsterna.Text);
                         else
                         {
@@ -178,7 +183,7 @@ namespace Programma
                         Queryleggi("SELECT * FROM risultato WHERE codice = '" + Program.risQuery[0][0] + "'");
                         if (!(cmbEsterna.Text == Program.risQuery[0][0]))
                         {
-                            richiamaQuery("DELECT FROM risultato WHERE idEsami  = '" + Program.risQuery[0][0] + "' AND idSillCard = '" + Program.risQuery[0][1]);
+                            richiamaQuery("DELECT FROM risultato WHERE idEsami  = '" + Program.risQuery[0][0] + "' AND idSillCard = '" + idPadre);
                             richiamaQuery("INSERT INTO risultato (idEsami,idSkillCard,esito,percentuale) VALUES '" + Program.risQuery[0][0] + " '" + Program.risQuery[0][1] + " '" + Program.risQuery[0][2] + " '" + Program.risQuery[0][3] + "'");
                         }
                     }
@@ -196,7 +201,7 @@ namespace Programma
             dettagli.ShowDialog();
 
             if (!insert)
-                richiamaQuery("DELETE FROM esamesessione WHERE idEsami = '" + daModificare.ChiaviPrimarie[0].valore + "' AND idSessione = '" + daModificare.ChiaviPrimarie[1].valore + "'");
+                richiamaQuery("DELETE FROM esamesessione WHERE idEsami = '" + daModificare.ChiaviPrimarie[0].valore + "' AND idSessione = '" + idPadre + "'");
 
             richiamaQuery("INSERT INTO esamesessione (idEsami,idSessione,DurataEsame) VALUES ('" + esame + "', '" + sessione + "', '" + Dettagli.durata + "')");
         }
@@ -307,9 +312,21 @@ namespace Programma
 
                 cmbEsterna.Text = daModificare.ChiaviEsterne[0].valore;
             }
-            else if (tabella == "esame" || tabella == "esaminando")
+            else if (tabella == "esami" || tabella == "esaminando")
             {
+                if (tabella == "esami")
+                {
+                    Queryleggi("SELECT idSessione FROM Sessione");
+                    lblEsterna.Text = "idSessione";
+                }
+                else
+                {
+                    Queryleggi("SELECT idEsame FROM Esame");
+                    lblEsterna.Text = "idEsame";
+                }
 
+                for (int i = 0; i < Program.risQuery.Count; i++)
+                    cmbEsterna.Items.Add(Program.risQuery[i][0]);
             }
             else
                 cmbEsterna.Enabled = false;
