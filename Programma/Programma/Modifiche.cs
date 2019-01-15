@@ -16,7 +16,7 @@ namespace Programma
 {
     public partial class Modifiche : MaterialForm
     {
-        bool insert = false;
+        public static bool insert = false;
 
         int idPadre = 0, idCittà = 0;
         string tabella;
