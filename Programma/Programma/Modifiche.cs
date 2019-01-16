@@ -146,8 +146,9 @@ namespace Programma
                         else
                             query += label[i].Text + " = '" + Convert.ToDateTime(text[i].Text).ToString("yyyy/MM/dd") + "', ";
                     }
+
                     if (tabella != "esami" && tabella != "esaminando")
-                        query += lblEsterna.Text + " = '" + cmbEsterna.Text;
+                        query += lblEsterna.Text + " = '" + cmbEsterna.Text + "' ";
                     else
                         query = query.Remove(query.Length - 2, 1);
 
@@ -305,10 +306,14 @@ namespace Programma
             {
                 lblEsterna.Text = daModificare.ChiaviEsterne[0].nome;
 
-                Queryleggi("SELECT " + daModificare.ChiaviEsterne[0].nome + " FROM " + gerarchie[gerarchie.FindIndex(dato => dato == daModificare.Tabella) - 1]);
+                if (tabella != "esaminando")
+                    Queryleggi("SELECT " + daModificare.ChiaviEsterne[0].nome + " FROM " + gerarchie[gerarchie.FindIndex(dato => dato == daModificare.Tabella) - 1]);
+                else
+                    Queryleggi("SELECT " + daModificare.ChiaviEsterne[0].nome + " FROM città");
 
-                for (int i = 0; i < Program.risQuery.Count; i++)
-                    cmbEsterna.Items.Add(Program.risQuery[i][0]);
+
+                    for (int i = 0; i < Program.risQuery.Count; i++)
+                        cmbEsterna.Items.Add(Program.risQuery[i][0]);
 
                 cmbEsterna.Text = daModificare.ChiaviEsterne[0].valore;
             }
