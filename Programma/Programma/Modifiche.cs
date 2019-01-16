@@ -35,7 +35,6 @@ namespace Programma
             InitializeComponent();
             this.tabella = tabella;
             idPadre = id;
-            this.idCittà = idCittà;
             creaOggetti();
             insert = true;
             if (tabella != "esami" && tabella != "esaminandi")
@@ -43,7 +42,7 @@ namespace Programma
             else
                 rbEsistente.Enabled = true;
 
-            if (tabella == "esaminando")
+            if (tabella == "esaminandi")
             {
                 panel5.Show();
                 lblEsterna.Text = "idCittà";
@@ -64,14 +63,15 @@ namespace Programma
             insert = false;
 
             panel4.Hide();
-            panel5.Show();
+            if (tabella != "risultato")
+                panel5.Show();
         }
 
         void btnConferma_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Sei sicuro di voler confermare questi dati?", "Attenzione", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
             Controllo controllo = new Controllo(panel3.Controls, tabella);
-            if (result == DialogResult.Yes && controllo.Errore == 0)
+            if (result == DialogResult.Yes && controllo.Errore == 0) 
             {
                 if (insert)
                 {
@@ -80,26 +80,24 @@ namespace Programma
                         int index = trovaId(tabella);
 
                         query = "INSERT INTO " + tabella + "( ";
-                        for (int i = 0; i < key.Count; i++)
-                            query += key[i] + ", ";
+                        if (tabella != "esaminandi")
+                            for (int i = 0; i < key.Count; i++)
+                                query += key[i] + ", ";
+                        else
+                            query += primary[0].ToString() + ", ";
 
                         for (int i = 0; i < label.Count; i++)
                             query += label[i].Text + ", ";
 
-                        if (tabella != "esaminando")
+                        if (tabella != "esaminando" && tabella != "esami")
                             query += lblEsterna.Text;
                         else
                             query = query.Remove(query.Length - 2, 1);
 
                         query += ") VALUES ( ' " + index + " ', '";
 
-                        if (idPadre != int.MaxValue && tabella != "esami")
-                        {
-                            if (tabella != "esaminandi")
-                                query += idPadre + "', '";
-                            else
-                                query += idCittà + "', '";
-                        }
+                        if (idPadre != int.MaxValue && tabella != "esami" && tabella != "esaminandi")
+                            query += idPadre + "', '";
 
                         for (int i = 0; i < text.Count; i++)
                         {
@@ -109,7 +107,7 @@ namespace Programma
                                 query += Convert.ToDateTime(text[i].Text).ToString("yyyy/MM/dd") + "', '";
                         }
 
-                        if (tabella != "esaminando")
+                        if (tabella != "esaminando" && tabella != "esami")
                             query += cmbEsterna.Text + "'";
                         else
                             query = query.Remove(query.Length - 4, 3);
@@ -121,9 +119,7 @@ namespace Programma
                             aggiungiDurata(index.ToString(), idPadre.ToString());
 
                         if (tabella == "esaminandi")
-                        {
                             aggiungiSkill_Risultato(index);
-                        }
                     }
                     else
                     {
@@ -147,7 +143,7 @@ namespace Programma
                             query += label[i].Text + " = '" + Convert.ToDateTime(text[i].Text).ToString("yyyy/MM/dd") + "', ";
                     }
 
-                    if (tabella != "esami" && tabella != "esaminando")
+                    if (tabella != "esami" && tabella != "risultato")
                         query += lblEsterna.Text + " = '" + cmbEsterna.Text + "' ";
                     else
                         query = query.Remove(query.Length - 2, 1);
@@ -155,8 +151,8 @@ namespace Programma
                     query += " WHERE ";
 
                     foreach (var item in daModificare.ChiaviPrimarie)
-                        query += item.nome + " = '" + item.valore + "', ";
-                    query = query.Remove(query.Length - 2, 1);
+                        query += item.nome + " = '" + item.valore + " ' AND ";
+                    query = query.Remove(query.Length - 5, 4);
 
                     richiamaQuery(query);
 
@@ -178,14 +174,14 @@ namespace Programma
                         }
                     }
 
-                    if (tabella == "esaminando")
+                    if (tabella == "esaminandi")
                     {
-                        Queryleggi("SELECT idSkillCard FROM 'skillcard` WHERE DataScadenza > CURRENT_DATE AND codice = '" + daModificare.ChiaviPrimarie[0].valore + "'");
-                        Queryleggi("SELECT * FROM risultato WHERE codice = '" + Program.risQuery[0][0] + "'");
-                        if (!(cmbEsterna.Text == Program.risQuery[0][0]))
+                        Queryleggi("SELECT idSkillCard FROM skillcard` WHERE DataScadenza >  CURRENT_DATE AND codice = '" + daModificare.ChiaviPrimarie[0].valore + "'");
+                        Queryleggi("SELECT * FROM risultato WHERE idSkillCard = '" + Program.risQuery[0][0] + "' AND idEsami = '" + idPadre.ToString() + "'");
+                        if (!(cmbEsterna2.Text == idPadre.ToString()))
                         {
-                            richiamaQuery("DELECT FROM risultato WHERE idEsami  = '" + Program.risQuery[0][0] + "' AND idSillCard = '" + idPadre);
-                            richiamaQuery("INSERT INTO risultato (idEsami,idSkillCard,esito,percentuale) VALUES '" + Program.risQuery[0][0] + " '" + Program.risQuery[0][1] + " '" + Program.risQuery[0][2] + " '" + Program.risQuery[0][3] + "'");
+                            richiamaQuery("DELETE FROM risultato WHERE idEsami  = '" + idPadre + "' AND idSkillCard = '" + Program.risQuery[0][1] + "'");
+                            richiamaQuery("INSERT INTO risultato (idEsami,idSkillCard,esito,percentuale) VALUES ('" + cmbEsterna2.Text + " ','" + Program.risQuery[0][1] + " ','" + Program.risQuery[0][2] + " ','" + Program.risQuery[0][3] + "')");
                         }
                     }
 
@@ -217,8 +213,8 @@ namespace Programma
 
                 SkillCard skillCard = new SkillCard();
                 skillCard.ShowDialog();
-                if (SkillCard.dataEmissione != "" && SkillCard.dataScadenza != "")
-                    richiamaQuery("INSERT INTO skillcard (idSkillCard,DataEmissione,DataScadenza,codice) VALUES ('" + idSkillCard + "', '" + SkillCard.dataEmissione + "', '" + SkillCard.dataScadenza + "', '" + index + "') ");
+
+                richiamaQuery("INSERT INTO skillcard (idSkillCard,DataEmissione,DataScadenza,codice) VALUES ('" + idSkillCard + "', '" + SkillCard.dataEmissione + "', '" + SkillCard.dataScadenza + "', '" + index + "') ");
 
                 richiamaQuery("INSERT INTO risultato (idEsami,idSkillCard,esito) VALUES ('" + idPadre + "',' " + idSkillCard + "', 'Non valutato')");
             }
@@ -306,34 +302,42 @@ namespace Programma
             {
                 lblEsterna.Text = daModificare.ChiaviEsterne[0].nome;
 
-                if (tabella != "esaminando")
+                if (tabella != "esaminandi")
                     Queryleggi("SELECT " + daModificare.ChiaviEsterne[0].nome + " FROM " + gerarchie[gerarchie.FindIndex(dato => dato == daModificare.Tabella) - 1]);
                 else
                     Queryleggi("SELECT " + daModificare.ChiaviEsterne[0].nome + " FROM città");
 
 
-                    for (int i = 0; i < Program.risQuery.Count; i++)
-                        cmbEsterna.Items.Add(Program.risQuery[i][0]);
+                for (int i = 0; i < Program.risQuery.Count; i++)
+                    cmbEsterna.Items.Add(Program.risQuery[i][0]);
 
                 cmbEsterna.Text = daModificare.ChiaviEsterne[0].valore;
             }
-            else if (tabella == "esami" || tabella == "esaminando")
+            if (tabella == "esami")
             {
-                if (tabella == "esami")
-                {
-                    Queryleggi("SELECT idSessione FROM Sessione");
-                    lblEsterna.Text = "idSessione";
-                }
-                else
-                {
-                    Queryleggi("SELECT idEsame FROM Esame");
-                    lblEsterna.Text = "idEsame";
-                }
+                Queryleggi("SELECT idSessione FROM Sessione");
+                lblEsterna.Text = "idSessione";
 
                 for (int i = 0; i < Program.risQuery.Count; i++)
                     cmbEsterna.Items.Add(Program.risQuery[i][0]);
+
+                cmbEsterna.Text = idPadre.ToString();
+
             }
-            else
+            if (tabella == "esaminandi")
+            {
+                Queryleggi("SELECT idEsami FROM esami");
+                lblEsterna2.Text = "idEsami";
+
+                for (int i = 0; i < Program.risQuery.Count; i++)
+                    cmbEsterna2.Items.Add(Program.risQuery[i][0]);
+
+                lblEsterna2.Visible = true;
+                cmbEsterna2.Visible = true;
+
+                cmbEsterna2.Text = idPadre.ToString();
+            }
+            if(tabella == "città")
                 cmbEsterna.Enabled = false;
         }
 
