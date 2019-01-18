@@ -71,125 +71,154 @@ namespace Programma
         {
             DialogResult result = MessageBox.Show("Sei sicuro di voler confermare questi dati?", "Attenzione", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
             Controllo controllo = new Controllo(panel3.Controls, tabella);
-            if (result == DialogResult.Yes && controllo.Errore == 0) 
+            if (result == DialogResult.Yes) 
             {
                 if (insert)
                 {
                     if (rbNuovo.Checked)
                     {
-                        int index = trovaId(tabella);
+                        int err = 0;
 
-                        query = "INSERT INTO " + tabella + "( ";
-                        if (tabella != "esaminandi")
-                            for (int i = 0; i < key.Count; i++)
-                                query += key[i] + ", ";
-                        else
-                            query += primary[0].ToString() + ", ";
+                        if (controllo.Errore == 1)
+                        {
+                            result = MessageBox.Show("Attenzione i dati presenti sono già esistenti. Vuoi mantenerli entrambi?", "Attenzione", MessageBoxButtons.YesNoCancel);
+                            if (result != DialogResult.Yes)
+                                err = 1;
+                        }
+                        else if(controllo.Errore != 0)
+                            MessageBox.Show(controllo.InStringa);
 
-                        for (int i = 0; i < label.Count; i++)
-                            query += label[i].Text + ", ";
+                        if (err == 0)
+                        {
+                            int index = trovaId(tabella);
 
-                        if (tabella != "esaminando" && tabella != "esami")
-                            query += lblEsterna.Text;
-                        else
-                            query = query.Remove(query.Length - 2, 1);
+                            query = "INSERT INTO " + tabella + "( ";
+                            if (tabella != "esaminandi")
+                                for (int i = 0; i < key.Count; i++)
+                                    query += key[i] + ", ";
+                            else
+                                query += primary[0].ToString() + ", ";
 
-                        query += ") VALUES ( ' " + index + " ', '";
+                            for (int i = 0; i < label.Count; i++)
+                                query += label[i].Text + ", ";
 
-                        if (idPadre != int.MaxValue && tabella != "esami" && tabella != "esaminandi")
-                            query += idPadre + "', '";
+                            if (tabella != "esaminando" && tabella != "esami")
+                                query += lblEsterna.Text;
+                            else
+                                query = query.Remove(query.Length - 2, 1);
+
+                            query += ") VALUES ( ' " + index + " ', '";
+
+                            if (idPadre != int.MaxValue && tabella != "esami" && tabella != "esaminandi")
+                                query += idPadre + "', '";
+
+                            for (int i = 0; i < text.Count; i++)
+                            {
+                                if (!isData(label[i].Text))
+                                    query += text[i].Text + "', '";
+                                else
+                                    query += Convert.ToDateTime(text[i].Text).ToString("yyyy/MM/dd") + "', '";
+                            }
+
+                            if (tabella != "esaminando" && tabella != "esami")
+                                query += cmbEsterna.Text + "'";
+                            else
+                                query = query.Remove(query.Length - 4, 3);
+                            query += ")";
+
+                            if (tabella == "esami")
+                                aggiungiDurata(index.ToString(), idPadre.ToString());
+
+                            if (tabella == "esaminandi")
+                                aggiungiSkill_Risultato(index);
+
+                            this.Close();
+                        }
+                    }
+                    else
+                    {
+                        if (controllo.Errore != 4 && controllo.Errore != 3)
+                        {
+                            if (tabella == "esami")
+                                aggiungiDurata(cmbEsistente.Text, idPadre.ToString());
+                            if (tabella == "esaminandi")
+                                aggiungiSkill_Risultato(Convert.ToInt32(cmbEsistente.Text));
+                        }
+
+                        this.Close();
+                    }
+                }
+                else
+                {
+                    int err = 0;
+
+                    if (controllo.Errore == 1)
+                    {
+                        result = MessageBox.Show("Attenzione i dati presenti sono già esistenti. Vuoi mantenerli entrambi?", "Attenzione", MessageBoxButtons.YesNoCancel);
+                        if (result != DialogResult.Yes)
+                            err = 1;
+                    }
+                    else if (controllo.Errore != 0)
+                        MessageBox.Show(controllo.InStringa);
+
+                    if (err == 0)
+                    {
+                        query = "UPDATE " + tabella + " SET ";
 
                         for (int i = 0; i < text.Count; i++)
                         {
                             if (!isData(label[i].Text))
-                                query += text[i].Text + "', '";
+                                query += label[i].Text + " = '" + text[i].Text + "', ";
                             else
-                                query += Convert.ToDateTime(text[i].Text).ToString("yyyy/MM/dd") + "', '";
+                                query += label[i].Text + " = '" + Convert.ToDateTime(text[i].Text).ToString("yyyy/MM/dd") + "', ";
                         }
 
-                        if (tabella != "esaminando" && tabella != "esami")
-                            query += cmbEsterna.Text + "'";
+                        if (tabella != "esami" && tabella != "risultato")
+                            query += lblEsterna.Text + " = '" + cmbEsterna.Text + "' ";
                         else
-                            query = query.Remove(query.Length - 4, 3);
-                        query += ")";
+                            query = query.Remove(query.Length - 2, 1);
+
+                        query += " WHERE ";
+
+                        foreach (var item in daModificare.ChiaviPrimarie)
+                            query += item.nome + " = '" + item.valore + " ' AND ";
+                        query = query.Remove(query.Length - 5, 4);
 
                         richiamaQuery(query);
 
                         if (tabella == "esami")
-                            aggiungiDurata(index.ToString(), idPadre.ToString());
-
-                        if (tabella == "esaminandi")
-                            aggiungiSkill_Risultato(index);
-                    }
-                    else
-                    {
-                        if (tabella == "esami")
-                            aggiungiDurata(cmbEsistente.Text, idPadre.ToString());
-                        if (tabella == "esaminandi")
-                            aggiungiSkill_Risultato(Convert.ToInt32(cmbEsistente.Text));
-                    }
-
-                    this.Close();
-                }
-                else
-                {
-                    query = "UPDATE " + tabella + " SET ";
-
-                    for (int i = 0; i < text.Count; i++)
-                    {
-                        if (!isData(label[i].Text))
-                            query += label[i].Text + " = '" + text[i].Text + "', ";
-                        else
-                            query += label[i].Text + " = '" + Convert.ToDateTime(text[i].Text).ToString("yyyy/MM/dd") + "', ";
-                    }
-
-                    if (tabella != "esami" && tabella != "risultato")
-                        query += lblEsterna.Text + " = '" + cmbEsterna.Text + "' ";
-                    else
-                        query = query.Remove(query.Length - 2, 1);
-
-                    query += " WHERE ";
-
-                    foreach (var item in daModificare.ChiaviPrimarie)
-                        query += item.nome + " = '" + item.valore + " ' AND ";
-                    query = query.Remove(query.Length - 5, 4);
-
-                    richiamaQuery(query);
-
-                    if (tabella == "esami")
-                    { 
-
-                        if (Convert.ToInt32(cmbEsterna.Text) != idPadre)
-                            aggiungiDurata(daModificare.ChiaviPrimarie[0].valore, cmbEsterna.Text);
-                        else
                         {
-                            result = MessageBox.Show("Vuoi modificare la durata dell'esame?", "Attenzione", MessageBoxButtons.YesNoCancel);
-                            if (result == DialogResult.Yes)
+
+                            if (Convert.ToInt32(cmbEsterna.Text) != idPadre)
+                                aggiungiDurata(daModificare.ChiaviPrimarie[0].valore, cmbEsterna.Text);
+                            else
                             {
-                                Queryleggi("SELECT durata FROM esamesessione WHERE idEsame = '" + daModificare.ChiaviPrimarie[0].valore + "' AND idSessione = '" + cmbEsterna.Text + "'");
-                                Dettagli dettagli = new Dettagli(cmbEsterna.Text, daModificare.ChiaviPrimarie[0].valore, Program.risQuery[0][0]);
-                                dettagli.ShowDialog();
-                                richiamaQuery("UPDATE esamesessione SET DurataEsame = '" + Dettagli.durata + "'WHERE" + daModificare.ChiaviPrimarie[0].nome + " = '" + daModificare.ChiaviPrimarie[0].valore + "' AND" + daModificare.ChiaviPrimarie[1].nome + " = '" + daModificare.ChiaviPrimarie[1].valore);
+                                result = MessageBox.Show("Vuoi modificare la durata dell'esame?", "Attenzione", MessageBoxButtons.YesNoCancel);
+                                if (result == DialogResult.Yes)
+                                {
+                                    Queryleggi("SELECT durata FROM esamesessione WHERE idEsame = '" + daModificare.ChiaviPrimarie[0].valore + "' AND idSessione = '" + cmbEsterna.Text + "'");
+                                    Dettagli dettagli = new Dettagli(cmbEsterna.Text, daModificare.ChiaviPrimarie[0].valore, Program.risQuery[0][0]);
+                                    dettagli.ShowDialog();
+                                    richiamaQuery("UPDATE esamesessione SET DurataEsame = '" + Dettagli.durata + "'WHERE" + daModificare.ChiaviPrimarie[0].nome + " = '" + daModificare.ChiaviPrimarie[0].valore + "' AND" + daModificare.ChiaviPrimarie[1].nome + " = '" + daModificare.ChiaviPrimarie[1].valore);
+                                }
                             }
                         }
-                    }
 
-                    if (tabella == "esaminandi")
-                    {
-                        Queryleggi("SELECT idSkillCard FROM skillcard` WHERE DataScadenza >  CURRENT_DATE AND codice = '" + daModificare.ChiaviPrimarie[0].valore + "'");
-                        Queryleggi("SELECT * FROM risultato WHERE idSkillCard = '" + Program.risQuery[0][0] + "' AND idEsami = '" + idPadre.ToString() + "'");
-                        if (!(cmbEsterna2.Text == idPadre.ToString()))
+                        if (tabella == "esaminandi")
                         {
-                            richiamaQuery("DELETE FROM risultato WHERE idEsami  = '" + idPadre + "' AND idSkillCard = '" + Program.risQuery[0][1] + "'");
-                            richiamaQuery("INSERT INTO risultato (idEsami,idSkillCard,esito,percentuale) VALUES ('" + cmbEsterna2.Text + " ','" + Program.risQuery[0][1] + " ','" + Program.risQuery[0][2] + " ','" + Program.risQuery[0][3] + "')");
+                            Queryleggi("SELECT idSkillCard FROM skillcard` WHERE DataScadenza >  CURRENT_DATE AND codice = '" + daModificare.ChiaviPrimarie[0].valore + "'");
+                            Queryleggi("SELECT * FROM risultato WHERE idSkillCard = '" + Program.risQuery[0][0] + "' AND idEsami = '" + idPadre.ToString() + "'");
+                            if (!(cmbEsterna2.Text == idPadre.ToString()))
+                            {
+                                richiamaQuery("DELETE FROM risultato WHERE idEsami  = '" + idPadre + "' AND idSkillCard = '" + Program.risQuery[0][1] + "'");
+                                richiamaQuery("INSERT INTO risultato (idEsami,idSkillCard,esito,percentuale) VALUES ('" + cmbEsterna2.Text + " ','" + Program.risQuery[0][1] + " ','" + Program.risQuery[0][2] + " ','" + Program.risQuery[0][3] + "')");
+                            }
                         }
-                    }
 
-                    this.Close();
+                        this.Close();
+                    }
                 }
             }
-            else
-                MessageBox.Show(controllo.InStringa);
         }
 
         void aggiungiDurata(string esame, string sessione)
