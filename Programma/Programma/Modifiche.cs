@@ -18,9 +18,10 @@ namespace Programma
     {
         public static bool insert = false;
 
-        int idPadre = 0, idCittà = 0;
+        int idPadre = 0;
         string tabella;
         string query = "";
+        bool err = false;
         List<string> gerarchie = new List<string> { "città", "sede", "sessione", "esami", "esaminandi", "skillcard", "risultato" };
         List<string> primary = new List<string>();
         List<string> key = new List<string>();
@@ -30,7 +31,7 @@ namespace Programma
 
         Nodo daModificare = new Nodo();
 
-        public Modifiche(string tabella, int id, int idCittà)
+        public Modifiche(string tabella, int id)
         {
             InitializeComponent();
             this.tabella = tabella;
@@ -77,18 +78,7 @@ namespace Programma
                 {
                     if (rbNuovo.Checked)
                     {
-                        int err = 0;
-
-                        if (controllo.Errore == 1)
-                        {
-                            result = MessageBox.Show("Attenzione i dati presenti sono già esistenti. Vuoi mantenerli entrambi?", "Attenzione", MessageBoxButtons.YesNoCancel);
-                            if (result != DialogResult.Yes)
-                                err = 1;
-                        }
-                        else if(controllo.Errore != 0)
-                            MessageBox.Show(controllo.InStringa);
-
-                        if (err == 0)
+                        if (!controllaErr(controllo))
                         {
                             int index = trovaId(tabella);
 
@@ -102,7 +92,7 @@ namespace Programma
                             for (int i = 0; i < label.Count; i++)
                                 query += label[i].Text + ", ";
 
-                            if (tabella != "esaminando" && tabella != "esami")
+                            if (tabella == "esaminandi")
                                 query += lblEsterna.Text;
                             else
                                 query = query.Remove(query.Length - 2, 1);
@@ -120,11 +110,13 @@ namespace Programma
                                     query += Convert.ToDateTime(text[i].Text).ToString("yyyy/MM/dd") + "', '";
                             }
 
-                            if (tabella != "esaminando" && tabella != "esami")
+                            if (tabella == "esaminandi")
                                 query += cmbEsterna.Text + "'";
                             else
                                 query = query.Remove(query.Length - 4, 3);
                             query += ")";
+
+                            richiamaQuery(query);
 
                             if (tabella == "esami")
                                 aggiungiDurata(index.ToString(), idPadre.ToString());
@@ -137,31 +129,22 @@ namespace Programma
                     }
                     else
                     {
-                        if (controllo.Errore != 4 && controllo.Errore != 3)
+                        if (controllo.Errore != 3 && cmbEsistente.Items.Contains(cmbEsistente))
                         {
                             if (tabella == "esami")
                                 aggiungiDurata(cmbEsistente.Text, idPadre.ToString());
                             if (tabella == "esaminandi")
                                 aggiungiSkill_Risultato(Convert.ToInt32(cmbEsistente.Text));
                         }
+                        else
+                            MessageBox.Show("Sono stati riscontrati degli errori", "Attenzione");
 
                         this.Close();
                     }
                 }
                 else
                 {
-                    int err = 0;
-
-                    if (controllo.Errore == 1)
-                    {
-                        result = MessageBox.Show("Attenzione i dati presenti sono già esistenti. Vuoi mantenerli entrambi?", "Attenzione", MessageBoxButtons.YesNoCancel);
-                        if (result != DialogResult.Yes)
-                            err = 1;
-                    }
-                    else if (controllo.Errore != 0)
-                        MessageBox.Show(controllo.InStringa);
-
-                    if (err == 0)
+                    if (controllaErr(controllo))
                     {
                         query = "UPDATE " + tabella + " SET ";
 
@@ -249,6 +232,31 @@ namespace Programma
             }
             else
                 richiamaQuery("INSERT INTO risultato (idEsami,idSkillCard,esito) VALUES ('" + idPadre + "',' " + Program.risQuery[0][0] + "', 'Non valutato')");
+        }
+
+        bool controllaErr(Controllo controllo)
+        {
+            if (!cmbEsterna.Items.Contains(cmbEsterna.Text))
+            {
+                return = true;
+                MessageBox.Show("Attenzione la chiave esterna non è presente", "Errore");
+            }
+            else if (controllo.Errore != 0)
+            {
+                if (controllo.Errore == 1)
+                {
+                    DialogResult result = MessageBox.Show("Attenzione i dati presenti sono già esistenti. Vuoi mantenerli entrambi?", "Attenzione", MessageBoxButtons.YesNoCancel);
+                    if (result != DialogResult.Yes)
+                        return true;
+                }
+                else
+                {
+                    MessageBox.Show(controllo.InStringa);
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         void creaOggetti()
