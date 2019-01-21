@@ -37,11 +37,12 @@ CREATE  TABLE IF NOT EXISTS `Esami ECDL`.`Esaminandi` (
   `nome` VARCHAR(45) NULL ,
   `cognome` VARCHAR(45) NULL ,
   `sesso` VARCHAR(45) NULL ,
-  `Città_idCittà` INT NOT NULL ,
+  `DataNascita` DATETIME NULL ,
+  `idCittà` INT NOT NULL ,
   PRIMARY KEY (`codice`) ,
-  INDEX `fk_Esaminandi_Città1_idx` (`Città_idCittà` ASC) ,
+  INDEX `fk_Esaminandi_Città1_idx` (`idCittà` ASC) ,
   CONSTRAINT `fk_Esaminandi_Città1`
-    FOREIGN KEY (`Città_idCittà` )
+    FOREIGN KEY (`idCittà` )
     REFERENCES `Esami ECDL`.`Città` (`idCittà` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -54,11 +55,11 @@ ENGINE = InnoDB;
 CREATE  TABLE IF NOT EXISTS `Esami ECDL`.`Sede` (
   `idSede` INT NOT NULL ,
   `nome` VARCHAR(45) NULL ,
-  `Città_idCittà` INT NOT NULL ,
+  `idCittà` INT NOT NULL ,
   PRIMARY KEY (`idSede`) ,
-  INDEX `fk_Sede_Città1_idx` (`Città_idCittà` ASC) ,
+  INDEX `fk_Sede_Città1_idx` (`idCittà` ASC) ,
   CONSTRAINT `fk_Sede_Città1`
-    FOREIGN KEY (`Città_idCittà` )
+    FOREIGN KEY (`idCittà` )
     REFERENCES `Esami ECDL`.`Città` (`idCittà` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -72,11 +73,11 @@ CREATE  TABLE IF NOT EXISTS `Esami ECDL`.`SkillCard` (
   `idSkillCard` INT NOT NULL AUTO_INCREMENT ,
   `DataEmissione` DATETIME NULL ,
   `DataScadenza` DATETIME NULL ,
-  `Esaminandi_codice` INT NOT NULL ,
+  `codice` INT NOT NULL ,
   PRIMARY KEY (`idSkillCard`) ,
-  INDEX `fk_SkillCard_Esaminandi1_idx` (`Esaminandi_codice` ASC) ,
+  INDEX `fk_SkillCard_Esaminandi1_idx` (`codice` ASC) ,
   CONSTRAINT `fk_SkillCard_Esaminandi1`
-    FOREIGN KEY (`Esaminandi_codice` )
+    FOREIGN KEY (`codice` )
     REFERENCES `Esami ECDL`.`Esaminandi` (`codice` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -113,11 +114,11 @@ ENGINE = InnoDB;
 CREATE  TABLE IF NOT EXISTS `Esami ECDL`.`Sessione` (
   `idSessione` INT NOT NULL AUTO_INCREMENT ,
   `data` DATETIME NULL ,
-  `Sede_idSede` INT NOT NULL ,
+  `idSede` INT NOT NULL ,
   PRIMARY KEY (`idSessione`) ,
-  INDEX `fk_Sessione_Sede1_idx` (`Sede_idSede` ASC) ,
+  INDEX `fk_Sessione_Sede1_idx` (`idSede` ASC) ,
   CONSTRAINT `fk_Sessione_Sede1`
-    FOREIGN KEY (`Sede_idSede` )
+    FOREIGN KEY (`idSede` )
     REFERENCES `Esami ECDL`.`Sede` (`idSede` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
