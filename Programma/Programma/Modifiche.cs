@@ -238,8 +238,8 @@ namespace Programma
         {
             if (!cmbEsterna.Items.Contains(cmbEsterna.Text))
             {
-                return = true;
                 MessageBox.Show("Attenzione la chiave esterna non è presente", "Errore");
+                return true;
             }
             else if (controllo.Errore != 0)
             {
