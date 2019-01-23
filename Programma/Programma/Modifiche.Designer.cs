@@ -31,6 +31,8 @@
             this.btnConferma = new MaterialSkin.Controls.MaterialFlatButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.cmbEsterna2 = new System.Windows.Forms.ComboBox();
+            this.lblEsterna2 = new MaterialSkin.Controls.MaterialLabel();
             this.cmbEsterna = new System.Windows.Forms.ComboBox();
             this.lblEsterna = new MaterialSkin.Controls.MaterialLabel();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -41,8 +43,6 @@
             this.labelcmb = new MaterialSkin.Controls.MaterialLabel();
             this.cmbEsistente = new System.Windows.Forms.ComboBox();
             this.lblSeleziona = new MaterialSkin.Controls.MaterialLabel();
-            this.cmbEsterna2 = new System.Windows.Forms.ComboBox();
-            this.lblEsterna2 = new MaterialSkin.Controls.MaterialLabel();
             this.panel1.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -87,6 +87,28 @@
             this.panel5.Size = new System.Drawing.Size(311, 71);
             this.panel5.TabIndex = 5;
             this.panel5.Visible = false;
+            // 
+            // cmbEsterna2
+            // 
+            this.cmbEsterna2.FormattingEnabled = true;
+            this.cmbEsterna2.Location = new System.Drawing.Point(141, 37);
+            this.cmbEsterna2.Name = "cmbEsterna2";
+            this.cmbEsterna2.Size = new System.Drawing.Size(152, 21);
+            this.cmbEsterna2.TabIndex = 3;
+            this.cmbEsterna2.Visible = false;
+            // 
+            // lblEsterna2
+            // 
+            this.lblEsterna2.AutoSize = true;
+            this.lblEsterna2.Depth = 0;
+            this.lblEsterna2.Font = new System.Drawing.Font("Roboto", 11F);
+            this.lblEsterna2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblEsterna2.Location = new System.Drawing.Point(9, 37);
+            this.lblEsterna2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblEsterna2.Name = "lblEsterna2";
+            this.lblEsterna2.Size = new System.Drawing.Size(0, 19);
+            this.lblEsterna2.TabIndex = 2;
+            this.lblEsterna2.Visible = false;
             // 
             // cmbEsterna
             // 
@@ -202,28 +224,6 @@
             this.lblSeleziona.Size = new System.Drawing.Size(144, 19);
             this.lblSeleziona.TabIndex = 0;
             this.lblSeleziona.Text = "Seleziona esistente:";
-            // 
-            // cmbEsterna2
-            // 
-            this.cmbEsterna2.FormattingEnabled = true;
-            this.cmbEsterna2.Location = new System.Drawing.Point(141, 37);
-            this.cmbEsterna2.Name = "cmbEsterna2";
-            this.cmbEsterna2.Size = new System.Drawing.Size(152, 21);
-            this.cmbEsterna2.TabIndex = 3;
-            this.cmbEsterna2.Visible = false;
-            // 
-            // lblEsterna2
-            // 
-            this.lblEsterna2.AutoSize = true;
-            this.lblEsterna2.Depth = 0;
-            this.lblEsterna2.Font = new System.Drawing.Font("Roboto", 11F);
-            this.lblEsterna2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblEsterna2.Location = new System.Drawing.Point(9, 37);
-            this.lblEsterna2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblEsterna2.Name = "lblEsterna2";
-            this.lblEsterna2.Size = new System.Drawing.Size(0, 19);
-            this.lblEsterna2.TabIndex = 2;
-            this.lblEsterna2.Visible = false;
             // 
             // Modifiche
             // 

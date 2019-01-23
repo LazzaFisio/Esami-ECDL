@@ -341,14 +341,14 @@ namespace Programma
                     if (app > -1)
                     {
                         nodo = creaNodoPadre(selezionato.Tag.ToString(), selezionato);
-                        new Modifiche(panel.Tag.ToString(), Convert.ToInt32(nodo.ChiaviPrimarie[0].valore), Convert.ToInt32(città.Controls[1].Text)).ShowDialog();
+                        new Modifiche(panel.Tag.ToString(), Convert.ToInt32(nodo.ChiaviPrimarie[0].valore)).ShowDialog();
                     }
                     else
                     {
                         int index = 0;
                         if (padre.Name != panel.Name)
                             index = Convert.ToInt32(città.Controls[1].Text);
-                        new Modifiche(panel.Tag.ToString(), int.MaxValue, index).ShowDialog();
+                        new Modifiche(panel.Tag.ToString(), int.MaxValue).ShowDialog();
                     }
                 break;
                 case "modifica":  new Modifiche(creaNodoPadre(padre.Tag.ToString(), panel), 

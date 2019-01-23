@@ -27,15 +27,15 @@ namespace Programma
 
         private void connetti_Click(object sender, EventArgs e)
         {
-            string appoggio = "Server=" + server.Text + ";Database=" + database.Text + ";Uid=" + user.Text + ";Psw=" + password.Text + ";";
-            Program.connection = new MySqlConnection(appoggio);
-            Program.connection.Open();
-            Hide();
-            new Principale().ShowDialog();
-            Show();
+           
             try
             {
-                
+                string appoggio = "Server=" + server.Text + ";Database=" + database.Text + ";Uid=" + user.Text + ";Psw=" + password.Text + ";";
+                Program.connection = new MySqlConnection(appoggio);
+                Program.connection.Open();
+                Hide();
+                new Principale().ShowDialog();
+                Show();
             }
             catch (Exception err) { MessageBox.Show(err.Message, "ATTENZIONE", MessageBoxButtons.OK, MessageBoxIcon.Warning); Show(); }
         }
