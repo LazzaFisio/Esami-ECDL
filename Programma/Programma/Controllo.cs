@@ -36,7 +36,6 @@ namespace Programma
             if(Modifiche.insert)
                 controlloInserimento();
             controlloFormattazioneData();
-            controlloChiaveEsterna();
         }
 
         void controlloInserimento()
@@ -75,30 +74,6 @@ namespace Programma
             if(field.Name != "")
                 try { Convert.ToDateTime(field.Text).ToString("yyyy/MM/dd"); }
                 catch { caricaErrore(2, "errore formattazione data"); }
-        }
-
-        void controlloChiaveEsterna()
-        {
-            //cmbEsterna cmbEsterna2(esame)
-            List<string> legenda = new List<string>() { "sede:città", "sessione:sede", "esami:sessione:esamesessione", "esaminandi:città/esami:/risultato"};
-            Control chiaveEst = control.Find("cmbEsterna", true)[0];
-            Control chiaveEst2 = control.Find("cmbEsterna2", true)[0];
-            if(control.Find("panel5", true)[0].Visible)
-            {
-                string[] tabelle = legenda.Find(dato => dato.Split(':')[0] == tabella).Split(':');
-                if (tabelle[1].Contains("/"))
-                {
-                    string[] app = tabelle[1].Split('/');
-                    List<string[]> dati = query("SELECT " + Program.chiaviPrimarie(app[0]) + " FROM " + app[0]);
-                    string tabellaMM = tabelle[2].Split('/')[1];
-                    List<string[]> info = query("SELECT " + Program.chiaviPrimarie(tabellaMM)[0] + " FROM " + tabellaMM);
-
-                }
-                else
-                {
-
-                }
-            }
         }
 
         void caricaErrore(int num, string err)
