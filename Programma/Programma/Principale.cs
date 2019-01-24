@@ -90,7 +90,7 @@ namespace Programma
                 bool eccezzione = true;
                 if (inizio < fine)
                     eccezzione = false;
-                daInserire = figliSucc(tag, tabPrec, creaNodoPadre(tabPrec, panel), eccezzione);
+                daInserire = figliSucc(tag, tabPrec, creaNodoPadre(tabPrec, panel), new bool[] { eccezzione, false });
                 if (tag == "risultato")
                     controlloPerRisultato(daInserire);
             }
@@ -139,7 +139,7 @@ namespace Programma
                 }
         }
 
-        public static List<Nodo> figliSucc(string tag, string tabPrec, Nodo nodo, bool eccezione)
+        public static List<Nodo> figliSucc(string tag, string tabPrec, Nodo nodo, bool[] eccezione)
         {
             List<Nodo> daInserire = new List<Nodo>();
             List<Nodo> nodi = new List<Nodo>();
@@ -151,7 +151,7 @@ namespace Programma
                 List<string> chivi = Program.chiaviPrimarie(tabPrec);
                 List<string[]> app = new List<string[]>();
                 string cond = "";
-                if (!eccezione)
+                if (!eccezione[0])
                 {
                     tabPrec = Program.tabelle[Program.tabelle.ToList().FindIndex(dato => dato == tabPrec) + 1];
                     if (tabPrec == "esaminandi")
@@ -164,7 +164,12 @@ namespace Programma
                     if(nodi.Count == 0)
                         nodi.Add(nodo);
                     if (chivi.Count > 1)
-                        chivi.RemoveAt(0);
+                    {
+                        if (eccezione[1])
+                            chivi.RemoveAt(1);
+                        else
+                            chivi.RemoveAt(0);
+                    }
                 }
                 int index = 0;
                 if (nodi.Count > 0)
@@ -175,7 +180,10 @@ namespace Programma
                             index = item.ChiaviPrimarie.FindIndex(dato => dato.nome == chivi[0]);
                     for(int i = 0; i < nodi.Count; i++)
                     {
-                        cond = " WHERE " + chivi[0] + " = '" + nodi[i].ChiaviPrimarie[index].valore + "'";
+                        string a = nodi[i].ChiaviPrimarie[index].valore;
+                        if (eccezione.Length == 3 && !eccezione[2])
+                            a = nodi[i].ChiaviEsterne[index].valore;
+                        cond = " WHERE " + chivi[0] + " = '" + a + "'";
                         funzione(tabPrec, cond, daInserire);
                     }
                 }

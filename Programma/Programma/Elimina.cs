@@ -70,24 +70,24 @@ namespace Programma
             while(valori.Count > 0)
             {
                 foreach (Nodo item in valori)
-                    if (item.Tabella != "esamesessione"){
-                        DataGridView data = null;
-                        for (int i = 0; i < tabelle.TabPages.Count; i++)
+                {
+                    DataGridView data = null;
+                    for (int i = 0; i < tabelle.TabPages.Count; i++)
+                    {
+                        TabPage page = tabelle.TabPages[i];
+                        if (page.Name == item.Tabella)
                         {
-                            TabPage page = tabelle.TabPages[i];
-                            if (page.Name == item.Tabella)
-                            {
-                                if (page.Controls.Count > 0)
-                                    data = (DataGridView)page.Controls[0];
-                                i = tabelle.TabPages.Count;
-                            }
+                            if (page.Controls.Count > 0)
+                                data = (DataGridView)page.Controls[0];
+                            i = tabelle.TabPages.Count;
                         }
-                        if (data == null)
-                            creaDataGridView(ref data, item);
-                        caricaValori(data, item);
-                        if (!tabellePassate.Contains(item.Tabella))
-                            tabellePassate.Add(item.Tabella);
                     }
+                    if (data == null)
+                        creaDataGridView(ref data, item);
+                    caricaValori(data, item);
+                    if (!tabellePassate.Contains(item.Tabella))
+                        tabellePassate.Add(item.Tabella);
+                }
                 app.Clear();
                 foreach (Nodo item in valori)
                 {
@@ -114,7 +114,8 @@ namespace Programma
             TabPage tabPage = new TabPage(item.Tabella);
             tabPage.Name = item.Tabella;
             tabPage.Controls.Add(data);
-            tabelle.TabPages.Add(tabPage);
+            if(item.Tabella != "esamesessione")
+                tabelle.TabPages.Add(tabPage);
         }
 
         void caricaValori(DataGridView data, Nodo appoggio)
@@ -189,7 +190,12 @@ namespace Programma
                     tabPrec = Program.tabelle[i];
                     i = -1;
                 }
-            List<Nodo> appoggio = Principale.figliSucc(tabPrec, nodo.Tabella, nodo, true);
+            bool condizione = true, condizione2 = true;
+            if (nodo.Tabella == "skillcard" || nodo.Tabella == "esaminandi")
+                condizione = false;
+            if (nodo.Tabella == "sede")
+                condizione2 = false;
+            List<Nodo> appoggio = Principale.figliSucc(tabPrec, nodo.Tabella, nodo, new bool[] { true, condizione, condizione2 });
             new Modifiche(nodo, Convert.ToInt32(appoggio[0].ChiaviPrimarie[0].valore)).ShowDialog();
             aggiorna();
         }
