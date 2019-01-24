@@ -129,7 +129,7 @@ namespace Programma
                     }
                     else
                     {
-                        if (controllo.Errore != 3 && cmbEsistente.Items.Contains(cmbEsistente))
+                        if (controllo.Errore != 3 && cmbEsistente.Items.Contains(cmbEsistente.Text))
                         {
                             if (tabella == "esami")
                                 aggiungiDurata(cmbEsistente.Text, idPadre.ToString());
@@ -236,7 +236,7 @@ namespace Programma
 
         bool controllaErr(Controllo controllo)
         {
-            if (!cmbEsterna.Items.Contains(cmbEsterna.Text))
+            if (cmbEsterna.Visible && !cmbEsterna.Items.Contains(cmbEsterna.Text))
             {
                 MessageBox.Show("Attenzione la chiave esterna non è presente", "Errore");
                 return true;
