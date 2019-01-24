@@ -22,7 +22,7 @@ namespace Programma
             if (campi.Count == 0)
                 modifica.Enabled = elimina.Enabled = false;
             if (tabella == "risultato")
-                elimina.Enabled = false;
+                elimina.Enabled = aggiungi.Enabled = false;
         }
 
         private void aggiungi_Click(object sender, EventArgs e)

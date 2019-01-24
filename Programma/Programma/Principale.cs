@@ -407,16 +407,10 @@ namespace Programma
                 if (panel.BackColor == Color.LightBlue && index < principale.Controls.Count)
                     principale.Controls[index].Visible = false;
             }
-            Control[] controls = Controls.Find("esaminandi", true);
-            if (controls.Length > 0)
-            {
-                Panel appoggio = (Panel)controls[0];
-                bool vis = false;
-                foreach (Control control in appoggio.Controls)
-                    if (control.BackColor == Color.Lime)
-                        vis = true;
-                ((MaterialFlatButton)Controls.Find("visualizza", true)[0]).Visible = vis;
-            }
+            bool vis = false;
+            if (padre.Tag.ToString() == "esaminandi" || padre.Tag.ToString() == "risultato")
+                vis = true;
+            ((MaterialFlatButton)Controls.Find("visualizza", true)[0]).Visible = vis;
         }
 
         void azioneBottone(object sender, EventArgs e)
