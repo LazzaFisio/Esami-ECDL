@@ -69,25 +69,25 @@ namespace Programma
             controllo(app, valori, tabellePassate);
             while(valori.Count > 0)
             {
-                foreach(Nodo item in valori)
-                {
-                    DataGridView data = null;
-                    for(int i = 0; i < tabelle.TabPages.Count; i++)
-                    {
-                        TabPage page = tabelle.TabPages[i];
-                        if(page.Name == item.Tabella)
+                foreach (Nodo item in valori)
+                    if (item.Tabella != "esamesessione"){
+                        DataGridView data = null;
+                        for (int i = 0; i < tabelle.TabPages.Count; i++)
                         {
-                            if (page.Controls.Count > 0)
-                                data = (DataGridView)page.Controls[0];
-                            i = tabelle.TabPages.Count;
+                            TabPage page = tabelle.TabPages[i];
+                            if (page.Name == item.Tabella)
+                            {
+                                if (page.Controls.Count > 0)
+                                    data = (DataGridView)page.Controls[0];
+                                i = tabelle.TabPages.Count;
+                            }
                         }
+                        if (data == null)
+                            creaDataGridView(ref data, item);
+                        caricaValori(data, item);
+                        if (!tabellePassate.Contains(item.Tabella))
+                            tabellePassate.Add(item.Tabella);
                     }
-                    if (data == null)
-                        creaDataGridView(ref data, item);
-                    caricaValori(data, item);
-                    if (!tabellePassate.Contains(item.Tabella))
-                        tabellePassate.Add(item.Tabella);
-                }
                 app.Clear();
                 foreach (Nodo item in valori)
                 {
