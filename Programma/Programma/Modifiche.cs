@@ -333,7 +333,13 @@ namespace Programma
         void riempi()
         {
             for (int i = 0; i < text.Count; i++)
-                text[i].Text = daModificare.Attributi[i].valore;
+            {
+                if (!daModificare.Attributi[i].nome.ToLower().Contains("data"))
+                    text[i].Text = daModificare.Attributi[i].valore;
+                else
+                    text[i].Text = daModificare.Attributi[i].valore.Split(' ')[0];
+            }
+
 
             if (daModificare.ChiaviEsterne.Count > 0)
             {
