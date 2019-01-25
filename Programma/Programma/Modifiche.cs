@@ -144,7 +144,7 @@ namespace Programma
                 }
                 else
                 {
-                    if (controllaErr(controllo))
+                    if (!controllaErr(controllo))
                     {
                         query = "UPDATE " + tabella + " SET ";
 
